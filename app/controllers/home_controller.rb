@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :require_authentication, only: [ :index ]
+  allow_unauthenticated_access
+  before_action :resume_session
   def index; end
 end
