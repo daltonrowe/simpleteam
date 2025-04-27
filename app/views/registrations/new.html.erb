@@ -15,7 +15,7 @@
     </div>
     <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
       <div class="inline">
-        <%= form.submit "Sign up", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+        <%= render ButtonComponent.new(text: "Sign up", type: :submit)%>
       </div>
       <div class="mt-4 text-sm text-gray-500 sm:mt-0">
         <%= link_to "Forgot password?", new_password_path, class: "text-gray-700 underline" %>

@@ -19,10 +19,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-yin-900 text-white">
     <%= render SiteHeaderComponent.new %>
     
-    <main class="container mx-auto px-5 flex">
+    <main class="container mx-auto px-5 sm:mt-20 flex">
       <%= yield %>
     </main>
   </body>
