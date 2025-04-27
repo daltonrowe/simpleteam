@@ -1,16 +1,16 @@
-<header class="flex justify-between py-2 px-5">
+<header class="sm:fixed top-0 left-0 w-full flex justify-between py-2 px-5 flex-col sm:flex-row">
   <h1>
     <a href="<%= root_path %>">SimpleHero</a>
   </h1>
 
-  <div>
-  <% if Current.user %>
-    <%= button_to 'Logout', session_path, method: 'delete' %>
+  <div class="flex gap-2">
+  <% unless Current.user %>
+    <%= render LinkComponent.new(text: 'Sign Up', to: new_registration_path, style: :outlined, level: :secondary) %>
+    <%= render LinkComponent.new(text: 'Log In', to: new_session_path, style: :outlined, level: :secondary) %>
   <% end %>
 
-  <% unless Current.user %>
-    <%= link_to 'Sign Up', new_registration_path %>
-    <%= link_to 'Log In', new_session_path %>
+  <% if Current.user %>
+    <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary, form: {class: 'w-full'}, extra_classes: 'block w-full') %>
   <% end %>
   </div>
 </header>

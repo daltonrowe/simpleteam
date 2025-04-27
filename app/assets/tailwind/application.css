@@ -187,3 +187,7 @@
   --color-yang-raw: 99.4% 0 0;
   --color-yang: oklch(var(--color-yang-raw));
 }
+
+*:focus {
+  outline: solid var(--color-white);
+}
