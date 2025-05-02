@@ -10,6 +10,10 @@ module Authentication
     def allow_unauthenticated_access(**options)
       skip_before_action :require_authentication, **options
     end
+
+    def unauthenticated_users_only
+      before_action :redirect_authenticated_users
+    end
   end
 
   private
@@ -49,5 +53,9 @@ module Authentication
   def terminate_session
     Current.session.destroy
     cookies.delete(:session_id)
+  end
+
+  def redirect_authenticated_users
+    redirect_to dashboard_path if authenticated?
   end
 end
