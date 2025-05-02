@@ -1,3 +1,5 @@
 class DashboardController < ApplicationController
-  def index; end
+  def index
+    @teams = Current.user.teams
+  end
 end

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
-  has_many :teams, foreign_key: :owner_id
+  has_many :teams
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 end
