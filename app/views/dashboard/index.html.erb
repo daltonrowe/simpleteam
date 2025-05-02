@@ -1,1 +1,13 @@
-<h1>Your Teams</h1>
+<div class="mx-auto md:w-2/3 w-full">
+  <%= render AlertComponent.new(text: flash[:notice], level: :notice) if flash[:notice] %>
+
+  <h1 class="font-bold text-4xl">Your Teams</h1>
+
+  <div class="flex-col gap-1">
+  <% @teams.each do |team| %>
+    <div><%= team.name %></div>
+  <% end %>
+  </div>
+
+  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :filled) %>
+</div>

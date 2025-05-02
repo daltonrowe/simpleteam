@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
 
+  resources :teams
+
   get "/dashboard", to: "dashboard#index"
 
   get "up" => "rails/health#show", as: :rails_health_check
