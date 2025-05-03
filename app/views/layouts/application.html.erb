@@ -21,6 +21,9 @@
 
   <body class="bg-yin-900 text-white">
     <%= render SiteHeaderComponent.new %>
+
+    <%= render AlertComponent.new(text: flash[:alert]) if flash[:alert] %>
+    <%= render AlertComponent.new(text: flash[:notice], level: :notice) if flash[:notice] %>
     
     <main class="container mx-auto px-5 sm:mt-20 flex">
       <%= yield %>
