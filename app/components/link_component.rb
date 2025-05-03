@@ -13,7 +13,7 @@ class LinkComponent < Abstract::NavigatorComponent
 
   attr_reader :text, :to, :style, :level, :extra_classes
 
-  def element
+  def call
     return link_to text, to, class: classes if to.present?
 
     tag.a text, to, class: classes

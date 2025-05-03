@@ -16,7 +16,7 @@ class ButtonComponent < Abstract::NavigatorComponent
 
   attr_reader :text, :type, :to, :method, :style, :level, :form, :extra_classes
 
-  def element
+  def call
     return button_to text, to, method:, form:, class: classes if to.present?
 
     tag.button text, type:, class: classes
