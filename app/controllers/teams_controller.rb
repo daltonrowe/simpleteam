@@ -1,10 +1,11 @@
 class TeamsController < ApplicationController
+  require "securerandom"
   def new
     @team = Team.new(user: Current.user)
   end
 
   def create
-    @team = Team.create(user: Current.user, **create_params)
+    @team = Team.create(guid: SecureRandom.uuid, user: Current.user, **create_params)
 
     if @team.save
       redirect_to root_path, notice: "Team created!"
@@ -15,6 +16,8 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find(params[:id])
+
+    redirect_to dashboard_path unless @team.user == Current.user
   end
 
   private

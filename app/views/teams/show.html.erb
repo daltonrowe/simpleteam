@@ -4,4 +4,8 @@
   <% if Current.user == @team.user %>
   <div class="rounded-3xl bg-white text-yin py-2 px-4">Owner</div>
   <% end %>
+
+  <% form_for :team_seats, url: new_team_seat_path do |form| %>
+    <%= form.hidden_field value: @team.guid %>
+  <% end %>
 </section>

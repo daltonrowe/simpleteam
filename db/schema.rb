@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_02_170159) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_03_131722) do
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -25,15 +25,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_170159) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "pending_email"
     t.index ["team_id"], name: "index_team_seats_on_team_id"
     t.index ["user_id"], name: "index_team_seats_on_user_id"
   end
 
   create_table "teams", force: :cascade do |t|
+    t.string "guid"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", limit: 120
+    t.index ["guid"], name: "index_teams_on_guid"
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 

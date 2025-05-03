@@ -8,8 +8,12 @@ class AlertComponent < ViewComponent::Base
 
   attr_reader :text, :type, :level
 
+  def call
+    tag.div text, class: classes
+  end
+
   def classes
-    class_array = [ "py-2", "px-3",  "mb-5", "font-medium", "rounded-lg", "inline-block" ]
+    class_array = [ "py-2", "px-3", "font-medium", "rounded-lg" ]
 
     class_array.push("bg-red-50", "text-red-500") if level == :alert
     class_array.push("bg-green-50", "text-green-500") if level == :notice

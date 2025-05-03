@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   resources :teams
+  resources :team_seats
 
   get "/dashboard", to: "dashboard#index"
 
