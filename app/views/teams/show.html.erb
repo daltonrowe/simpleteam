@@ -1,0 +1,7 @@
+<section class="flex gap-2">
+  <h1 class="font-bold text-4xl"><%= @team.name %></h1>
+
+  <% if Current.user == @team.user %>
+  <div class="rounded-3xl bg-white text-yin py-2 px-4">Owner</div>
+  <% end %>
+</section>

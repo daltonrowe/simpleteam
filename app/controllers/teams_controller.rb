@@ -13,6 +13,10 @@ class TeamsController < ApplicationController
     end
   end
 
+  def show
+    @team = Team.find(params[:id])
+  end
+
   private
 
   def create_params

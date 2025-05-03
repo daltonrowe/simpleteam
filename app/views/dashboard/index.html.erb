@@ -1,11 +1,24 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Your Teams</h1>
+<div class="mx-auto md:w-2/3 w-full flex flex-col gap-4">
 
-  <div class="flex-col gap-1">
-  <% @teams.each do |team| %>
-    <div><%= team.name %></div>
+  <section class="flex flex-col gap-2">
+    <h2 class="font-bold text-4xl">Today's Status:</h1>
+  </section>
+
+
+  <section class="flex flex-col gap-2">
+  <% if @teams %>
+    <h2 class="font-bold text-4xl">Manage Teams</h1>
+
+    <div class="flex flex-col gap-2">
+      <%= render TeamComponent.with_collection(@teams) %>
+    </div>
+
+    <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :filled) %>
   <% end %>
-  </div>
 
-  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :filled) %>
+  </section>
+
+  <section>
+    <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary, form: {class: 'w-full'}, extra_classes: 'block w-full') %>
+  </section>
 </div>

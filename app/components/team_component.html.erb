@@ -1,3 +1,5 @@
-<div class="p-4 border rounded-md">
+<div class="p-4 border rounded-md flex justify-between">
   <strong><%= name %></strong>
+
+  <%= render LinkComponent.new(text: 'Manage', to: team_path(team))%>
 </div>

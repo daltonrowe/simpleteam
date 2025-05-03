@@ -10,8 +10,7 @@
   <% end %>
 
   <% if Current.user %>
-    <%= render LinkComponent.new(text: 'Dashboard', to: dashboard_path, style: :outlined, level: :secondary, extra_classes: 'block w-full') %>
-    <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary, form: {class: 'w-full'}, extra_classes: 'block w-full') %>
+    <%= render LinkComponent.new(text: 'My Teams', to: dashboard_path, style: :outlined, level: :secondary, extra_classes: 'block w-full') %>
   <% end %>
   </div>
 </header>
