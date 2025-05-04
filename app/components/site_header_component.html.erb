@@ -10,7 +10,7 @@
   <% end %>
 
   <% if Current.user %>
-    <%= render LinkComponent.new(text: 'My Teams', to: dashboard_path, style: :outlined, level: :secondary, extra_classes: 'block w-full') %>
+    <%= render LinkComponent.new(text: 'My Teams', to: dashboard_path, style: :outlined, level: :secondary) %>
   <% end %>
   </div>
 </header>

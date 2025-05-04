@@ -17,7 +17,7 @@
       </div>
 
       <div class="mt-4 text-sm text-gray-500 sm:mt-0">
-        <%= link_to "Forgot password?", new_password_path, class: "text-gray-700 underline hover:no-underline" %>
+        <%= render LinkComponent.new(text: "Forgot password?", to: new_password_path, level: :secondary) %>
       </div>
     </div>
   <% end %>

@@ -1,5 +1,6 @@
 class Team::SeatsController < ApplicationController
   def create
+    puts create_params
   end
 
   private

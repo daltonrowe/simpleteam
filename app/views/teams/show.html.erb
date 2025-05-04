@@ -1,11 +1,17 @@
-<section class="flex gap-2">
+<section class="flex gap-4">
   <h1 class="font-bold text-4xl"><%= @team.name %></h1>
 
   <% if Current.user == @team.user %>
   <div class="rounded-3xl bg-white text-yin py-2 px-4">Owner</div>
   <% end %>
+</section>
 
-  <% form_for :team_seats, url: new_team_seat_path do |form| %>
-    <%= form.hidden_field value: @team.guid %>
+<section>
+  <%= form_for :team_seats, url: new_team_seat_path, class:'flex flex-col gap-2', data: { controller: 'repeater' } do |form| %>
+    <%= form.hidden_field :guid, value: @team.guid, readonly: true %>
+
+    <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+
+    <%= render ButtonComponent.new(text: 'Invite Members', type: :sumbit)%>
   <% end %>
 </section>

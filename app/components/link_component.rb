@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LinkComponent < Abstract::NavigatorComponent
-  def initialize(text:, to: nil, style: :text, level: :primary, extra_classes: nil)
+  def initialize(text:, to: nil, style: :text, level: :primary, extra_classes: [])
     @text = text
     @to = to
     @style = style
