@@ -6,8 +6,17 @@
   <% end %>
 </section>
 
+<% if @team.pending_seats.any? %>
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Pending Seats</h2>
+  <%= render PendingSeatComponent.with_collection(@team.pending_seats) %>
+</section>
+<% end %>
+
 <section>
-  <%= form_for :team_pending_seat, url: team_pending_seats_path(@team.guid), class:'flex flex-col gap-2' do |form| %>
+  <h2 class="font-bold text-2xl">Add New Seats</h2>
+
+  <%= form_for :pending_seat, url: team_pending_seats_path(@team.guid), class:'flex flex-col gap-2' do |form| %>
     <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
 
     <%= render ButtonComponent.new(text: 'Invite Members', type: :submit)%>

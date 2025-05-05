@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Team::SeatTest < ActiveSupport::TestCase
+class SeatTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

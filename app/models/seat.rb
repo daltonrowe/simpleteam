@@ -1,4 +1,4 @@
-class Team::Seat < ApplicationRecord
+class Seat < ApplicationRecord
   belongs_to :team
   belongs_to :user
 

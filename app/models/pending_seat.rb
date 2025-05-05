@@ -1,4 +1,4 @@
-class Team::PendingSeat < ApplicationRecord
+class PendingSeat < ApplicationRecord
   belongs_to :team
 
   validates :team, presence: true

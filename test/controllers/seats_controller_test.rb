@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Team::SeatsControllerTest < ActionDispatch::IntegrationTest
+class SeatsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

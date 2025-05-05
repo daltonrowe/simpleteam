@@ -1,0 +1,16 @@
+<div class="flex border border-white p-4 rounded-lg justify-between w-full ">
+  <strong>
+    <%= pending_seat.email_address %>
+  </strong>
+
+
+  <div class="flex gap-4 align-center text-yin-600">
+    <span>
+    Sent <%= time_ago_in_words(pending_seat.created_at) %> ago
+    </span>
+
+    <span>
+      <%= render ButtonComponent.new(text: 'Revoke', to: team_pending_seat_path(pending_seat.team.guid, pending_seat:), method: :delete, style: :text) %>
+    </span>
+  </div>
+</div>
