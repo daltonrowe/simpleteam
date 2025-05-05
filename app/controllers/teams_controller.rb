@@ -15,7 +15,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
+    @team = Team.find_by(guid: params[:id])
 
     redirect_to dashboard_path unless @team.user == Current.user
   end

@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
 
-  resources :teams
-  resources :team_seats
+  resources :teams do
+    resources :seats
+    resources :pending_seats
+  end
 
   get "/dashboard", to: "dashboard#index"
 

@@ -7,11 +7,9 @@
 </section>
 
 <section>
-  <%= form_for :team_seats, url: new_team_seat_path, class:'flex flex-col gap-2', data: { controller: 'repeater' } do |form| %>
-    <%= form.hidden_field :guid, value: @team.guid, readonly: true %>
-
+  <%= form_for :team_pending_seat, url: team_pending_seats_path(@team.guid), class:'flex flex-col gap-2' do |form| %>
     <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
 
-    <%= render ButtonComponent.new(text: 'Invite Members', type: :sumbit)%>
+    <%= render ButtonComponent.new(text: 'Invite Members', type: :submit)%>
   <% end %>
 </section>
