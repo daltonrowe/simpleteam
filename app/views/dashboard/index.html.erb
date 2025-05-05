@@ -4,17 +4,17 @@
 
 <section class="flex flex-col gap-2">
 <% if @teams %>
-  <h2 class="font-bold text-4xl">Manage Teams</h1>
+  <h2 class="font-bold text-2xl">Manage Teams</h1>
 
   <div class="flex flex-col gap-2">
     <%= render TeamComponent.with_collection(@teams) %>
   </div>
 
-  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :filled) %>
+  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
 <% end %>
 
 </section>
 
 <section>
-  <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary, form: {class: 'w-full'}, extra_classes: ['block', 'w-full']) %>
+  <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary) %>
 </section>
