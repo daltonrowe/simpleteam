@@ -2,11 +2,9 @@ class PendingSeatsController < ApplicationController
   user_must_own_team
 
   def create
-    service = PendingSeatService.new(team: @team, pending_emails: create_params[:pending_emails])
+    PendingSeatInviteService.new(team: @team, pending_emails: create_params[:pending_emails]).create_seats
 
-    error = service.create_seats
-
-    redirect_to team_path(@team.guid), alert: error
+    redirect_to team_path(@team.guid)
   end
 
   def destroy

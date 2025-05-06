@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   require "securerandom"
+  include EncryptionHelper
 
   before_action :find_team, except: %i[new create]
   user_must_have_seat only: %i[show]
@@ -20,7 +21,6 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find_by(guid: params[:id])
-
     redirect_to dashboard_path unless @team.user == Current.user
   end
 

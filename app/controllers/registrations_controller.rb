@@ -7,7 +7,10 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(create_params.except(:token))
+
+    PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
+
     if @user.save
       start_new_session_for @user
       redirect_to root_path, notice: "Successfully signed up!"
@@ -18,7 +21,7 @@ class RegistrationsController < ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+  def create_params
+    params.require(:user).permit(:email_address, :password, :password_confirmation, :token)
   end
 end

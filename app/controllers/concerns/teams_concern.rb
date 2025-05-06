@@ -16,7 +16,7 @@ module TeamsConcern
   private
 
   def find_team
-    @team = Team.find_by(guid: params[:id])
+    @team = Team.find_by(guid: params[:team_id] || params[:id])
     redirect_to root_path unless @team
   end
 

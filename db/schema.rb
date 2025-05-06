@@ -14,9 +14,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
   create_table "pending_seats", force: :cascade do |t|
     t.integer "team_id"
     t.string "email_address"
+    t.string "token"
+    t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_pending_seats_on_email_address"
     t.index ["team_id"], name: "index_pending_seats_on_team_id"
+    t.index ["token"], name: "index_pending_seats_on_token"
   end
 
   create_table "seats", force: :cascade do |t|
@@ -50,6 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
+    t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
