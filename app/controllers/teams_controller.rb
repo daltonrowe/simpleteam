@@ -1,5 +1,9 @@
 class TeamsController < ApplicationController
   require "securerandom"
+
+  before_action :find_team, except: %i[new create]
+  user_must_have_seat only: %i[show]
+
   def new
     @team = Team.new(user: Current.user)
   end
