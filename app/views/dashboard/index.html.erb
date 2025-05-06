@@ -4,6 +4,26 @@
 
 <section class="flex flex-col gap-2">
 <% if @teams %>
+  <h2 class="font-bold text-2xl">Your Teams</h1>
+
+  <div class="flex flex-col gap-2">
+    <%= render SeatComponent.with_collection(@seats) %>
+  </div>
+<% end %>
+</section>
+
+<section class="flex flex-col gap-2">
+<% if @teams %>
+  <h2 class="font-bold text-2xl">Your Pending Seats</h1>
+
+  <div class="flex flex-col gap-2">
+    <%= render PendingSeatComponent.with_collection(@pending_seats, user: Current.user) %>
+  </div>
+<% end %>
+</section>
+
+<section class="flex flex-col gap-2">
+<% if @teams %>
   <h2 class="font-bold text-2xl">Manage Teams</h1>
 
   <div class="flex flex-col gap-2">
@@ -12,7 +32,6 @@
 
   <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
 <% end %>
-
 </section>
 
 <section>

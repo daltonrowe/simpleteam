@@ -9,8 +9,18 @@
     Sent <%= time_ago_in_words(pending_seat.created_at) %> ago
     </span>
 
+  <% if owner %>
+  <span>
+    <%= render ButtonComponent.new(text: 'Revoke', to: team_pending_seat_path(pending_seat.team.guid, pending_seat:), method: :delete, style: :text) %>
+  </span>
+  <% else %>
     <span>
-      <%= render ButtonComponent.new(text: 'Revoke', to: team_pending_seat_path(pending_seat.team.guid, pending_seat:), method: :delete, style: :text) %>
+    <%= render ButtonComponent.new(text: 'Accept', to: 'TODO', method: :delete, style: :text) %>
     </span>
+
+    <span>
+    <%= render ButtonComponent.new(text: 'Reject', to: 'TODO', method: :delete, style: :text) %>
+    </span>
+  <% end %>
   </div>
 </div>

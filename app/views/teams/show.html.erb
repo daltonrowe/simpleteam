@@ -9,7 +9,7 @@
 <% if @team.pending_seats.any? %>
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Pending Seats</h2>
-  <%= render PendingSeatComponent.with_collection(@team.pending_seats) %>
+  <%= render PendingSeatComponent.with_collection(@team.pending_seats, user: Current.user) %>
 </section>
 <% end %>
 

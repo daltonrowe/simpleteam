@@ -12,7 +12,7 @@ class PendingSeatJoinService
   def join
     return nil unless @token
 
-    @pending_seat = PendingSeat.where(token:)
+    @pending_seat = PendingSeat.find_by(token:)
 
     if token_valid
       confirm_user
@@ -28,7 +28,8 @@ class PendingSeatJoinService
   end
 
   def fill_pending_seat
-    puts "WEDIDIT\n" * 50
+    Seat.create(user: @user, team: @pending_seat.team)
+    @pending_seat.destroy
   end
 
   def token_valid

@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.create(guid: SecureRandom.uuid, user: Current.user, **create_params)
+    @team = Team.new(guid: SecureRandom.uuid, user: Current.user, **create_params)
 
     if @team.save
       redirect_to root_path, notice: "Team created!"

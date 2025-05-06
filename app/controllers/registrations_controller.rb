@@ -7,9 +7,10 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(create_params.except(:token))
-
-    PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
+    ActiveRecord::Base.transaction do
+      @user = User.new(create_params.except(:token))
+      PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
+    end
 
     if @user.save
       start_new_session_for @user
