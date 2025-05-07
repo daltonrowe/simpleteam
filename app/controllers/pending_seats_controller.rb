@@ -1,5 +1,6 @@
 class PendingSeatsController < ApplicationController
-  user_must_own_team
+  user_must_own_team except: %i[destroy]
+  user_must_have_pending_seat only: %i[destroy]
 
   def create
     PendingSeatInviteService.new(team: @team, pending_emails: create_params[:pending_emails]).create_seats
@@ -8,9 +9,7 @@ class PendingSeatsController < ApplicationController
   end
 
   def destroy
-    pending_seat = @team.pending_seats.find(params[:pending_seat])
-
-    pending_seat.destroy
+    @pending_seat.destroy
 
     redirect_to team_path(@team.guid)
   end
