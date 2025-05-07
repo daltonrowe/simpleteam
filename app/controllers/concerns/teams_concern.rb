@@ -1,20 +1,17 @@
 module TeamsConcern
   extend ActiveSupport::Concern
+  include ApplicationHelper
 
   class_methods do
     def user_must_own_team(**options)
-      before_action :find_team, **options
       before_action :redirect_non_owners, **options
     end
 
     def user_must_have_seat(**options)
-      before_action :find_team, **options
       before_action :redirect_non_members, **options
     end
 
     def user_must_have_pending_seat(**options)
-      before_action :find_team, **options
-      before_action :find_pending_seat, **options
       before_action :redirect_non_pending, **options
     end
   end
@@ -22,7 +19,9 @@ module TeamsConcern
   private
 
   def find_team
-    @team = Team.find_by(guid: params[:team_id] || params[:id])
+    guid = deep_search(:team_id, params) || deep_search(:id, params)
+    @team = Team.find_by(guid:)
+
     redirect_to dashboard_path unless @team
   end
 
@@ -31,14 +30,18 @@ module TeamsConcern
   end
 
   def redirect_non_owners
+    find_team
     redirect_to dashboard_path unless user_owns_team
   end
 
   def redirect_non_members
+    find_team
     redirect_to dashboard_path unless user_owns_team || user_has_seat
   end
 
   def redirect_non_pending
+    find_team
+    find_pending_seat
     redirect_to dashboard_path unless user_owns_team || user_has_pending_seat
   end
 

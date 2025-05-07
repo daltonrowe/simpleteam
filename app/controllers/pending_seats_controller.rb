@@ -9,7 +9,8 @@ class PendingSeatsController < ApplicationController
   end
 
   def destroy
-    @pending_seat.destroy
+    pending_seat = PendingSeat.find_by(id: params[:id])
+    pending_seat.destroy
 
     redirect_to team_path(@team.guid)
   end
