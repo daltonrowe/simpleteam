@@ -1,9 +1,18 @@
 class SeatsController < ApplicationController
+  user_must_have_pending_seat only: %i[create]
+  user_must_have_seat only: %i[destroy]
+  def create
+    ActiveRecord::Base.transaction do
+      Seat.create(user: Current.user, team: @pending_seat.team)
+      @pending_seat.destroy
+    end
+
+    redirect_to dashboard_path
+  end
   def destroy
     seat = Current.user.seats.find_by(team: @team)
-
-    puts Current.user.seats
-    puts seat
     seat.destroy
+
+    redirect_to dashboard_path
   end
 end

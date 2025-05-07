@@ -15,7 +15,7 @@
   </span>
   <% else %>
     <span>
-    <%= render ButtonComponent.new(text: 'Accept', to: team_seat_path(team_id: pending_seat.team.guid, id: pending_seat.id), method: :post, style: :text) %>
+    <%= render ButtonComponent.new(text: 'Accept', to: team_seats_path(team_id: pending_seat.team.guid, id: pending_seat.id), method: :post, style: :text) %>
     </span>
 
     <span>
