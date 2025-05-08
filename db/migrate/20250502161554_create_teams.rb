@@ -5,6 +5,7 @@ class CreateTeams < ActiveRecord::Migration[8.0]
       t.belongs_to :user, null: false, foreign_key: true
       t.string :name, limit: 120
       t.string :time_zone, default: "Central Time (US & Canada)"
+      t.text :ticket_link
 
       t.timestamps
     end
