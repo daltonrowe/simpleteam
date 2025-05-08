@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_08_062634) do
   create_table "pending_seats", force: :cascade do |t|
     t.integer "team_id"
     t.string "email_address"
@@ -24,8 +24,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
   end
 
   create_table "seats", force: :cascade do |t|
-    t.integer "team_id"
-    t.integer "user_id"
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_seats_on_team_id"
@@ -41,10 +41,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.json "message"
+    t.json "links"
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.index ["created_at"], name: "index_statuses_on_created_at"
+    t.index ["team_id"], name: "index_statuses_on_team_id"
+    t.index ["user_id"], name: "index_statuses_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name", limit: 120
     t.string "guid"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["guid"], name: "index_teams_on_guid"
@@ -52,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "name", limit: 60
     t.string "email_address", null: false
     t.string "password_digest", null: false
     t.datetime "confirmed_at"
@@ -60,6 +73,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_05_195130) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "pending_seats", "teams"
+  add_foreign_key "seats", "teams"
+  add_foreign_key "seats", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "statuses", "teams"
+  add_foreign_key "statuses", "users"
   add_foreign_key "teams", "users"
 end

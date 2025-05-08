@@ -1,11 +1,13 @@
 class CreateTeams < ActiveRecord::Migration[8.0]
   def change
     create_table :teams do |t|
-      t.column :name, :string, limit: 120
-      t.string :guid, index: true
-      t.belongs_to :user, index: true, foreign_key: true
+      t.string :name, limit: 120
+      t.string :guid
+      t.belongs_to :user, null: false, foreign_key: true
 
       t.timestamps
     end
+
+    add_index :teams, :guid
   end
 end
