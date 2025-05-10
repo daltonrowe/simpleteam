@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Simple Hero" %></title>
+    <title><%= content_for(:title) || "SimpleTeam" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,7 +20,9 @@
   </head>
 
   <body class="bg-yin-900 text-white">
-    <%= render SiteHeaderComponent.new %>
+    <%= render SiteHeaderComponent.new do |component| %>
+       <% component.with_badge(text: 'Pending Invites!', path: dashboard_seats_path) if @pending_seats %>
+    <% end %>
     
     <main class="container mx-auto px-5 sm:mt-20 md:w-2/3 w-full flex flex-col gap-8">
       <%= yield %>

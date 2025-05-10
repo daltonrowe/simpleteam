@@ -4,6 +4,7 @@ class TeamsController < ApplicationController
 
   before_action :find_team, except: %i[new create]
   user_must_have_seat only: %i[show]
+  user_must_own_team only: %i[edit]
 
   def new
     @team = Team.new(user: Current.user)
@@ -19,10 +20,8 @@ class TeamsController < ApplicationController
     end
   end
 
-  def show
-    @team = Team.find_by(guid: params[:id])
-    redirect_to dashboard_path unless @team.user == Current.user
-  end
+  def show; end
+  def edit; end
 
   private
 

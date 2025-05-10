@@ -1,4 +1,4 @@
-# SimpleHero
+# SimpleTeam
 
 Simple way to collect status updates from small teams.
 

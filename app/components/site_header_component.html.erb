@@ -1,6 +1,6 @@
 <header class="sm:fixed top-0 left-0 w-full flex justify-between py-2 px-5 flex-col sm:flex-row">
   <h1>
-    <a href="<%= root_path %>">SimpleHero</a>
+    <a href="<%= root_path %>">SimpleTeam</a>
   </h1>
 
   <div class="flex gap-2">
@@ -10,7 +10,7 @@
   <% end %>
 
   <% if Current.user %>
-    <%= render LinkComponent.new(text: 'My Teams', to: dashboard_path, style: :outlined, level: :secondary) %>
+    <%= render LinkComponent.new(text: 'Dashboard', to: dashboard_path, style: :outlined, level: :secondary) %>
   <% end %>
   </div>
 </header>
