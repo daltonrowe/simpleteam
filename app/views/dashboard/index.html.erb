@@ -1,25 +1,21 @@
-<% 'You have pending seats!' if @pending_seats.any? %>
-
-<section class="flex flex-col gap-4">
-  <h2 class="font-bold text-4xl">Today's Status:</h1>
-
-  <div class="flex flex-col gap-2">
-    <%= render SeatComponent.with_collection(@seats) %>
-    <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams') unless @seats.any? || @teams.any? %>
-  </div>
-</section>
-
-<% if @teams.any? %>
+<% if @pending_seats.any? %>
 <section class="flex flex-col gap-2">
-  <h2 class="font-bold text-2xl">Manage Teams</h1>
+  <h2 class="font-bold text-2xl">Your Pending Seats</h2>
 
   <div class="flex flex-col gap-2">
-    <%= render TeamComponent.with_collection(@teams) %>
+    <%= render PendingSeatComponent.with_collection(@pending_seats, user: Current.user) %>
   </div>
 </section>
 <% end %>
 
+<section class="flex flex-col gap-4">
+  <h2 class="font-bold text-4xl">Today's Status</h2>
+
+  <div class="flex flex-col gap-2">
+    <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams') if Current.user.all_alone? %>
+  </div>
+</section>
+
 <section class="flex gap-2">
-  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
-  <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary) %>
+  <%= render LinkComponent.new(text: "Account Settings", to: dashboard_user_path, style: :outlined, level: :secondary) %>
 </section>

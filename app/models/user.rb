@@ -9,4 +9,8 @@ class User < ApplicationRecord
   def display_name
     self.name || self.email_address.split("@")[0]
   end
+
+  def all_alone?
+    self.seats.empty? && self.teams.empty?
+  end
 end

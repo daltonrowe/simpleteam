@@ -1,0 +1,35 @@
+<h1 class="font-bold text-4xl">Manage Account</h1>
+
+<% if @pending_seats.any? %>
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Your Pending Seats</h2>
+
+  <div class="flex flex-col gap-2">
+    <%= render PendingSeatComponent.with_collection(@pending_seats, user: Current.user) %>
+  </div>
+</section>
+<% end %>
+
+
+<section class="flex flex-col gap-4">
+  <h2 class="font-bold text-2xl">Your Team Seats</h2>
+
+  <div class="flex flex-col gap-2">
+    <%= render SeatComponent.with_collection(Current.user.seats) %>
+    <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams.') if Current.user.seats.empty? %>
+  </div>
+</section>
+
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Your Teams</h2>
+
+  <div class="flex flex-col gap-2">
+    <%= render TeamComponent.with_collection(Current.user.teams) if Current.user.teams.any? %>
+    <%= render EmptySectionNoticeComponent.new(text: 'You do not own any teams.') if Current.user.teams.empty? %>
+  </div>
+</section>
+
+<section class="flex gap-2">
+  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
+  <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary) %>
+</section>

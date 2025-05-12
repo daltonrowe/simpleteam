@@ -7,12 +7,12 @@ class SeatsController < ApplicationController
       @pending_seat.destroy
     end
 
-    redirect_to dashboard_path
+    redirect_back
   end
   def destroy
-    seat = Current.user.seats.find_by(team: @team)
+    seat = Seat.find_by(id: params[:id])
     seat.destroy
 
-    redirect_to dashboard_path
+    redirect_back
   end
 end

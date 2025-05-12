@@ -1,12 +1,10 @@
 <div class="flex border border-white p-4 rounded-lg justify-between w-full ">
-  <strong>
-    <%= seat.team.name %>
-  </strong>
+  <strong><%= name %></strong>
 
 
   <div class="flex gap-4 align-center text-yin-600">
     <span>
-      <%= render ButtonComponent.new(text: 'Leave', to: team_seat_path(seat.team.guid, seat), method: :delete, style: :text) %>
+      <%= render ButtonComponent.new(text: action, to: team_seat_path(seat.team.guid, seat), method: :delete, style: :text) %>
     </span>
   </div>
 </div>

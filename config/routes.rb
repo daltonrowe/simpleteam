@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   get "/dashboard", to: "dashboard#index"
-  get "/dashboard/seats", to: "dashboard#seats"
+  get "/dashboard/user", to: "dashboard#user"
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
