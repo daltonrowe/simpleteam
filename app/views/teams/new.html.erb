@@ -1,17 +1,10 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Create a Team</h1>
+<h1 class="font-bold text-4xl">Create a Team</h1>
 
-  <%= form_with model: @team, url: teams_url, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.text_field :name, required: true, autofocus: true, placeholder: "My Awesome Team", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
-    </div>
+<%= form_with model: @team, url: teams_url, class: "contents flex flex-col gap-4" do |form| %>
+  <%= form.text_field :name, required: true, autofocus: true, placeholder: "My Awesome Team", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
+  <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
 
-    <div class="my-5">
-      <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
-    </div>
-
-    <div class="inline">
-      <%= render ButtonComponent.new(text: "Create team", type: :submit)%>
-    </div>
-  <% end %>
-</div>
+  <div class="inline">
+    <%= render ButtonComponent.new(text: "Create team", type: :submit)%>
+  </div>
+<% end %>

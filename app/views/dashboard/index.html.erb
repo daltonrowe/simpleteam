@@ -1,6 +1,6 @@
 <% 'You have pending seats!' if @pending_seats.any? %>
 
-<section class="flex flex-col gap-2">
+<section class="flex flex-col gap-4">
   <h2 class="font-bold text-4xl">Today's Status:</h1>
 
   <div class="flex flex-col gap-2">
@@ -9,18 +9,17 @@
   </div>
 </section>
 
-<section class="flex flex-col gap-2">
 <% if @teams.any? %>
+<section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Manage Teams</h1>
 
   <div class="flex flex-col gap-2">
     <%= render TeamComponent.with_collection(@teams) %>
   </div>
-
-  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
-<% end %>
 </section>
+<% end %>
 
-<section>
+<section class="flex gap-2">
+  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
   <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary) %>
 </section>

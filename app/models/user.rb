@@ -5,4 +5,8 @@ class User < ApplicationRecord
   has_many :seats
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  def display_name
+    self.name || self.email_address.split("@")[0]
+  end
 end

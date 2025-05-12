@@ -1,28 +1,17 @@
-<div class="mx-auto md:w-2/3 w-full">
-  
-  <h1 class="font-bold text-4xl">Sign up</h1>
-  <%= form_with model: @user, url: registration_url, class: "contents" do |form| %>
-    <%= form.hidden_field :token, value: params[:token], readonly: true if params[:token] %>
+<h1 class="font-bold text-4xl">Sign up</h1>
 
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-    </div>
+<%= form_with model: @user, url: registration_url, class: "contents flex flex-col gap-4" do |form| %>
+  <%= form.hidden_field :token, value: params[:token], readonly: true if params[:token] %>
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2  w-full" %>
+  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2  w-full" %>
+  <%= form.password_field :password_confirmation, required: true, autocomplete: "current-password", placeholder: "Confirm your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2  w-full" %>
 
-    <div class="my-5">
-      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+    <div class="inline">
+      <%= render ButtonComponent.new(text: "Sign up", type: :submit)%>
     </div>
-
-    <div class="my-5">
-      <%= form.password_field :password_confirmation, required: true, autocomplete: "current-password", placeholder: "Confirm your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    <div class="mt-4 text-sm text-gray-500 sm:mt-0">
+      <%= render LinkComponent.new(text: "Forgot password?", to: new_password_path, level: :secondary) %>
     </div>
-    
-    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-      <div class="inline">
-        <%= render ButtonComponent.new(text: "Sign up", type: :submit)%>
-      </div>
-      <div class="mt-4 text-sm text-gray-500 sm:mt-0">
-        <%= render LinkComponent.new(text: "Forgot password?", to: new_password_path, level: :secondary) %>
-      </div>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
