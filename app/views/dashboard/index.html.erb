@@ -12,6 +12,7 @@
   <h2 class="font-bold text-4xl">Today's Status</h2>
 
   <div class="flex flex-col gap-2">
+    <%= render StatusComponent.new(seat: Current.user.seats.first) if Current.user.seats.any? %>
     <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams') if Current.user.all_alone? %>
   </div>
 </section>

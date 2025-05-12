@@ -30,6 +30,7 @@
 </section>
 
 <section class="flex gap-2">
+  <%= render LinkComponent.new(text: "Back to Dashboard", to: dashboard_path, style: :outlined, level: :secondary) %>
   <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
   <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :outlined, level: :secondary) %>
 </section>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :teams do
     resources :seats
     resources :pending_seats
+    resources :statuses
   end
 
   get "/dashboard", to: "dashboard#index"
