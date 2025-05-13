@@ -1,2 +1,3 @@
-<%= form_for Status, url: team_statuses_path(team.id) do %>
+<%= form_with url: team_statuses_path(team.id) do |form| %>
+  <%= form.time_select :message, :ignore_date => true %>
 <% end %>

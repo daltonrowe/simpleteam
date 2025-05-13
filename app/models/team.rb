@@ -5,4 +5,8 @@ class Team < ApplicationRecord
 
   validates :guid, presence: true
   validates :name, presence: true, length: { maximum: 120 }
+
+  # metadata json:
+  # ticket_link
+  # slack_webhook
 end

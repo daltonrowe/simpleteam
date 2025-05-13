@@ -14,7 +14,7 @@ class TeamsController < ApplicationController
     @team = Team.new(guid: SecureRandom.uuid, user: Current.user, **create_params)
 
     if @team.save
-      redirect_to root_path, notice: "Team created!"
+      redirect_to edit_team_path(@team.guid), notice: "Team created!"
     else
       redirect_to new_team_path, alert: "Something went wrong."
     end

@@ -57,8 +57,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_08_062634) do
     t.string "guid"
     t.integer "user_id", null: false
     t.string "name", limit: 120
+    t.json "sections", default: {"yesterday"=>"Yesterday", "today"=>"Today"}
+    t.datetime "notifaction_time"
+    t.datetime "end_of_day"
     t.string "time_zone", default: "Central Time (US & Canada)"
-    t.text "ticket_link"
+    t.json "metadata", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["guid"], name: "index_teams_on_guid"

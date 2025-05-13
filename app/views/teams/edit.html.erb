@@ -7,18 +7,49 @@
 </section>
 <% end %>
 
-<% if @team.seats.any? %>
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Team Seats</h2>
   <%= render SeatComponent.with_collection(@team.seats, show: :email, action: "Remove") %>
+  <%= render EmptySectionNoticeComponent.new(text: 'Your team has no members, invite them below.') if @team.seats.empty? %>
 </section>
-<% end %>
 
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Add New Seats</h2>
 
   <%= form_for :pending_seat, url: team_pending_seats_path(team_id: @team.guid), class:'flex gap-2' do |form| %>
     <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
-    <%= render ButtonComponent.new(text: 'Invite Members', type: :submit, extra_classes: ['shrink-0'])%>
+    <%= render ButtonComponent.new(text: 'Send Invites', type: :submit, extra_classes: ['shrink-0'])%>
+  <% end %>
+</section>
+
+<section class="flex flex-col gap-4">
+  <h2 class="font-bold text-2xl">Team Settings</h2>
+
+  <%= form_with url: edit_team_path(@team.guid), class: "flex flex-col gap-4" do |form| %>
+    <fieldset class="flex flex-col gap-4">
+      <h3 class="fold-bold text-xl">Status Sections</h3>
+
+      <% @team.sections.each_pair do |k, v| %>
+        <input type="text" name="section[]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" value="<%= v %>">
+      <% end %>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-4">
+      <h3 class="fold-bold text-xl">Notifactions</h3>
+
+      <div>
+        <span class="inline-block w-35">Notifaction Time</span>
+        <%= form.time_select :notifaction_time, :ignore_date => true, value: @team.notifaction_time %>
+      </div>
+
+      <div>
+        <span class="inline-block w-35">End of Day</span>
+        <%= form.time_select :end_of_day, :ignore_date => true, value: @team.end_of_day %>
+      </div>
+
+      <input type="text" name="slack_webhook" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
+
+      <%= render ButtonComponent.new(text: 'Update Settings', type: :submit) %>
+    </fieldset>
   <% end %>
 </section>
