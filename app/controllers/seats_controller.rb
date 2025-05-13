@@ -7,12 +7,12 @@ class SeatsController < ApplicationController
       @pending_seat.destroy
     end
 
-    redirect_back
+    redirect_back fallback_location: root_path
   end
   def destroy
     seat = Seat.find_by(id: params[:id])
     seat.destroy
 
-    redirect_back
+    redirect_back fallback_location: root_path
   end
 end
