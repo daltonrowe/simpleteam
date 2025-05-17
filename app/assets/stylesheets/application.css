@@ -8,3 +8,8 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.alerts-container:has(*) {
+  padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 2)
+    calc(var(--spacing) * 2);
+}

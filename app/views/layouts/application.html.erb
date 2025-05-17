@@ -28,7 +28,7 @@
       <%= yield %>
     </main>
 
-    <div class="fixed bottom-0 left-0 p-4 flex flex-col justify-center w-full">
+    <div class="alerts-container fixed bottom-0 left-0 flex flex-col justify-center w-full">
       <%= render AlertComponent.new(text: flash[:alert]) if flash[:alert] %>
       <%= render AlertComponent.new(text: flash[:notice], level: :notice) if flash[:notice] %>
     </div>

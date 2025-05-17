@@ -29,8 +29,8 @@
     <fieldset class="flex flex-col gap-4">
       <h3 class="fold-bold text-xl">Status Sections</h3>
 
-      <% @team.sections.each_pair do |k, v| %>
-        <input type="text" name="section[]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" value="<%= v %>">
+      <% @team.sections.each do |section| %>
+        <input type="text" name="section[]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" value="<%= section %>">
       <% end %>
     </fieldset>
 
@@ -48,8 +48,8 @@
       </div>
 
       <input type="text" name="slack_webhook" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
-
-      <%= render ButtonComponent.new(text: 'Update Settings', type: :submit) %>
     </fieldset>
+
+    <%= render ButtonComponent.new(text: 'Update Settings', type: :submit) %>
   <% end %>
 </section>

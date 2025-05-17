@@ -1,3 +1,10 @@
-<%= form_with url: team_statuses_path(team.id) do |form| %>
-  <%= form.time_select :message, :ignore_date => true %>
+<%= form_with url: team_statuses_path(team.id), class: 'flex flex-col gap-4' do |form| %>
+  <% team.sections.each_with_index do |section, index| %>
+  <div class="flex flex-col gap-2">
+    <h2 class="font-bold text-2xl"><%= section %></h2>
+    <%= form.textarea section, id: "section_#{index}", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full h-30" %>
+  </div>
+  <% end %>
+
+  <%= render ButtonComponent.new(text: "Submit", type: :submit) %>
 <% end %>

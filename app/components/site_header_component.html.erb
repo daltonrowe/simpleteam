@@ -3,7 +3,7 @@
   
   <%= badge %>
 
-  <div class="flex gap-4 items-center">
+  <div class="flex gap-2 items-center">
 
     <% unless Current.user %>
       <%= render LinkComponent.new(text: 'Sign Up', to: new_registration_path, style: :outlined, level: :secondary) %>
@@ -11,8 +11,9 @@
     <% end %>
 
     <% if Current.user %>
-      <%= Current.user.display_name %>
-      <%= render LinkComponent.new(text: 'Post Status', to: dashboard_path, style: :outlined, level: :secondary) %>
+      <span class="p-2"><%= Current.user.display_name %></span>
+      <%= render LinkComponent.new(text: 'Status', to: dashboard_path, style: :outlined, level: :secondary) %>
+      <%= render LinkComponent.new(text: "Settings", to: dashboard_user_path, style: :outlined, level: :secondary) %>
     <% end %>
     
   </div>
