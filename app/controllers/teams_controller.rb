@@ -24,6 +24,7 @@ class TeamsController < ApplicationController
   def edit;end
 
   def update
+    # TODO check and assign params
     @team.assign_attributes(update_params)
 
     if @team.save
