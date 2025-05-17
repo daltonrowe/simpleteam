@@ -44,8 +44,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_08_062634) do
   create_table "statuses", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
-    t.json "message"
-    t.json "links"
+    t.json "sections"
     t.datetime "updated_at"
     t.datetime "created_at"
     t.index ["created_at"], name: "index_statuses_on_created_at"
@@ -57,7 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_08_062634) do
     t.string "guid"
     t.integer "user_id", null: false
     t.string "name", limit: 120
-    t.json "sections", default: {"yesterday"=>"Yesterday", "today"=>"Today"}
+    t.json "sections", default: ["Yesterday", "Today"]
     t.datetime "notifaction_time"
     t.datetime "end_of_day"
     t.string "time_zone", default: "Central Time (US & Canada)"

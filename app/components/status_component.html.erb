@@ -2,7 +2,7 @@
   <% team.sections.each_with_index do |section, index| %>
   <div class="flex flex-col gap-2">
     <h2 class="font-bold text-2xl"><%= section["name"] %></h2>
-    <%= form.textarea section["name"], id: "section_#{index}", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full h-30" %>
+    <%= form.textarea "sections[#{section["name"]}]", id: "section_#{index}", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full h-30" %>
   </div>
   <% end %>
 
