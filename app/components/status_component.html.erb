@@ -1,9 +1,14 @@
 <%= form_with url: team_statuses_path(team.guid), class: 'flex flex-col gap-4' do |form| %>
   <% team.sections.each_with_index do |section, index| %>
-  <div class="flex flex-col gap-2">
-    <h2 class="font-bold text-2xl"><%= section["name"] %></h2>
+  <section class="flex flex-col gap-2">
+    <header>
+      <h2 class="font-bold text-2xl"><%= section["name"] %></h2>
+      <% if section["description"] %>
+        <span class="text-sm text-yin-600"><%= section["description"] %></span>
+      <% end %>
+    </header>
     <%= form.textarea "sections[#{section["name"]}]", id: "section_#{index}", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full h-30" %>
-  </div>
+  </section>
   <% end %>
 
   <%= render ButtonComponent.new(text: "Submit", type: :submit) %>

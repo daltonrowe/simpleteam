@@ -5,8 +5,7 @@ class CreateStatuses < ActiveRecord::Migration[8.0]
       t.belongs_to :user, null: false, index: true, foreign_key: true
       t.json :sections
 
-      t.datetime :updated_at
-      t.datetime :created_at
+      t.timestamps
     end
 
     add_index :statuses, :created_at

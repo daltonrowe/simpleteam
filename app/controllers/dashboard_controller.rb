@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   def index
     @pending_seats = PendingSeat.where(email_address: Current.user.email_address)
-    @team_for_status = Current.user.seats.first.team || Current.user.teams.first
+    @team_for_status = Current.user&.seats&.first&.team || Current.user&.teams&.first
   end
 
   def user

@@ -1,16 +1,13 @@
 class StatusesController < ApplicationController
   user_must_have_seat
   def create
-    # TODO: check and save status
-    #
+    sections = StatusFormatterService.new(team: @team, sections: params[:sections]).format
+    status = Status.new(user: Current.user, team: @team, sections:)
 
-
-    puts params
-  end
-
-  private
-
-  def create_params
-    params.require(:status).permit()
+    if status.save
+      redirect_to dashboard_path, notice: "Status saved!"
+    else
+      redirect_to dashboard_path, alert: "Something went wrong."
+    end
   end
 end

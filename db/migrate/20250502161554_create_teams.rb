@@ -4,7 +4,11 @@ class CreateTeams < ActiveRecord::Migration[8.0]
       t.string :guid
       t.belongs_to :user, null: false, foreign_key: true
       t.string :name, limit: 120
-      t.json :sections, default: [ 'Yesterday', 'Today' ]
+      t.json :sections, default: [
+        { name: "Yesterday" },
+        { name: "Today" },
+        { name: "Links", description: "Read anything good?" }
+      ]
       t.datetime :notifaction_time
       t.datetime :end_of_day
       t.string :time_zone, default: "Central Time (US & Canada)"
