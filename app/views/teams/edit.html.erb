@@ -25,12 +25,12 @@
 <section class="flex flex-col gap-4">
   <h2 class="font-bold text-2xl">Team Settings</h2>
 
-  <%= form_with url: edit_team_path(@team.guid), class: "flex flex-col gap-4" do |form| %>
+  <%= form_for @team, url: team_path(@team.guid), method: :patch, class: "flex flex-col gap-4" do |form| %>
     <fieldset class="flex flex-col gap-4">
       <h3 class="fold-bold text-xl">Status Sections</h3>
 
       <% @team.sections.each do |section| %>
-        <input type="text" name="section[]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" value="<%= section %>">
+        <input type="text" name="sections[]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" value="<%= section %>">
       <% end %>
     </fieldset>
 
@@ -47,7 +47,7 @@
         <%= form.time_select :end_of_day, :ignore_date => true, value: @team.end_of_day %>
       </div>
 
-      <input type="text" name="slack_webhook" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
+      <input type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
     </fieldset>
 
     <%= render ButtonComponent.new(text: 'Update Settings', type: :submit) %>
