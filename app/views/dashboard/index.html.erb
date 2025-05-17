@@ -12,7 +12,7 @@
   <h2 class="font-bold text-4xl">Today's Status</h2>
 
   <div class="flex flex-col gap-2">
-    <%= render StatusComponent.new(team: @team_for_status) if Current.user.seats.any? %>
+    <%= render StatusComponent.new(team: @team_for_status, status: @status) if @team_for_status %>
 
     <% if Current.user.all_alone? %>
       <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams.') do |component| %>

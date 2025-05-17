@@ -10,4 +10,8 @@ class StatusesController < ApplicationController
       redirect_to dashboard_path, alert: "Something went wrong."
     end
   end
+
+  def update
+    # TODO: allow updates to statuses if not too old
+  end
 end
