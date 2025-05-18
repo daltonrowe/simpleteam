@@ -11,10 +11,18 @@ class Team < ApplicationRecord
   # slack_webhook
 
   def yesterday_cutoff
-    Time.zone.now.change({ hour: self.end_of_day.hour, minutes: 0 }) - 1.day
+    next_cutoff - 1.day
   end
 
-  def today_cutoff
-    Time.zone.now.change({ hour: self.end_of_day.hour, minutes: 0 })
+  def next_cutoff
+    cutoff_date = Time.zone.now.change(
+      { hour: self.end_of_day.hour, minutes: self.end_of_day.min }
+    )
+
+    if Time.zone.now >= cutoff_date
+      cutoff_date + 1.day
+    else
+      cutoff_date
+    end
   end
 end

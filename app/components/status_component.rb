@@ -28,6 +28,6 @@ class StatusComponent < ViewComponent::Base
   end
 
   def cutoff_time
-    distance_of_time_in_words(team.today_cutoff, Time.zone.now)
+    distance_of_time_in_words(team.next_cutoff, Time.zone.now)
   end
 end
