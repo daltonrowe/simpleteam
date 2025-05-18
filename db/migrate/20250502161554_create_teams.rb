@@ -9,8 +9,8 @@ class CreateTeams < ActiveRecord::Migration[8.0]
         { name: "Today" },
         { name: "Links", description: "Read anything good?" }
       ]
-      t.datetime :notifaction_time
-      t.datetime :end_of_day
+      t.datetime :notifaction_time, default: "Sat, 17 May 2025 09:30:00 +0000"
+      t.datetime :end_of_day, default: "Sat, 17 May 2025 15:00:00 +0000"
       t.string :time_zone, default: "Central Time (US & Canada)"
       t.json :metadata, default: {}
 

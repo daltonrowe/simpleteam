@@ -12,6 +12,16 @@ class StatusesController < ApplicationController
   end
 
   def update
-    # TODO: allow updates to statuses if not too old
+    status = Status.find(params[:id])
+
+    return redirect_to dashboard_path, alert: "Status too old, cannot be updated." unless status.fresh?
+
+    sections = StatusFormatterService.new(team: @team, sections: params[:sections]).format
+
+    if status.update(sections:)
+      redirect_to dashboard_path, notice: "Status saved!"
+    else
+      redirect_to dashboard_path, alert: "Something went wrong."
+    end
   end
 end

@@ -10,7 +10,7 @@ class StatusComponent < ViewComponent::Base
   attr_accessor :team, :status
 
   def form_attrs
-    return { url: team_statuses_path(team.guid, @status), method: :patch } if status
+    return { url: team_status_path(team.guid, @status.id), method: :patch } if status
 
     { url: team_statuses_path(team.guid), method: :post }
   end
