@@ -16,7 +16,7 @@ class StatusComponent < ViewComponent::Base
   end
 
   def section_value(name)
-    return nil unless status
+    return "" unless status
 
     status.sections.detect { |section| section["name"] == name }["content"].join("\n")
   end

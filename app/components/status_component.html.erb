@@ -10,7 +10,8 @@
     <%= form.textarea "sections[#{section["name"]}]", 
                       id: "section_#{index}",
                       value: section_value(section["name"]),
-                      class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full h-30" %>
+                      rows: 4,
+                      class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full field-size-content-polyfill" %>
   </section>
   <% end %>
 
