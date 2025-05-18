@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   def index
     @pending_seats = PendingSeat.where(email_address: Current.user.email_address)
-    @team_for_status = Current.user&.seats&.first&.team || Current.user&.teams&.first
+    @team_for_status = team_for_status
 
     status = Status.where(team: @team_for_status, user: Current.user).order(created_at: :desc).first
     @status = status if status&.fresh?
@@ -9,5 +9,21 @@ class DashboardController < ApplicationController
 
   def user
     @pending_seats = PendingSeat.where(email_address: Current.user.email_address)
+  end
+
+  private
+
+  def team_for_status
+    team = Team.find_by(guid: params[:team_id]) if params[:team_id]
+
+    if team
+      if Current.user == team.user || Current.user.seats.find_by(team:)
+        return team
+      else
+        return redirect_to dashboard_path
+      end
+    end
+
+    Current.user&.seats&.first&.team || Current.user&.teams&.first
   end
 end

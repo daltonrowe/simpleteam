@@ -10,7 +10,15 @@ class User < ApplicationRecord
     self.name || self.email_address.split("@")[0]
   end
 
+  def all_teams
+    [ *self.teams, *self.seats.map { |seat| seat.team } ]
+  end
+
   def all_alone?
-    self.seats.empty? && self.teams.empty?
+    all_teams.empty?
+  end
+
+  def multiple_teams?
+    all_teams.length > 1
   end
 end
