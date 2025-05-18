@@ -27,7 +27,7 @@ class StatusComponent < ViewComponent::Base
     "Submit"
   end
 
-  def updated_until
+  def cutoff_time
     distance_of_time_in_words(team.today_cutoff, Time.zone.now)
   end
 end
