@@ -10,7 +10,11 @@ class Team < ApplicationRecord
   # ticket_link
   # slack_webhook
 
-  def status_cutoff
+  def yesterday_cutoff
+    Time.zone.now.change({ hour: self.end_of_day.hour, minutes: 0 }) - 1.day
+  end
+
+  def today_cutoff
     Time.zone.now.change({ hour: self.end_of_day.hour, minutes: 0 })
   end
 end
