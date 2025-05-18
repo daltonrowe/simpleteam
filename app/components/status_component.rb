@@ -20,4 +20,14 @@ class StatusComponent < ViewComponent::Base
 
     status.sections.detect { |section| section["name"] == name }["content"].join("\n")
   end
+
+  def submit_text
+    return "Update" if status
+
+    "Submit"
+  end
+
+  def updated_until
+    distance_of_time_in_words(team.today_cutoff, Time.zone.now)
+  end
 end

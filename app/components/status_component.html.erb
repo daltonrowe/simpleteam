@@ -7,6 +7,7 @@
         <span class="text-sm text-yin-600"><%= section["description"] %></span>
       <% end %>
     </header>
+
     <%= form.textarea "sections[#{section["name"]}]", 
                       id: "section_#{index}",
                       value: section_value(section["name"]),
@@ -15,5 +16,7 @@
   </section>
   <% end %>
 
-  <%= render ButtonComponent.new(text: "Submit", type: :submit) %>
+  <%= render ButtonComponent.new(text: submit_text, type: :submit) %>
+
+  <span class="text-sm text-yin-600">Statuses editable for <%= updated_until %></span>
 <% end %>
