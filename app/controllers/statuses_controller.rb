@@ -2,7 +2,7 @@ class StatusesController < ApplicationController
   user_must_have_seat
   def create
     sections = StatusFormatterService.new(team: @team, sections: params[:sections]).format
-    status = Status.new(user: Current.user, team: @team, sections:)
+    status = Status.new(user: Current.user, team: @team, sections:, id: SecureRandom.uuid)
 
     if status.save
       redirect_to dashboard_path, notice: "Status saved!"

@@ -24,7 +24,7 @@
        <% component.with_badge(text: 'Pending Invites!', path: dashboard_user_path) if @pending_seats&.any? %>
     <% end %>
     
-    <main class="container mx-auto md:w-1/2 px-5 sm:mt-5 w-full flex flex-col gap-8">
+    <main class="container mx-auto md:w-1/2 px-5 sm:mt-15 sm:mb-20 w-full flex flex-col gap-8">
       <%= yield %>
     </main>
 

@@ -19,8 +19,7 @@ module TeamsConcern
   private
 
   def find_team
-    guid = deep_search(:team_id, params) || deep_search(:id, params)
-    @team = Team.find_by(guid:)
+    @team = Team.find(params[:team_id] || params[:id])
 
     redirect_to dashboard_path unless @team
   end

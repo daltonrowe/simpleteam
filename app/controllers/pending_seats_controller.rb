@@ -5,7 +5,7 @@ class PendingSeatsController < ApplicationController
   def create
     PendingSeatInviteService.new(team: @team, pending_emails: create_params[:pending_emails]).create_seats
 
-    redirect_to edit_team_path(@team)
+    redirect_to edit_team_path(@team), notice: "Team invitiations sent!"
   end
 
   def destroy
@@ -18,6 +18,6 @@ class PendingSeatsController < ApplicationController
   private
 
   def create_params
-    params.require(:pending_seat).permit(:team_guid, :pending_emails)
+    params.require(:pending_seat).permit(:pending_emails)
   end
 end

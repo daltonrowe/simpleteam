@@ -13,6 +13,7 @@ class AlertComponent < ViewComponent::Base
   end
 
   def classes
+    # TODO: Set turbo permanent, fade and disappear via CSS animation
     class_array = [ "py-2", "px-3", "font-medium", "rounded-lg" ]
 
     class_array.push("bg-red-50", "text-red-500") if level == :alert

@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     resources :statuses
   end
 
-  get "/dashboard", to: "dashboard#index"
   get "/dashboard/user", to: "dashboard#user"
+  get "/dashboard", to: "dashboard#index"
+  get "/dashboard/:team_id", to: "dashboard#index"
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

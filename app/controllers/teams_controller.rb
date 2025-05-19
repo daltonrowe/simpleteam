@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(id: SecureRandom.uuid, user: Current.user, **create_params)
+    @team = Team.new(**create_params, id: SecureRandom.uuid, user: Current.user)
 
     if @team.save
       redirect_to edit_team_path(@team), notice: "Team created!"
