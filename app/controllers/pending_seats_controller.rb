@@ -5,14 +5,14 @@ class PendingSeatsController < ApplicationController
   def create
     PendingSeatInviteService.new(team: @team, pending_emails: create_params[:pending_emails]).create_seats
 
-    redirect_to edit_team_path(@team.guid)
+    redirect_to edit_team_path(@team)
   end
 
   def destroy
     pending_seat = PendingSeat.find_by(id: params[:id])
     pending_seat.destroy
 
-    redirect_to edit_team_path(@team.guid)
+    redirect_to edit_team_path(@team)
   end
 
   private

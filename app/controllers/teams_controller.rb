@@ -11,10 +11,10 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(guid: SecureRandom.uuid, user: Current.user, **create_params)
+    @team = Team.new(id: SecureRandom.uuid, user: Current.user, **create_params)
 
     if @team.save
-      redirect_to edit_team_path(@team.guid), notice: "Team created!"
+      redirect_to edit_team_path(@team), notice: "Team created!"
     else
       redirect_to new_team_path, alert: "Something went wrong."
     end
@@ -28,9 +28,9 @@ class TeamsController < ApplicationController
     @team.assign_attributes(update_params)
 
     if @team.save
-      redirect_to edit_team_path(@team.guid), notice: "Team updated!"
+      redirect_to edit_team_path(@team), notice: "Team updated!"
     else
-      redirect_to edit_team_path(@team.guid), alert: "Something went wrong."
+      redirect_to edit_team_path(@team), alert: "Something went wrong."
     end
   end
 

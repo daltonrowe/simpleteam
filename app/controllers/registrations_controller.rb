@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @user = User.new(create_params.except(:token))
+      @user = User.new({ **create_params.except(:token), id: SecureRandom.uuid })
       PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
     end
 

@@ -4,7 +4,7 @@
 
   <div class="flex gap-4 align-center text-yin-600">
     <span>
-      <%= render ButtonComponent.new(text: action, to: team_seat_path(seat.team.guid, seat), method: :delete, style: :text) %>
+      <%= render ButtonComponent.new(text: action, to: team_seat_path(seat.team, seat), method: :delete, style: :text) %>
     </span>
   </div>
 </div>

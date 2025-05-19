@@ -1,8 +1,8 @@
 class CreateTeams < ActiveRecord::Migration[8.0]
   def change
-    create_table :teams do |t|
+    create_table :teams, id: :uuid do |t|
       t.string :guid
-      t.belongs_to :user, null: false, foreign_key: true
+      t.belongs_to :user, null: false, foreign_key: true, type: :uuid
       t.string :name, limit: 120
       t.json :sections, default: [
         { name: "Yesterday" },

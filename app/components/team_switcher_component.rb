@@ -20,6 +20,6 @@ class TeamSwitcherComponent < ViewComponent::Base
   end
 
   def link_path
-    "#{route}?team_id=#{team.guid}"
+    "#{route}?team_id=#{team.id}"
   end
 end
