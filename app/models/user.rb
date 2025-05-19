@@ -21,4 +21,12 @@ class User < ApplicationRecord
   def multiple_teams?
     all_teams.length > 1
   end
+
+  def member_of?(team)
+    self == team.user || self.seats.find_by(team:).any?
+  end
+
+  def default_team
+    self&.teams&.first || self&.seats&.first&.team
+  end
 end

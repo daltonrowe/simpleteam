@@ -9,9 +9,22 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-.alerts-container:has(*) {
-  padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 2)
-    calc(var(--spacing) * 2);
+.auto-fade {
+  transition: opacity 1s ease;
+  transition-delay: 7s;
+
+  opacity: 0;
+
+  @starting-style {
+    opacity: 1;
+  }
+}
+
+.alerts-container {
+  &:has(*) {
+    padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 2)
+      calc(var(--spacing) * 2);
+  }
 }
 
 .field-size-content-polyfill {

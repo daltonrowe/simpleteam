@@ -17,13 +17,10 @@ class DashboardController < ApplicationController
     team = Team.find(params[:team_id]) if params[:team_id]
 
     if team
-      if Current.user == team.user || Current.user.seats.find_by(team:)
-        return team
-      else
-        return redirect_to dashboard_path
-      end
+      return team if Current.user.member_of? team
+      return redirect_to dashboard_path
     end
 
-    Current.user&.seats&.first&.team || Current.user&.teams&.first
+    Current.user.default_team
   end
 end
