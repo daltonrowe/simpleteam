@@ -23,35 +23,44 @@
 </section>
 
 <section class="flex flex-col gap-4">
-  <h2 class="font-bold text-2xl">Team Settings</h2>
+  <h2 class="font-bold text-2xl">Status Sections</h2>
 
   <%= form_for @team, url: team_path(@team), method: :patch, html: { class: "flex flex-col gap-4" } do |form| %>
     <fieldset class="flex flex-col gap-4">
-      <h3 class="fold-bold text-xl">Status Sections</h3>
-
-      <%# TODO: Fix section name editing %>
-      <%# TODO: Add description field %>
       <% @team.sections.each_with_index do |section, index| %>
-      <% section %>
-        <%= form.text_field "section_#{index}[name]", value: section, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
+      <div class="border border-gray-400 rounded-md">
+        <%= form.text_field "section_#{index}[name]", value: section["name"], placeholder: "Section Name", class: "block rounded-md focus:outline-solid focus:outline-blue-600 px-3 py-2 font-bold w-full" %>
+        <%= form.text_field "section_#{index}[description]", value: section["description"], placeholder: "Description", class: "block rounded-md focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full text-sm text-yin-300" %>
+      </div>
       <% end %>
     </fieldset>
 
     <fieldset class="flex flex-col gap-4">
-      <h3 class="fold-bold text-xl">Notifactions</h3>
+      <h2 class="font-bold text-2xl">Time Zone</h2>
 
-      <div>
-        <%# TODO: Allow enable / disabled of notifaction %>
-        <span class="inline-block w-35">Notifaction Time</span>
-        <%= form.time_select :notifaction_time, :ignore_date => true, value: @team.notifaction_time %>
-      </div>
+      <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, value: @team.time_zone, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full" %>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">End of Day Cutoff</h2>
 
       <div>
         <span class="inline-block w-35">End of Day</span>
         <%= form.time_select :end_of_day, :ignore_date => true, value: @team.end_of_day %>
       </div>
+    </fieldset>
 
-      <%# include time zone select %>
+    <fieldset>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">Notifactions</h2>
+
+      <div>
+        <%# TODO: Allow enable / disabled of notifactions %>
+        <span class="inline-block w-35">Notifaction Time</span>
+        <%= form.time_select :notifaction_time, :ignore_date => true, value: @team.notifaction_time %>
+      </div>
 
       <input type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
     </fieldset>
