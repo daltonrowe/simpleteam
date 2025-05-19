@@ -5,7 +5,6 @@
 # below each fixture, per the syntax in the comments below
 #
 awesome:
-  guid: "abc123"
   user: owner
   name: "My Awesome Team"
   notifaction_time: "Sat, 17 May 2025 18:44:15 +0000"
