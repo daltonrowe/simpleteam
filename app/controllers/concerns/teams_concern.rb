@@ -25,34 +25,22 @@ module TeamsConcern
   end
 
   def find_pending_seat
-    @pending_seat = @team.pending_seats.find_by(email_address: Current.user.email_address)
+    @pending_seat = @team.pending_seats_for Current.user
   end
 
   def redirect_non_owners
     find_team
-    redirect_to dashboard_path unless user_owns_team
+    redirect_to dashboard_path unless Current.user.owns? @team
   end
 
   def redirect_non_members
     find_team
-    redirect_to dashboard_path unless user_owns_team || user_has_seat
+    redirect_to dashboard_path unless Current.user.member_of? team
   end
 
   def redirect_non_pending
     find_team
     find_pending_seat
-    redirect_to dashboard_path unless user_owns_team || user_has_pending_seat
-  end
-
-  def user_owns_team
-    Current.user == @team.user
-  end
-
-  def user_has_seat
-     Current.user.seats.find_by(team: @team)
-  end
-
-  def user_has_pending_seat
-    @pending_seat
+    redirect_to dashboard_path unless Current.user.owns?(@team)|| @pending_seat
   end
 end

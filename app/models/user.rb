@@ -26,6 +26,10 @@ class User < ApplicationRecord
     self == team.user || self.seats.find_by(team:).any?
   end
 
+  def owns?(team)
+    self == team.user
+  end
+
   def default_team
     self&.teams&.first || self&.seats&.first&.team
   end

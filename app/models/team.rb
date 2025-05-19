@@ -24,4 +24,8 @@ class Team < ApplicationRecord
       cutoff_date
     end
   end
+
+  def pending_seats_for(user)
+    self.pending_seats.find_by(email_address: user.email_address)
+  end
 end
