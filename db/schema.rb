@@ -57,7 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_08_062634) do
     t.string "name", limit: 120
     t.json "sections", default: [{"name"=>"Yesterday"}, {"name"=>"Today"}, {"name"=>"Links", "description"=>"Read anything good?"}]
     t.datetime "notifaction_time", default: "2025-05-17 09:30:00"
-    t.datetime "end_of_day", default: "2025-05-17 15:00:00"
+    t.datetime "end_of_day", default: "2025-05-17 15:00:00", null: false
     t.string "time_zone", default: "Central Time (US & Canada)"
     t.json "metadata", default: {}
     t.datetime "created_at", null: false

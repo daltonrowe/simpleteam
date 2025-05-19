@@ -14,7 +14,7 @@ class DashboardController < ApplicationController
   private
 
   def team_for_status
-    team = Team.find_by(guid: params[:team_id]) if params[:team_id]
+    team = Team.find(params[:team_id]) if params[:team_id]
 
     if team
       if Current.user == team.user || Current.user.seats.find_by(team:)
