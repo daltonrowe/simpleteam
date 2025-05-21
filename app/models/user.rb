@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def member_of?(team)
-    self == team.user || self.seats.find_by(team:).any?
+    self == team.user || self.seats.where(team:).any?
   end
 
   def owns?(team)

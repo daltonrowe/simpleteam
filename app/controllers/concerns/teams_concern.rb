@@ -35,7 +35,7 @@ module TeamsConcern
 
   def redirect_non_members
     find_team
-    redirect_to dashboard_path unless Current.user.member_of? team
+    redirect_to dashboard_path unless Current.user.member_of? @team
   end
 
   def redirect_non_pending
