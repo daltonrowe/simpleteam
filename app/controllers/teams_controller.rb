@@ -7,6 +7,7 @@ class TeamsController < ApplicationController
   user_must_own_team only: %i[edit update]
 
   def new
+    # TODO: require email confirm before team creation
     @team = Team.new(user: Current.user)
   end
 

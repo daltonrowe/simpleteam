@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resource :session
   resource :registration, only: %i[new create]
+  resource :user, only: %i[edit update]
   resources :passwords, param: :token
 
   resources :teams do

@@ -1,6 +1,10 @@
 <h1 class="font-bold text-4xl">Manage Account</h1>
 
-<%# TODO: add name editing %>
+<%= form_for Current.user, method: :patch, html: { class: 'flex flex-col gap-4' } do |form| %>
+  <%= form.text_field :name, required: true, value: Current.user.display_name, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
+  <%# TODO: allow email update %>
+  <%= render ButtonComponent.new(text: "Update", type: :submit) %>
+<% end %>
 
 <% if @pending_seats.any? %>
 <section class="flex flex-col gap-2">
@@ -14,6 +18,9 @@
 
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Your Teams</h2>
+
+  <% form_for :user do %>
+  <% end %>
 
   <div class="flex flex-col gap-2">
     <%= render TeamComponent.with_collection(Current.user.teams) if Current.user.teams.any? %>

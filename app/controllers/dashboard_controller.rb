@@ -8,10 +8,6 @@ class DashboardController < ApplicationController
     render layout: @team ? "wide" : "application"
   end
 
-  def user
-    @pending_seats = Current.user.pending_seats
-  end
-
   private
 
   def dashboard_team
