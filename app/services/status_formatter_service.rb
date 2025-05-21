@@ -6,6 +6,7 @@ class StatusFormatterService
 
   attr_accessor :team, :status_sections
 
+  # TODO: Maybe move to AR callbacks?
   def format
     team.sections.map do |team_section|
       key = team_section["name"].to_sym
