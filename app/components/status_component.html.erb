@@ -1,8 +1,8 @@
-<article class="flex flex-col border rounded-lg border-yin-600 overflow-hidden">
+<details open="true" class="flex flex-col border rounded-lg border-yin-600 overflow-hidden">
 
-  <header class="px-3 py-2 bg-yin-800">
+  <summary class="px-3 py-2 bg-yin-800">
     <%= user.display_name %>
-  </header>
+  </summary>
 
   <div class="grid auto-cols-fr grid-flow-col gap-3 px-3 py-2">
     <% sections_with_content.each_with_index do |section, index| %>
@@ -23,4 +23,4 @@
 
     <% end %>
   </div>
-</article>
+</details>
