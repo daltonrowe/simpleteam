@@ -1,5 +1,5 @@
 class StatusFormatterService
-  def initialize(team:, sections:)
+  def initialize(team:, sections: nil)
     @status_sections = sections
     @team = team
   end

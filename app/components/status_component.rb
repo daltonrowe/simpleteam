@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class StatusComponent < ViewComponent::Base
-  def initialize(seat: nil, team: nil, status: nil)
-    @seat = seat
-    @team = team || seat.team
+  def initialize(status:)
     @status = status
   end
 
-  attr_accessor :team, :status
+  attr_accessor :status
+  delegate :team, :sections, to: :status
 
   def form_attrs
     return { url: team_status_path(team, @status), method: :patch } if status
@@ -18,7 +17,8 @@ class StatusComponent < ViewComponent::Base
   def section_value(name)
     return "" unless status
 
-    status.sections.detect { |section| section["name"] == name }["content"].join("\n")
+    puts status.inspect
+    sections.detect { |section| section["name"] == name }["content"].join("\n")
   end
 
   def submit_text

@@ -4,6 +4,12 @@ class Status < ApplicationRecord
 
   # allowed to be updated, part of today's batch of status updates
   def fresh?
-    self.created_at.between?(team.yesterday_cutoff, team.next_cutoff)
+    self.created_at.between?(team.previous_cutoff, team.next_cutoff)
+  end
+
+  def setup_new_sections
+    self.sections = self.team.sections.map do |team_section|
+      { name: team_section["name"], content: [] }
+    end
   end
 end

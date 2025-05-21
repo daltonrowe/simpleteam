@@ -33,4 +33,8 @@ class User < ApplicationRecord
   def default_team
     self&.teams&.first || self&.seats&.first&.team
   end
+
+  def pending_seats
+    PendingSeat.where(email_address: self.email_address)
+  end
 end

@@ -1,19 +1,18 @@
 class DashboardController < ApplicationController
   def index
-    @pending_seats = PendingSeat.where(email_address: Current.user.email_address)
-    @team_for_status = team_for_status
-
-    status = Status.where(team: @team_for_status, user: Current.user).order(created_at: :desc).first
-    @status = status if status&.fresh?
+    @pending_seats = Current.user.pending_seats
+    @team = dashboard_team
+    @team_statuses = @team&.current_statuses
+    @status = dashboard_status
   end
 
   def user
-    @pending_seats = PendingSeat.where(email_address: Current.user.email_address)
+    @pending_seats = Current.user.pending_seats
   end
 
   private
 
-  def team_for_status
+  def dashboard_team
     team = Team.find(params[:team_id]) if params[:team_id]
 
     if team
@@ -22,5 +21,19 @@ class DashboardController < ApplicationController
     end
 
     Current.user.default_team
+  end
+
+  def dashboard_status
+    return nil unless @team
+
+    status = @team_statuses&.where(user: Current.user)&.first
+    @status = status || new_status
+  end
+
+  def new_status
+    status = Status.new(team: @team, user: Current.user, id: SecureRandom.uuid)
+    status.setup_new_sections
+
+    status
   end
 end

@@ -9,7 +9,7 @@ class Team < ApplicationRecord
   # ticket_link
   # slack_webhook
 
-  def yesterday_cutoff
+  def previous_cutoff
     next_cutoff - 1.day
   end
 
@@ -23,6 +23,13 @@ class Team < ApplicationRecord
     else
       cutoff_date
     end
+  end
+
+  def current_statuses
+    Status.where(
+      team: self,
+      created_at: self.previous_cutoff..self.next_cutoff
+    ).order(created_at: :desc)
   end
 
   def pending_seats_for(user)

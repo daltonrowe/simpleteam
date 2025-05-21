@@ -15,12 +15,12 @@
 
   <% if Current.user.multiple_teams? %>
   <div class="flex gap-2">
-    <%= render TeamSwitcherComponent.with_collection(Current.user.all_teams, selected: @team_for_status, route: dashboard_path) %>
+    <%= render TeamSwitcherComponent.with_collection(Current.user.all_teams, selected: @team, route: dashboard_path) %>
   </div>
   <% end %>
 
   <div class="flex flex-col gap-2">
-    <%= render StatusComponent.new(team: @team_for_status, status: @status) if @team_for_status %>
+    <%= render StatusComponent.new(status: @status) if @status %>
 
     <% if Current.user.all_alone? %>
       <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams.') do |component| %>
