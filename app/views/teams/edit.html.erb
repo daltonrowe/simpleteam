@@ -1,5 +1,14 @@
 <%= render SectionHeaderComponent.new(text: @team.name, badge: @team.user == Current.user ? 'Owner' : nil) %>
 
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Add New Seats</h2>
+
+  <%= form_for :pending_seat, url: team_pending_seats_path(@team), class:'flex gap-2' do |form| %>
+    <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
+    <%= render ButtonComponent.new(text: 'Send Invites', type: :submit, extra_classes: ['shrink-0'])%>
+  <% end %>
+</section>
+
 <% if @team.pending_seats.any? %>
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Pending Seats</h2>
@@ -11,15 +20,6 @@
   <h2 class="font-bold text-2xl">Team Seats</h2>
   <%= render SeatComponent.with_collection(@team.seats, show: :email, action: "Remove") %>
   <%= render EmptySectionNoticeComponent.new(text: 'Your team has no members, invite them below.') if @team.seats.empty? %>
-</section>
-
-<section class="flex flex-col gap-2">
-  <h2 class="font-bold text-2xl">Add New Seats</h2>
-
-  <%= form_for :pending_seat, url: team_pending_seats_path(@team), class:'flex gap-2' do |form| %>
-    <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
-    <%= render ButtonComponent.new(text: 'Send Invites', type: :submit, extra_classes: ['shrink-0'])%>
-  <% end %>
 </section>
 
 <section class="flex flex-col gap-4">
