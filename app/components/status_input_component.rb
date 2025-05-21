@@ -13,13 +13,13 @@ class StatusInputComponent < ViewComponent::Base
   end
 
   def section_value(name)
-    return "" unless status
+    return "" unless created_at
 
     sections.detect { |section| section["name"] == name }["content"].join("\n")
   end
 
   def submit_text
-    return "Update" if status
+    return "Update" if created_at
 
     "Submit"
   end
