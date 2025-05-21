@@ -4,6 +4,8 @@ class DashboardController < ApplicationController
     @team = dashboard_team
     @team_statuses = @team&.current_statuses
     @status = dashboard_status
+
+    render layout: @team ? "wide" : "application"
   end
 
   def user

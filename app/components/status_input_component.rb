@@ -8,6 +8,14 @@ class StatusInputComponent < ViewComponent::Base
   attr_accessor :status
   delegate :team, :sections, :created_at, to: :status
 
+  def form_attrs
+    { url:, method: }
+  end
+
+  def url
+    created_at ? team_status_path(team, status) : team_statuses_path(team)
+  end
+
   def method
     created_at ? :patch : :post
   end

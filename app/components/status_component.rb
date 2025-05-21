@@ -6,5 +6,5 @@ class StatusComponent < ViewComponent::Base
   end
 
   attr_accessor :status
-  delegate :team, :sections, :user, to: :status
+  delegate :team, :sections_with_content, :user, to: :status
 end

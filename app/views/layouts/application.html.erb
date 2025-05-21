@@ -24,9 +24,13 @@
        <% component.with_badge(text: 'Pending Invites!', path: dashboard_user_path) if @pending_seats&.any? %>
     <% end %>
     
-    <main class="container mx-auto md:w-1/2 px-5 sm:mt-15 sm:mb-20 w-full flex flex-col gap-8">
-      <%= yield %>
-    </main>
+    <% if content_for?(:content) %>
+      <%= yield(:content)%>
+    <% else %>
+      <main class="container mx-auto md:w-1/2 px-5 sm:mt-15 sm:mb-20 w-full flex flex-col gap-8">
+        <%= yield %>
+      </main>
+    <% end %>
 
     <div class="has-[*]:p-2 has-[*]:pt-0 fixed bottom-0 left-1/2 transform -translate-x-1/2 flex flex-col justify-center w-160 max-w-full">
       <%= render AlertComponent.new(text: flash[:alert]) if flash[:alert] %>

@@ -1,19 +1,26 @@
-<article class="flex flex-col gap-2">
-  <%= user.display_name %>
+<article class="flex flex-col border rounded-lg border-yin-600 overflow-hidden">
 
-  <% sections.each_with_index do |section, index| %>
-  <section class="flex flex-col gap-2">
+  <header class="px-3 py-2 bg-yin-800">
+    <%= user.display_name %>
+  </header>
 
-    <header>
-      <h2 class="font-bold text-md"><%= section["name"] %></h2>
-    </header>
+  <div class="grid auto-cols-fr grid-flow-col gap-3 px-3 py-2">
+    <% sections_with_content.each_with_index do |section, index| %>
+    
+    <section class="flex flex-col gap-2">
 
-    <ul>
-      <% section["content"].each do |content| %>
-        <li><%= content %></li>
-      <% end %>
-    </ul>
+      <header>
+        <h2 class="font-bold text-md"><%= section["name"] %></h2>
+      </header>
 
-  </section>
-  <% end %>
+      <ul>
+        <% section["content"].each do |content| %>
+          <li><%= content %></li>
+        <% end %>
+      </ul>
+
+    </section>
+
+    <% end %>
+  </div>
 </article>

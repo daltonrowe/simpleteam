@@ -13,4 +13,8 @@ class Status < ApplicationRecord
       { name: team_section["name"], content: [] }
     end
   end
+
+  def sections_with_content
+    self.sections.reject { |section| section["content"].empty? }
+  end
 end
