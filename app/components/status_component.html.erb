@@ -1,22 +1,19 @@
-<%= form_with **form_attrs, class: 'flex flex-col gap-4' do |form| %>
-  <% team.sections.each_with_index do |section, index| %>
+<article class="flex flex-col gap-2">
+  <%= user.display_name %>
+
+  <% sections.each_with_index do |section, index| %>
   <section class="flex flex-col gap-2">
+
     <header>
-      <h2 class="font-bold text-2xl"><%= section["name"] %></h2>
-      <% if section["description"] %>
-        <span class="text-sm text-yin-600"><%= section["description"] %></span>
-      <% end %>
+      <h2 class="font-bold text-md"><%= section["name"] %></h2>
     </header>
 
-    <%= form.textarea "sections[#{section["name"]}]", 
-                      id: "section_#{index}",
-                      value: section_value(section["name"]),
-                      rows: 4,
-                      class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full field-size-content-polyfill" %>
+    <ul>
+      <% section["content"].each do |content| %>
+        <li><%= content %></li>
+      <% end %>
+    </ul>
+
   </section>
   <% end %>
-
-  <%= render ButtonComponent.new(text: submit_text, type: :submit) %>
-
-  <span class="text-sm text-yin-600"><%= team.name %> statuses due in <%= cutoff_time %></span>
-<% end %>
+</article>

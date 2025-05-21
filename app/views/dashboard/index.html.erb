@@ -8,7 +8,10 @@
 </section>
 <% end %>
 
-<%# TODO: Display statuses from team %>
+
+<section class="flex flex-col gap-4">
+  <%= render StatusComponent.with_collection(@team_statuses) %>
+</section>
 
 <section class="flex flex-col gap-4">
   <h2 class="font-bold text-4xl">Today's Status</h2>
@@ -20,7 +23,7 @@
   <% end %>
 
   <div class="flex flex-col gap-2">
-    <%= render StatusComponent.new(status: @status) if @status %>
+    <%= render StatusInputComponent.new(status: @status) if @status %>
 
     <% if Current.user.all_alone? %>
       <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams.') do |component| %>
