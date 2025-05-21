@@ -35,4 +35,8 @@ class Team < ApplicationRecord
   def pending_seats_for(user)
     self.pending_seats.find_by(email_address: user.email_address)
   end
+
+  def member_count
+    self.seats.length + 1
+  end
 end

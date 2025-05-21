@@ -1,10 +1,10 @@
 <details open="true" class="flex flex-col border rounded-lg border-yin-600 overflow-hidden">
 
-  <summary class="px-3 py-2 bg-yin-800">
+  <summary class="px-3 py-2 bg-yin-800 hover:bg-yin-700 cursor-pointer select-none">
     <%= user.display_name %>
   </summary>
 
-  <div class="grid auto-cols-fr grid-flow-col gap-3 px-3 py-2">
+  <div class="grid auto-cols-fr grid-flow-col gap-4 px-3 py-2">
     <% sections_with_content.each_with_index do |section, index| %>
     
     <section class="flex flex-col gap-2">
@@ -13,7 +13,7 @@
         <h2 class="font-bold text-md"><%= section["name"] %></h2>
       </header>
 
-      <ul>
+      <ul class="flex flex-col gap-1">
         <% section["content"].each do |content| %>
           <li><%= content %></li>
         <% end %>

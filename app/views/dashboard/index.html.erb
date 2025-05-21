@@ -18,10 +18,8 @@
 
 <% else %>
 
-  <div class="grid grid-cols-2 gap-8">
-    <section class="flex flex-col gap-4">
-      <h2 class="font-bold text-4xl">Your Status</h2>
-
+  <div class="grid grid-cols-5 gap-8">
+    <section class="col-span-2 flex flex-col gap-4">
       <% if Current.user.multiple_teams? %>
       <div class="flex gap-2">
         <%= render TeamSwitcherComponent.with_collection(Current.user.all_teams, selected: @team, route: dashboard_path) %>
@@ -33,9 +31,26 @@
       </div>
     </section>
 
-    <section class="flex flex-col gap-4">
+    <section class="col-span-3 flex flex-col gap-4">
+      <header class="flex flex-row justify-between">
+        <span>
+          <%= @team_statuses.length %> / <%= @team.member_count %> Statuses Submitted
+        </span>
+
+        <%# TODO: rig up show hide all%>
+        <button class="text-yin-500 cursor-pointer">Show / Hide All</button>
+      </header>
       <%= render StatusComponent.with_collection(@team_statuses&.reject {|s| s.user == Current.user}) %>
-      <% render EmptySectionNoticeComponent.new(text: "No updates yet.") unless @team_statuses&.any? %>
+      <% if @status.created_at %>
+        <div class="bg-yin-800 p-2 rounded-lg">
+          <% if @team_statuses.length == 1 %>
+            Just You
+          <% else %>
+            &amp; You
+          <% end %>
+        </div>
+      <% end %>
+      <%= render EmptySectionNoticeComponent.new(text: "No updates yet.") unless @team_statuses&.any? %>
     </section>
   </div>
 
