@@ -31,14 +31,13 @@
       </div>
     </section>
 
-    <section class="col-span-3 flex flex-col gap-4">
+    <section class="col-span-3 flex flex-col gap-4" data-controller="show-hide">
       <header class="flex flex-row justify-between">
         <span>
           <%= @team_statuses.length %> / <%= @team.member_count %> Statuses Submitted
         </span>
 
-        <%# TODO: rig up show hide all%>
-        <button class="text-yin-500 cursor-pointer">Show / Hide All</button>
+        <button data-action="click->show-hide#toggle" class="text-yin-500 cursor-pointer">Show / Hide All</button>
       </header>
       <%= render StatusComponent.with_collection(@team_statuses&.reject {|s| s.user == Current.user}) %>
       <% if @status.created_at %>
