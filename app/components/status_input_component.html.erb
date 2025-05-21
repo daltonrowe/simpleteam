@@ -1,8 +1,10 @@
-<%= form_with **form_attrs, class: 'flex flex-col gap-4' do |form| %>
+<%= form_with url: team_status_path(team, status), method:, class: 'flex flex-col gap-4' do |form| %>
+
   <% team.sections.each_with_index do |section, index| %>
   <section class="flex flex-col gap-2">
     <header>
       <h2 class="font-bold text-2xl"><%= section["name"] %></h2>
+      
       <% if section["description"] %>
         <span class="text-sm text-yin-600"><%= section["description"] %></span>
       <% end %>
