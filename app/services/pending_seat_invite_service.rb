@@ -10,7 +10,10 @@ class PendingSeatInviteService
 
   def create_seats
     valid_emails.each do |email_address|
-      pending_seat = PendingSeat.create(team:, email_address:, token: token(email_address), expires_at:)
+      pending_seat = PendingSeat.create(team:,
+                                        email_address:,
+                                        token: user_token(email_address, Time.zone.now + 14.days, "pending_seat"),
+                                        expires_at:)
 
       if User.find_by(email_address:)
         PendingSeatMailer.invite(email_address:, pending_seat:).deliver_later
@@ -24,13 +27,5 @@ class PendingSeatInviteService
 
   def valid_emails
     pending_emails.gsub(/\s+/, "").split(",")
-  end
-
-  def expires_at
-    Time.zone.now + 14.days
-  end
-
-  def token(email_address)
-    encrypt "#{email_address}---#{expires_at}"
   end
 end

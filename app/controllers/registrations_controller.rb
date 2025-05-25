@@ -8,16 +8,18 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      @user = User.new(**create_params.except(:token), id: SecureRandom.uuid)
-      PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
+    user = User.new(**create_params.except(:token), id: SecureRandom.uuid)
+    joined_from_seat = PendingSeatJoinService.new(user:, token: create_params[:token]).join
+
+    unless joined_from_seat
+      EmailConfirmMailer.request_confirmation(user:).deliver_later
     end
 
-    if @user.save
-      start_new_session_for @user
+    if user.save
+      start_new_session_for user
       redirect_to root_path, notice: "Successfully signed up!"
     else
-      render :new
+      render :new, alert: "Something went wrong."
     end
   end
 

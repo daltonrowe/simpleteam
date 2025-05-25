@@ -37,4 +37,12 @@ class User < ApplicationRecord
   def pending_seats
     PendingSeat.where(email_address: self.email_address)
   end
+
+  def unconfirmed?
+    self.confirmed_at.nil?
+  end
+
+  def confirmed
+    !unconfirmed?
+  end
 end

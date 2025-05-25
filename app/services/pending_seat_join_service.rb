@@ -17,7 +17,10 @@ class PendingSeatJoinService
     if token_valid
       confirm_user
       fill_pending_seat
+      return true
     end
+
+    false
   end
 
   private
@@ -33,9 +36,6 @@ class PendingSeatJoinService
   end
 
   def token_valid
-    data = decrypt(token)
-    token_email, token_date = data.split("---")
-
-    token_email == @user.email_address && Date.parse(token_date).future?
+    valid_user_token(@user.email_address, token, "pending_seat")
   end
 end
