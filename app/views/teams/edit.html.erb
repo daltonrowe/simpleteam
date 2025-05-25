@@ -3,6 +3,7 @@
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Add New Seats</h2>
 
+  <%# TODO: Limit seat creation to confirmed users%>
   <%= form_for :pending_seat, url: team_pending_seats_path(@team), class:'flex gap-2' do |form| %>
     <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
     <%= render ButtonComponent.new(text: 'Send Invites', type: :submit, extra_classes: ['shrink-0'])%>
