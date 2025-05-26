@@ -1,6 +1,6 @@
 <h1 class="font-bold text-4xl">Manage Account</h1>
 
-<%= form_for Current.user, method: :patch, html: { class: 'flex flex-col gap-4' } do |form| %>
+<%= form_for Current.user, method: :patch, html: { class: "flex flex-col gap-4" } do |form| %>
   <%= form.text_field :name, required: true, value: Current.user.display_name, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
   <%# TODO: allow email update %>
   <%= render ButtonComponent.new(text: "Update", type: :submit) %>
@@ -27,9 +27,9 @@
     <%= render SeatComponent.with_collection(Current.user.seats) %>
 
     <% if Current.user.all_alone? %>
-      <%= render EmptySectionNoticeComponent.new(text: 'You\'re not a member of any teams.') do |component| %>
+      <%= render EmptySectionNoticeComponent.new(text: "You're not a member of any teams.") do |component| %>
         <% component.with_link do %>
-          <%= render LinkComponent.new(text: 'Create a team', to: new_team_path) %>
+          <%= render LinkComponent.new(text: "Create a team", to: new_team_path) %>
         <% end %>
       <% end %>
     <% end %>
@@ -38,5 +38,5 @@
 
 <section class="flex gap-4 items-center">
   <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
-  <%= render ButtonComponent.new(text: 'Log Out', to: session_path, method: :delete, style: :text, level: :secondary) %>
+  <%= render ButtonComponent.new(text: "Log Out", to: session_path, method: :delete, style: :text, level: :secondary) %>
 </section>

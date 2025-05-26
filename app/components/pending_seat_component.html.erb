@@ -3,7 +3,6 @@
     <%= pending_seat.email_address %>
   </strong>
 
-
   <div class="flex gap-4 align-center text-yin-600">
     <span>
     Sent <%= time_ago_in_words(pending_seat.created_at) %> ago
@@ -11,15 +10,15 @@
 
   <% if owner %>
   <span>
-    <%= render ButtonComponent.new(text: 'Revoke', to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
+    <%= render ButtonComponent.new(text: "Revoke", to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
   </span>
   <% else %>
     <span>
-    <%= render ButtonComponent.new(text: 'Accept', to: team_seats_path(pending_seat.team, pending_seat), method: :post, style: :text) %>
+    <%= render ButtonComponent.new(text: "Accept", to: team_seats_path(pending_seat.team, pending_seat), method: :post, style: :text) %>
     </span>
 
     <span>
-    <%= render ButtonComponent.new(text: 'Reject', to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
+    <%= render ButtonComponent.new(text: "Reject", to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
     </span>
   <% end %>
   </div>

@@ -5,10 +5,10 @@
 
   <div>
     <span class="inline-block w-35">End of Day</span>
-    <%= form.time_select :end_of_day, :ignore_date => true %>
+    <%= form.time_select :end_of_day, ignore_date: true %>
   </div>
-  
+
   <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
 
-  <%= render ButtonComponent.new(text: "Create team", type: :submit)%>
+  <%= render ButtonComponent.new(text: "Create team", type: :submit) %>
 <% end %>

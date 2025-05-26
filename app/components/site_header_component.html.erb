@@ -1,20 +1,20 @@
 <header class="w-full flex items-center justify-between py-2 px-5 flex-col sm:flex-row">
   <h1><a href="<%= root_path %>">SimpleTeam</a></h1>
-  
+
   <%= badge %>
 
   <div class="flex gap-2 items-center">
 
     <% unless Current.user %>
-      <%= render LinkComponent.new(text: 'Sign Up', to: new_registration_path, style: :outlined, level: :secondary) %>
-      <%= render LinkComponent.new(text: 'Log In', to: new_session_path, style: :outlined, level: :secondary) %>
+      <%= render LinkComponent.new(text: "Sign Up", to: new_registration_path, style: :outlined, level: :secondary) %>
+      <%= render LinkComponent.new(text: "Log In", to: new_session_path, style: :outlined, level: :secondary) %>
     <% end %>
 
     <% if Current.user %>
       <span class="p-2"><%= Current.user.display_name %></span>
-      <%= render LinkComponent.new(text: 'Status', to: dashboard_path, style: :outlined, level: :secondary) %>
+      <%= render LinkComponent.new(text: "Status", to: dashboard_path, style: :outlined, level: :secondary) %>
       <%= render LinkComponent.new(text: "Settings", to: edit_user_path, style: :outlined, level: :secondary) %>
     <% end %>
-    
+
   </div>
 </header>

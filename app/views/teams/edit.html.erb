@@ -1,12 +1,12 @@
-<%= render SectionHeaderComponent.new(text: @team.name, badge: @team.user == Current.user ? 'Owner' : nil) %>
+<%= render SectionHeaderComponent.new(text: @team.name, badge: @team.user == Current.user ? "Owner" : nil) %>
 
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Add New Seats</h2>
 
   <%# TODO: Limit seat creation to confirmed users%>
-  <%= form_for :pending_seat, url: team_pending_seats_path(@team), class:'flex gap-2' do |form| %>
-    <%= form.text_field :pending_emails, placeholder: 'member1@mydomain.com, member2@mydomain.com', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
-    <%= render ButtonComponent.new(text: 'Send Invites', type: :submit, extra_classes: ['shrink-0'])%>
+  <%= form_for :pending_seat, url: team_pending_seats_path(@team), class: "flex gap-2" do |form| %>
+    <%= form.text_field :pending_emails, placeholder: "member1@mydomain.com, member2@mydomain.com", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
+    <%= render ButtonComponent.new(text: "Send Invites", type: :submit, extra_classes: [ "shrink-0" ]) %>
   <% end %>
 </section>
 
@@ -20,7 +20,7 @@
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Team Seats</h2>
   <%= render SeatComponent.with_collection(@team.seats, show: :email, action: "Remove") %>
-  <%= render EmptySectionNoticeComponent.new(text: 'Your team has no members, invite them below.') if @team.seats.empty? %>
+  <%= render EmptySectionNoticeComponent.new(text: "Your team has no members, invite them below.") if @team.seats.empty? %>
 </section>
 
 <section class="flex flex-col gap-4">
@@ -47,7 +47,7 @@
 
       <div>
         <span class="inline-block w-35">End of Day</span>
-        <%= form.time_select :end_of_day, :ignore_date => true, value: @team.end_of_day %>
+        <%= form.time_select :end_of_day, ignore_date: true, value: @team.end_of_day %>
       </div>
     </fieldset>
 
@@ -60,13 +60,13 @@
       <div>
         <%# TODO: Allow enable / disabled of notifactions %>
         <span class="inline-block w-35">Notifaction Time</span>
-        <%= form.time_select :notifaction_time, :ignore_date => true, value: @team.notifaction_time %>
+        <%= form.time_select :notifaction_time, ignore_date: true, value: @team.notifaction_time %>
       </div>
 
       <input type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX">
     </fieldset>
-    
-    <%= render ButtonComponent.new(text: 'Update Settings', type: :submit) %>
+
+    <%= render ButtonComponent.new(text: "Update Settings", type: :submit) %>
   <% end %>
 
 </section>
