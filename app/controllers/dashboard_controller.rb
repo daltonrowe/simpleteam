@@ -25,13 +25,6 @@ class DashboardController < ApplicationController
     return nil unless @team
 
     status = @team_statuses&.where(user: Current.user)&.first
-    @status = status || new_status
-  end
-
-  def new_status
-    status = Status.new(team: @team, user: Current.user, id: SecureRandom.uuid)
-    status.setup_new_sections
-
-    status
+    @status = status || Status.new(team: @team, user: Current.user, id: SecureRandom.uuid)
   end
 end

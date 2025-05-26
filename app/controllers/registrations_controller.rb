@@ -3,7 +3,6 @@ class RegistrationsController < ApplicationController
   unauthenticated_users_only
 
   def new
-    # TODO: email confirmation
     @user = User.new
   end
 
