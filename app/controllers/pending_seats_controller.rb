@@ -1,9 +1,9 @@
 class PendingSeatsController < ApplicationController
   user_must_own_team except: %i[destroy]
   user_must_have_pending_seat only: %i[destroy]
+  user_must_be_confirmed only: %i[create]
 
   def create
-    # TODO: Limit seat creation to confirmed users
     PendingSeatInviteService.new(team: @team, pending_emails: create_params[:pending_emails]).create_seats
 
     redirect_to edit_team_path(@team), notice: "Team invitiations sent!"

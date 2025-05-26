@@ -42,7 +42,7 @@ class User < ApplicationRecord
     self.confirmed_at.nil?
   end
 
-  def confirmed
+  def confirmed?
     !unconfirmed?
   end
 end
