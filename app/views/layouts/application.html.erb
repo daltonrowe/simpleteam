@@ -21,7 +21,10 @@
 
   <body class="bg-yin-900 text-white">
     <%= render SiteHeaderComponent.new do |component| %>
-       <% component.with_badge(text: "Pending Invites!", path: edit_user_path) if @pending_seats&.any? %>
+      <% component.with_notice_area do %>
+      <%= render BadgeComponent.new(text: "Pending Invites!", path: edit_user_path) if @pending_seats.any? %>
+      <%= render BadgeComponent.new(text: "Unconfirmed email address, click to resend.", path: reconfirm_user_path, method: :post) if Current&.user&.unconfirmed? %>
+      <% end %>
     <% end %>
 
     <% if content_for?(:content) %>

@@ -16,8 +16,10 @@ class UsersController < ApplicationController
   end
 
   def confirm
-    valid_confirmation = Current.user&.unconfirmed? && valid_user_token(Current.user.email_address, confirm_params[:token], "email_confirm")
-    puts "$$$\n" * 20
+    valid_token = valid_user_token(Current.user.email_address, confirm_params[:token], "email_confirm")
+    valid_user = Current.user&.unconfirmed?
+
+    valid_confirmation = valid_token && valid_user
     return redirect_to root_path, alert: "Something went wrong." unless valid_confirmation
 
     Current.user.confirmed_at = Time.zone.now
@@ -27,6 +29,13 @@ class UsersController < ApplicationController
     else
       redirect_to root_path, alert: "Something went wrong."
     end
+  end
+
+  def reconfirm
+    return redirect_back fallback_location: root_path, alert: "Something went wrong." unless Current&.user&.unconfirmed?
+
+    EmailConfirmMailer.request_confirmation(user: Current.user).deliver_later
+    redirect_back fallback_location: root_path, notice: "Confirmation email re-sent."
   end
 
   private

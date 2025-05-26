@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resource :session
   resource :registration, only: %i[new create]
   resource :user, only: %i[edit update] do
-    get "confirm", to: "users#confirm"
+    get "confirm"
+    post "reconfirm"
   end
   resources :passwords, param: :token
 
