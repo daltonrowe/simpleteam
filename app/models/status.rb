@@ -2,10 +2,17 @@ class Status < ApplicationRecord
   belongs_to :user
   belongs_to :team
 
-  after_create do
-    self.sections = self.team.sections.map do |team_section|
+  before_create do
+    self.sections = team.sections.map do |team_section|
       { name: team_section["name"], content: [] }
     end
+  end
+
+  before_update do
+    team.sections.map do |team_section|
+      key = team_section["name"].to_sym
+      self.sections.key?(key) ? format_section(team_section["name"], status_sections[key]) : nil
+    end.compact
   end
 
   def fresh?
@@ -14,5 +21,14 @@ class Status < ApplicationRecord
 
   def sections_with_content
     self.sections.reject { |section| section["content"].empty? }
+  end
+
+  private
+
+  def format_section(name, raw_content)
+    {
+      name:,
+      content: raw_content.split("\n").reject(&:blank?)
+    }
   end
 end

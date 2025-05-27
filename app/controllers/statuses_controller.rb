@@ -1,8 +1,8 @@
 class StatusesController < ApplicationController
   user_must_have_seat
+  before_action :find_fresh_status, only: %i[update]
   def create
-    sections = StatusFormatterService.new(team: @team, sections: params[:sections]).format
-    status = Status.new(user: Current.user, team: @team, sections:, id: SecureRandom.uuid)
+    status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid, sections: params[:sections])
 
     if status.save
       redirect_to dashboard_path, notice: "Status saved!"
@@ -12,16 +12,17 @@ class StatusesController < ApplicationController
   end
 
   def update
-    status = Status.find(params[:id])
-
-    return redirect_to dashboard_path, alert: "Status too old, cannot be updated." unless status.fresh?
-
-    sections = StatusFormatterService.new(team: @team, sections: params[:sections]).format
-
-    if status.update(sections:)
+    if @status.update(sections: params[:sections])
       redirect_to dashboard_path, notice: "Status saved!"
     else
       redirect_to dashboard_path, alert: "Something went wrong."
     end
+  end
+
+  private
+
+  def find_fresh_status
+    @status = Status.find(params[:id])
+    redirect_to dashboard_path, alert: "Status too old, cannot be updated." unless @status.fresh?
   end
 end
