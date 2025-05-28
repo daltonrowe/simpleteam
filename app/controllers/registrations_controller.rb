@@ -1,9 +1,12 @@
 class RegistrationsController < ApplicationController
+  include EncryptionHelper
   allow_unauthenticated_access
   unauthenticated_users_only
 
   def new
-    @user = User.new
+    user_token_data(params[:token]) => { token_email: } if params[:token]
+    @user = User.new(email_address: token_email)
+    puts @user.inspect
   end
 
   def create
