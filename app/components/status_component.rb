@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StatusComponent < ViewComponent::Base
+class StatusComponent < ApplicationComponent
   def initialize(status:)
     @status = status
   end

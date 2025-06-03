@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class SiteHeaderComponent < ViewComponent::Base
+class SiteHeaderComponent < ApplicationComponent
   renders_one :notice_area
 end

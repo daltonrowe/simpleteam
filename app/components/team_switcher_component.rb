@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TeamSwitcherComponent < ViewComponent::Base
+class TeamSwitcherComponent < ApplicationComponent
   with_collection_parameter :team
 
   def initialize(team:, selected:, route:)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SectionHeaderComponent < ViewComponent::Base
+class SectionHeaderComponent < ApplicationComponent
   def initialize(text:, badge: nil)
     @text = text
     @badge = badge

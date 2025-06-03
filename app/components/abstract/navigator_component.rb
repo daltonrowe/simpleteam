@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Abstract::NavigatorComponent < ViewComponent::Base
+class Abstract::NavigatorComponent < ApplicationComponent
   def classes
     classes_array = [ "cursor-pointer" ]
 

@@ -1,5 +1,4 @@
-<%= form_with **form_attrs, class: "flex flex-col gap-4" do |form| %>
-
+<%= form_with **form_attrs, html: { class: "flex flex-col gap-4" } do |form| %>
   <% team.sections.each_with_index do |section, index| %>
   <section class="flex flex-col gap-2">
     <header>
@@ -18,7 +17,7 @@
   </section>
   <% end %>
 
-  <%= render ButtonComponent.new(text: submit_text, type: :submit) %>
+  <%= form.simple_submit(text: submit_text) %>
 
   <span class="text-sm text-yin-600"><%= team.name %> statuses due in <%= cutoff_time %></span>
 <% end %>

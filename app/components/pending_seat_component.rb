@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PendingSeatComponent < ViewComponent::Base
+class PendingSeatComponent < ApplicationComponent
   def initialize(pending_seat:, user:)
     @pending_seat = pending_seat
     @user = user

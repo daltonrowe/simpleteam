@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TimeComponent < ViewComponent::Base
+class TimeComponent < ApplicationComponent
   def initialize(time:, format: nil)
     @time = time
     @format = format

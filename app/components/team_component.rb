@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TeamComponent < ViewComponent::Base
+class TeamComponent < ApplicationComponent
   def initialize(team:)
     @team = team
   end

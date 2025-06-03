@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BadgeComponent < ViewComponent::Base
+class BadgeComponent < ApplicationComponent
   def initialize(text:, path: nil, method: :get)
     @text = text
     @path = path

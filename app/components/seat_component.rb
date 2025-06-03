@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SeatComponent < ViewComponent::Base
+class SeatComponent < ApplicationComponent
   def initialize(seat:, show: :team, action: "Leave")
     @seat = seat
     @show = show
