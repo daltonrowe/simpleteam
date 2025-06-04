@@ -8,10 +8,10 @@ class Status < ApplicationRecord
     end
   end
 
-  before_update do
-    team.sections.map do |team_section|
-      key = team_section["name"].to_sym
-      self.sections.key?(key) ? format_section(team_section["name"], status_sections[key]) : nil
+  before_update do |incoming|
+    self.sections = team.sections.map do |team_section|
+      key = team_section["name"]
+      incoming.sections.key?(key) ? format_section(team_section["name"], incoming.sections[key]) : nil
     end.compact
   end
 

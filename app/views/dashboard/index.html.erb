@@ -39,16 +39,7 @@
 
         <button data-action="click->show-hide#toggle" class="text-yin-500 cursor-pointer">Show / Hide All</button>
       </header>
-      <%= render StatusComponent.with_collection(@team_statuses&.reject { |s| s.user == Current.user }) %>
-      <% if @status.created_at %>
-        <div class="bg-yin-800 p-2 rounded-lg">
-          <% if @team_statuses.length == 1 %>
-            Just You
-          <% else %>
-            &amp; You
-          <% end %>
-        </div>
-      <% end %>
+      <%= render StatusComponent.with_collection(@team_statuses) %>
       <%= render EmptySectionNoticeComponent.new(text: "No updates yet.") unless @team_statuses&.any? %>
     </section>
   </div>
