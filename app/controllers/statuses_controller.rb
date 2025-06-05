@@ -2,7 +2,8 @@ class StatusesController < ApplicationController
   user_must_have_seat
   before_action :find_fresh_status, only: %i[update]
   def create
-    status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid, sections: params[:sections])
+    status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid)
+    status.update_sections(params[:sections])
 
     if status.save
       redirect_to dashboard_path, notice: "Status saved!"
@@ -12,7 +13,9 @@ class StatusesController < ApplicationController
   end
 
   def update
-    if @status.update(sections: params[:sections])
+    @status.update_sections(params[:sections])
+
+    if @status.save
       redirect_to dashboard_path, notice: "Status saved!"
     else
       redirect_to dashboard_path, alert: "Something went wrong."
