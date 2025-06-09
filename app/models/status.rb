@@ -17,6 +17,15 @@ class Status < ApplicationRecord
     end.compact
   end
 
+  def import_draft(incoming)
+    self.sections = team.sections.map do |team_section|
+      key = team_section["name"]
+      section_data = incoming.detect { |incoming_section| incoming_section["name"] === key }
+
+      { name: key, content: section_data["content"] }
+    end.compact
+  end
+
   private
 
   def format_section(name, raw_content)

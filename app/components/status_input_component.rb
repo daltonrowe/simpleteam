@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class StatusInputComponent < ApplicationComponent
-  def initialize(status:)
+  def initialize(status:, is_draft: false)
     @status = status
+    @is_draft = is_draft
   end
 
-  attr_accessor :status
+  attr_accessor :status, :is_draft
+
   delegate :team, :sections, :created_at, to: :status
 
   def form_attrs
@@ -13,20 +15,27 @@ class StatusInputComponent < ApplicationComponent
   end
 
   def url
-    created_at ? team_status_path(team, status) : team_statuses_path(team)
+    team_statuses_path(team) if is_draft
+    team_status_path(team, status) if created_at
+
+    team_statuses_path(team)
   end
 
   def method
-    created_at ? :patch : :post
+    :patch if created_at
+
+    :post
   end
 
   def section_value(name)
-    return "" unless created_at
+    section = sections.detect { |section| section["name"] == name }
+    return nil unless section
 
-    sections.detect { |section| section["name"] == name }["content"].join("\n")
+    section["content"].join("\n")
   end
 
   def submit_text
+    return "Save Draft" if is_draft
     return "Update" if created_at
 
     "Submit"

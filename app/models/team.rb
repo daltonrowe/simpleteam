@@ -32,6 +32,13 @@ class Team < ApplicationRecord
     ).order(created_at: :desc)
   end
 
+  def previous_statuses(before:, after:)
+    Status.where(
+      team: self,
+      created_at: before..after
+    ).order(created_at: :desc)
+  end
+
   def pending_seats_for(user)
     self.pending_seats.find_by(email_address: user.email_address)
   end
