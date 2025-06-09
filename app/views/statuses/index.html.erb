@@ -1,0 +1,47 @@
+<% if @pending_seats.any? %>
+  <section class="flex flex-col gap-2">
+    <h2 class="font-bold text-2xl">Your Pending Seats</h2>
+
+    <div class="flex flex-col gap-2">
+      <%= render PendingSeatComponent.with_collection(@pending_seats, user: Current.user) %>
+    </div>
+  </section>
+<% end %>
+
+<% if Current.user.all_alone? %>
+
+  <%= render EmptySectionNoticeComponent.new(text: "You're not a member of any teams.") do |component| %>
+    <% component.with_link do %>
+      <%= render LinkComponent.new(text: "Create a team", to: new_team_path) %>
+    <% end %>
+  <% end %>
+
+<% else %>
+
+  <div class="grid grid-cols-5 gap-8">
+    <section class="col-span-2 flex flex-col gap-4">
+      <% if Current.user.multiple_teams? %>
+      <div class="flex gap-2">
+        <%= render TeamSwitcherComponent.with_collection(Current.user.all_teams, selected: @team, route: dashboard_path) %>
+      </div>
+      <% end %>
+
+      <div class="flex flex-col gap-2">
+        <%= render StatusInputComponent.new(status: @status) if @status %>
+      </div>
+    </section>
+
+    <section class="col-span-3 flex flex-col gap-4" data-controller="show-hide">
+      <header class="flex flex-row justify-between">
+        <span>
+          <%= @team_statuses.length %> / <%= @team.member_count %> Statuses Submitted
+        </span>
+
+        <button data-action="click->show-hide#toggle" class="text-yin-500 cursor-pointer">Show / Hide All</button>
+      </header>
+      <%= render StatusComponent.with_collection(@team_statuses) %>
+      <%= render EmptySectionNoticeComponent.new(text: "No updates yet.") unless @team_statuses&.any? %>
+    </section>
+  </div>
+
+<% end %>
