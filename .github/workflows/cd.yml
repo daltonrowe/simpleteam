@@ -104,7 +104,7 @@ jobs:
       RAILS_ENV: production
       BUNDLE_WITHOUT: “default development test production profiling”
       BUNDLE_WITH: tools
-      SERVER_ADDR: ${{ env.PROD_SERVER_IP }}
+      SERVER_ADDR: 5.161.109.193
 
     steps:
       - name: Checkout code
