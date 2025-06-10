@@ -9,9 +9,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false # Prevents ongoing deployments from being canceled
 
-env:
-  SERVER_ADDR: ${{ env.PROD_SERVER_IP }}
-
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
@@ -107,6 +104,7 @@ jobs:
       RAILS_ENV: production
       BUNDLE_WITHOUT: “default development test production profiling”
       BUNDLE_WITH: tools
+      SERVER_ADDR: ${{ env.PROD_SERVER_IP }}
 
     steps:
       - name: Checkout code
