@@ -12,7 +12,7 @@
 
     <% if Current.user %>
       <span class="p-2"><%= Current.user.display_name %></span>
-      <%= render LinkComponent.new(text: "Status", to: dashboard_path, style: :outlined, level: :secondary) %>
+      <%= render LinkComponent.new(text: "Home", to: dashboard_path, style: :outlined, level: :secondary) %>
       <%= render LinkComponent.new(text: "Settings", to: edit_user_path, style: :outlined, level: :secondary) %>
     <% end %>
 

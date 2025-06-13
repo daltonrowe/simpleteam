@@ -35,10 +35,12 @@
         <% end %>
       <% end %>
     <% end %>
+
   </div>
+
 </section>
 
-<section class="flex gap-4 items-center">
-  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, style: :outlined, level: :secondary) %>
+<section class="flex gap-4 items-center justify-center">
+  <%= render LinkComponent.new(text: "Create Team", to: new_team_path, level: :secondary) %>
   <%= render ButtonComponent.new(text: "Log Out", to: session_path, method: :delete, style: :text, level: :secondary) %>
 </section>
