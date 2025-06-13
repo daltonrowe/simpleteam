@@ -15,16 +15,22 @@ class StatusInputComponent < ApplicationComponent
   end
 
   def url
-    team_statuses_path(team) if is_draft
-    team_status_path(team, status) if created_at
+    return team_status_path(team, status) if created_at
 
     team_statuses_path(team)
   end
 
   def method
-    :patch if created_at
+    return :patch if created_at
 
     :post
+  end
+
+  def section_id(index)
+    id = "section_#{index}"
+    id << "_draft" if is_draft
+
+    id
   end
 
   def section_value(name)

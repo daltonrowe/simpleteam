@@ -3,3 +3,15 @@ owner:
   email_address: "taco@pizza.com"
   password_digest: "abc123"
   confirmed_at: "Sat, 17 May 2025 18:44:15 +0000"
+
+member:
+  name: "John Doe"
+  email_address: "kentucky@fried.com"
+  password_digest: "abc123"
+  confirmed_at: "Sat, 17 May 2025 18:44:15 +0000"
+
+rando:
+  name: "Somebody Else"
+  email_address: "pizza@hut.com"
+  password_digest: "abc123"
+  confirmed_at: "Sat, 17 May 2025 18:44:15 +0000"

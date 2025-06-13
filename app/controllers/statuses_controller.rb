@@ -2,7 +2,7 @@ require "json"
 class StatusesController < ApplicationController
   user_must_have_seat
   before_action :find_fresh_status, only: %i[update]
-
+  before_action :ensure_one_status, only: %i[create]
 
   def index
     @pending_seats = Current.user.pending_seats
@@ -27,7 +27,7 @@ class StatusesController < ApplicationController
     end
 
     if status.save
-      delete cookies[:draft_status]
+      cookies.delete :draft_status
       redirect_to team_statuses_path(@team), notice: "Status saved!"
     else
       redirect_to team_statuses_path(@team), alert: "Something went wrong."
@@ -48,7 +48,7 @@ class StatusesController < ApplicationController
 
   def find_fresh_status
     @status = Status.find(params[:id])
-    redirect_to dashboard_path, alert: "Status too old, cannot be updated." unless @status.fresh?
+    redirect_back fallback_location: dashboard_path, alert: "Status too old, cannot be updated." unless @status.fresh?
   end
 
   def draft_status
@@ -60,5 +60,12 @@ class StatusesController < ApplicationController
     end
 
     draft_status
+  end
+
+  def ensure_one_status
+    @team_statuses = @team&.current_statuses
+    @status = @team_statuses&.where(user: Current.user)&.first
+
+    redirect_back fallback_location: dashboard_path, alert: "Only one status per day please." if @status&.fresh?
   end
 end

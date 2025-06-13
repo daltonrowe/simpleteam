@@ -2,6 +2,8 @@ class Status < ApplicationRecord
   belongs_to :user
   belongs_to :team
 
+  after_initialize :setup_default_sections, if: :new_record?
+
   def fresh?
     self.created_at.between?(team.previous_cutoff, team.next_cutoff)
   end
@@ -22,7 +24,7 @@ class Status < ApplicationRecord
       key = team_section["name"]
       section_data = incoming.detect { |incoming_section| incoming_section["name"] === key }
 
-      { name: key, content: section_data["content"] }
+      { name: key, content: section_data&.[]("content") || [] }
     end.compact
   end
 
@@ -33,5 +35,11 @@ class Status < ApplicationRecord
       name:,
       content: raw_content.split("\n").reject(&:blank?)
     }
+  end
+
+  def setup_default_sections
+    self.sections = team.sections.map do |team_section|
+      format_section(team_section["name"], "")
+    end.compact
   end
 end

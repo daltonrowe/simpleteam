@@ -12,7 +12,7 @@
     </header>
 
     <%= form.textarea "sections[#{section["name"]}]",
-                      id: "section_#{index}",
+                      id: section_id(index),
                       value: section_value(section["name"]),
                       rows: 4,
                       class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full field-size-content-polyfill" %>
@@ -25,7 +25,7 @@
     <span class="text-sm text-yin-600">
 
       <% if @status.created_at? %>
-        Submitted <%= @status.created_at.strftime("%B %d, %Y at %I:%M %p %Z") %>
+        Submitted <%= @status.created_at.in_time_zone(status.team.time_zone).strftime("%B %d, %Y at %I:%M %p %Z") %>
       <% else %>
         <%= team.name %> statuses due in <%= cutoff_time %>
       <% end %>

@@ -4,11 +4,16 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-awesome:
+basic:
   user: owner
   name: "My Awesome Team"
   notifaction_time: "Sat, 17 May 2025 18:44:15 +0000"
   end_of_day: "Sat, 17 May 2025 20:44:15 +0000"
   time_zone: "Central Time (US & Canada)"
-  sections: []
+  sections:
+    [
+      { "name": "Yesterday" },
+      { "name": "Today" },
+      { "name": "Links", "description": "Read anything good?" },
+    ]
   metadata: {}
