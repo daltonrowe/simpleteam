@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :teams do
     resources :seats
     resources :pending_seats
-    resources :statuses
+    resources :statuses do
+      post "draft"
+    end
   end
 
   get "/dashboard/user", to: "dashboard#user"

@@ -21,11 +21,6 @@ class StatusesController < ApplicationController
     status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid)
     status.update_sections(params[:sections])
 
-    if params[:is_draft]
-      cookies[:draft_status] = status.sections.to_json
-      return redirect_to team_statuses_path(@team), notice: "Draft saved!"
-    end
-
     if status.save
       cookies.delete :draft_status
       redirect_to team_statuses_path(@team), notice: "Status saved!"
@@ -42,6 +37,14 @@ class StatusesController < ApplicationController
     else
       redirect_to team_statuses_path(@team), alert: "Something went wrong."
     end
+  end
+
+  def draft
+    status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid)
+    status.update_sections(params[:sections])
+
+    cookies[:draft_status] = status.sections.to_json
+    redirect_to team_statuses_path(@team), notice: "Draft saved!"
   end
 
   private

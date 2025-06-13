@@ -16,6 +16,7 @@ class StatusInputComponent < ApplicationComponent
 
   def url
     return team_status_path(team, status) if created_at
+    return team_status_draft_path(team, status) if is_draft
 
     team_statuses_path(team)
   end
