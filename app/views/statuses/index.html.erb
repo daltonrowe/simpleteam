@@ -22,7 +22,7 @@
     <section class="col-span-2 flex flex-col gap-4">
       <div class="flex flex-col gap-4">
 
-        <details <%= @status.created_at.blank? ? "open" : nil %>>
+        <details <%= @status&.created_at&.present? ? nil : "open" %>>
           <summary>Today's Status</summary>
 
           <div class="mt-4">
@@ -30,7 +30,7 @@
           </div>
         </details>
 
-        <% if @status.created_at.present? %>
+        <% if @status&.created_at&.present? %>
           <details <%= @status.created_at.present? ? "open" : nil %>>
             <summary>Tomorrow's Status (Draft)</summary>
 
