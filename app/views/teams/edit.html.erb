@@ -23,7 +23,7 @@
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Team Seats</h2>
   <%= render SeatComponent.with_collection(@team.seats, show: :email, action: "Remove") %>
-  <%= render EmptySectionNoticeComponent.new(text: "Your team has no members, invite them below.") if @team.seats.empty? %>
+  <%= render EmptySectionNoticeComponent.new(text: "Your team has no members.") if @team.seats.empty? %>
 </section>
 
 <section class="flex flex-col gap-4">

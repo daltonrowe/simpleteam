@@ -4,6 +4,8 @@ class <%= class_name %>Service
     @<%= file_name %> = <%= file_name %>
   end
 
+  attr_reader :<%= file_name %>
+
   def call
     # TODO: Implement service logic
     @<%= file_name %>
@@ -11,6 +13,5 @@ class <%= class_name %>Service
 
   private
 
-  attr_reader :<%= file_name %>
 end
 <% end -%>
