@@ -1,0 +1,16 @@
+<% module_namespacing do -%>
+class <%= class_name %>Service
+  def initialize(<%= file_name %>)
+    @<%= file_name %> = <%= file_name %>
+  end
+
+  def call
+    # TODO: Implement service logic
+    @<%= file_name %>
+  end
+
+  private
+
+  attr_reader :<%= file_name %>
+end
+<% end -%>

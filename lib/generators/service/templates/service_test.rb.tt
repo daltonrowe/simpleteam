@@ -1,0 +1,10 @@
+require "test_helper"
+
+<% module_namespacing do -%>
+class <%= class_name %>ServiceTest < ActiveSupport::TestCase
+  # test "should call service" do
+  #   result = <%= class_name %>.call
+  #   assert_equal @<%= file_name %>, result
+  # end
+end
+<% end -%>

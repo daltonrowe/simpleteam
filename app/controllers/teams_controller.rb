@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
 
   def update
     # TODO check and assign params, handle sections and time inputs
+
     @team.assign_attributes(update_params)
 
     if @team.save
