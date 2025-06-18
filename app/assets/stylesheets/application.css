@@ -10,8 +10,9 @@
  */
 
 .auto-fade {
+  --duration: 7s;
   transition: opacity 1s ease;
-  transition-delay: 7s;
+  transition-delay: var(--duration);
 
   opacity: 0;
 
