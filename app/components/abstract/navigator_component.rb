@@ -7,6 +7,7 @@ class Abstract::NavigatorComponent < ApplicationComponent
     classes_array.push(*filled_classes) if style == :filled
     classes_array.push(*outlined_classes) if style == :outlined
     classes_array.push(*text_classes) if style == :text
+    classes_array.push(*inline_classes) if style == :inline
 
     classes_array.push(*extra_classes) if extra_classes.any?
 
@@ -34,6 +35,15 @@ class Abstract::NavigatorComponent < ApplicationComponent
 
   def text_classes
     classes_array = [ "inline-block", "p-0", "underline", "hover:no-underline" ]
+
+    classes_array.push("text-white", "hover:text-gray-200") if level == :primary
+    classes_array.push("text-gray-400", "hover:text-gray-200") if level == :secondary
+
+    classes_array
+  end
+
+  def inline_classes
+    classes_array = [ "inline-block", "p-0" ]
 
     classes_array.push("text-white", "hover:text-gray-200") if level == :primary
     classes_array.push("text-gray-400", "hover:text-gray-200") if level == :secondary
