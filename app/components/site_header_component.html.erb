@@ -1,20 +1,30 @@
-<header class="w-full flex items-center justify-between py-2 px-5 flex-col sm:flex-row">
+<header class="w-full flex items-center justify-between py-4 sm:py-2 px-5 gap-2">
   <h1 class="w-100"><a href="<%= root_path %>">SimpleTeam</a></h1>
 
-  <%= notice_area %>
+  <button class="sm:hidden" data-action="click->toggle-class#toggle" data-selector="#menu" data-class-names="hidden">
+    Menu
+  </button>
 
-  <div class="flex gap-2 items-center w-100 justify-end">
+  <div id="menu" class="flex flex-col justify-center align-center hidden fixed top-0 left-0 w-full h-screen bg-yin sm:static sm:contents">
+    <%= notice_area %>
 
-    <% unless Current.user %>
-      <%= render LinkComponent.new(text: "Sign Up", to: new_registration_path, style: :outlined, level: :secondary) %>
-      <%= render LinkComponent.new(text: "Log In", to: new_session_path, style: :outlined, level: :secondary) %>
-    <% end %>
+    <div class="flex flex-col sm:flex-row gap-6 sm:gap-2 items-center p-8 sm:p-0 w-full sm:w-100 justify-end">
 
-    <% if Current.user %>
-      <span class="p-2"><%= Current.user.display_name %></span>
-      <%= render LinkComponent.new(text: "Home", to: dashboard_path, style: :outlined, level: :secondary) %>
-      <%= render LinkComponent.new(text: "Settings", to: edit_user_path, style: :outlined, level: :secondary) %>
-    <% end %>
+      <% unless Current.user %>
+        <%= render LinkComponent.new(text: "Sign Up", to: new_registration_path, style: :outlined, level: :secondary) %>
+        <%= render LinkComponent.new(text: "Log In", to: new_session_path, style: :outlined, level: :secondary) %>
+      <% end %>
 
+      <% if Current.user %>
+        <span class="sm:p-2"><%= Current.user.display_name %></span>
+        <%= render LinkComponent.new(text: "Home", to: dashboard_path, style: :outlined, level: :secondary) %>
+        <%= render LinkComponent.new(text: "Settings", to: edit_user_path, style: :outlined, level: :secondary) %>
+      <% end %>
+
+      <button class="sm:hidden" data-action="click->toggle-class#toggle" data-selector="#menu" data-class-names="hidden">
+        Close
+      </button>
+
+    </div>
   </div>
 </header>

@@ -19,7 +19,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-yin-900 text-white">
+  <body class="bg-yin-900 text-white" data-controller="toggle-class">
     <%= render SiteHeaderComponent.new do |component| %>
       <% component.with_notice_area do %>
       <%= render BadgeComponent.new(text: "Pending Invites!", path: edit_user_path) if @pending_seats&.any? %>
@@ -30,7 +30,7 @@
     <% if content_for?(:content) %>
       <%= yield(:content) %>
     <% else %>
-      <main class="container mx-auto max-w-2xl px-5 sm:mt-15 sm:mb-20 w-full flex flex-col gap-8">
+      <main class="container mx-auto max-w-2xl px-5 sm:mt-15 mb-20 w-full flex flex-col gap-8">
         <%= yield %>
       </main>
     <% end %>

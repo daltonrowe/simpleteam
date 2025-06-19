@@ -5,7 +5,14 @@
 
   <div class="flex gap-2 items-center">
   <%= form.email_field :email_address, value: Current.user.email_address, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
-  <%= tag.div Current.user.confirmed? ? "Email Confirmed" : "Unconfirmed Email", class: "shrink-0" %>
+  <div class="shrink-0">
+
+  <% if Current.user.confirmed? %>
+    <%= tag.div Current.user.confirmed? ? "Email Confirmed" : "Unconfirmed Email", class: "text-green-500" %>
+  <% else %>
+    <%= tag.div "Unconfirmed Email", class: "text-red-500" %>
+  <% end %>
+  </div>
   </div>
 
   <%= form.simple_submit(text: "Update") %>
