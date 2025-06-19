@@ -18,14 +18,12 @@ export default class extends Controller {
   }
 
   toggleSet(event) {
-    const { selector, classNames } = event.target.dataset;
+    const { selector, classNamesA, classNamesB } = event.target.dataset;
 
-    const sets = classNames.split(' ').reduce((acc, current) => {
-      const [set, name] = current.split(':')
-      acc[set].push(name)
-
-      return acc
-    }, { a: [], b: [] })
+    const sets = {
+      a: classNamesA.split(' '),
+      b: classNamesB.split(' ')
+    }
 
     const els = document.querySelectorAll(selector)
 
