@@ -29,7 +29,7 @@
 <section class="flex flex-col gap-4">
   <h2 class="font-bold text-2xl">Status Sections</h2>
 
-  <%= form_with model: @team, url: team_path(@team), method: :patch, html: { class: "flex flex-col gap-4" } do |form| %>
+  <%= form_with model: @team, url: team_path(@team), method: :patch, html: { class: "flex flex-col gap-8" } do |form| %>
     <fieldset class="flex flex-col gap-4">
       <% @team.sections.each_with_index do |section, index| %>
       <div class="border border-gray-400 rounded-md">
@@ -54,20 +54,19 @@
       </div>
     </fieldset>
 
-    <fieldset>
-    </fieldset>
+    <div class="cursor-not-allowed">
+      <fieldset class="flex flex-col gap-4 opacity-40 pointer-events-none">
+        <h2 class="font-bold text-2xl">Notifactions</h2>
 
-    <fieldset class="flex flex-col gap-4">
-      <h2 class="font-bold text-2xl">Notifactions</h2>
+        <div>
+          <%# TODO: Allow enable / disabled of notifactions %>
+          <span class="inline-block w-35">Notifaction Time</span>
+          <%= form.time_select :notifaction_time, ignore_date: true, value: @team.notifaction_time, disabled: true %>
+        </div>
 
-      <div>
-        <%# TODO: Allow enable / disabled of notifactions %>
-        <span class="inline-block w-35">Notifaction Time</span>
-        <%= form.time_select :notifaction_time, ignore_date: true, value: @team.notifaction_time %>
-      </div>
-
-      <input type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">
-    </fieldset>
+        <input disabled type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">
+      </fieldset>
+    </div>
 
     <%= form.simple_submit(text: "Update Settings") %>
   <% end %>

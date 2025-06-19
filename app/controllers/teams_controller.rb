@@ -24,11 +24,9 @@ class TeamsController < ApplicationController
   def edit;end
 
   def update
-    # TODO check and assign params, handle sections and time inputs
+    success = TeamUpdateService.new(@team, update_params).call
 
-    @team.assign_attributes(update_params)
-
-    if @team.save
+    if success
       redirect_to edit_team_path(@team), notice: "Team updated!"
     else
       redirect_to edit_team_path(@team), alert: "Something went wrong."
@@ -42,6 +40,18 @@ class TeamsController < ApplicationController
   end
 
   def update_params
-    params.require(:team).permit(:name, :sections, :notifaction_time, :end_of_day, :metadata)
+    params.require(:team).permit(
+      :name,
+      :section_0_name,
+      :section_0_description,
+      :section_1_name,
+      :section_1_description,
+      :section_2_name,
+      :section_2_description,
+      :notifaction_time,
+      :end_of_day,
+      :time_zone,
+      :metadata
+    )
   end
 end
