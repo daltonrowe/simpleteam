@@ -23,5 +23,16 @@ module SimpleTeam
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    extra_paths = %W[
+      #{config.root}/lib
+    ]
+
+    # Add generators, they don't have a module structure that matches their directory structure.
+    extra_paths += Dir.glob("#{config.root}/lib/generators/*")
+    extra_paths += Dir.glob("#{config.root}/test/mailers/*")
+
+    config.autoload_paths += extra_paths
+    config.eager_load_paths += extra_paths
   end
 end
