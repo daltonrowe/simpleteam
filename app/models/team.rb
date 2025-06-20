@@ -1,7 +1,7 @@
 class Team < ApplicationRecord
   belongs_to :user
-  has_many :seats
-  has_many :pending_seats
+  has_many :seats, dependent: :destroy
+  has_many :pending_seats, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }
 

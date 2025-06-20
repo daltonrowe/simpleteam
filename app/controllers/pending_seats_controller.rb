@@ -19,6 +19,6 @@ class PendingSeatsController < ApplicationController
   private
 
   def create_params
-    params.require(:pending_seat).permit(:pending_emails)
+    params.permit(:pending_emails)
   end
 end
