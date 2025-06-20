@@ -7,7 +7,7 @@ image: daltonrowe/simple-hero
 # Deploy to these servers.
 servers:
   web:
-    - 5.161.109.193
+    - 5.161.93.224
   # job:
   #   hosts:
   #     - 192.168.0.1
