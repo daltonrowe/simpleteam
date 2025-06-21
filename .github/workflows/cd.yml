@@ -106,6 +106,14 @@ jobs:
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
 
+  notify_start:
+    runs-on: ubuntu-latest
+    needs: [scan_ruby, scan_js, lint, test]
+
+    steps:
+      - name: Notify start
+        run: curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{"content":"Simplehero CD Deploy Starting"}'
+
   deploy:
     runs-on: ubuntu-latest
     needs: [scan_ruby, scan_js, lint, test]
@@ -158,3 +166,12 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_MASTER_KEY }}
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           KAMAL_REGISTRY_USERNAME: ${{ github.actor }}
+
+  notify_end:
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: always()
+
+    steps:
+      - name: Notify end
+        run: curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{"content":"Simplehero CD Deploy Complete. Status ${{ github.workflow_conclusion }}"}'
