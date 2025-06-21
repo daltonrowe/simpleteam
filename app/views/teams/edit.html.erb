@@ -61,7 +61,7 @@
         <div>
           <%# TODO: Allow enable / disabled of notifactions %>
           <span class="inline-block w-35">Notifaction Time</span>
-          <%= form.time_select :notifaction_time, ignore_date: true, value: @team.notifaction_time, disabled: true %>
+          <%= form.simple_time_select(method: :notifaction_time, ignore_date: true, value: @team.notifaction_time, disabled: true) %>
         </div>
 
         <input disabled type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">
@@ -69,6 +69,7 @@
     </div>
 
     <%= form.simple_submit(text: "Update Settings") %>
+
   <% end %>
 
 </section>
