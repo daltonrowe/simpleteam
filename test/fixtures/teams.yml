@@ -7,7 +7,7 @@
 basic:
   user: owner
   name: "My Awesome Team"
-  notifaction_time: "Sat, 17 May 2025 18:44:15 +0000"
+  notifaction_time: "Sat, 17 May 2025 22:30:00 +0000"
   end_of_day: "Sat, 17 May 2025 20:44:15 +0000"
   time_zone: "Central Time (US & Canada)"
   sections:

@@ -5,9 +5,30 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 120 }
 
+  alias_attribute :original_end_of_day, :end_of_day
+  alias_attribute :original_notifaction_time, :notifaction_time
+
   # metadata json:
   # ticket_link
   # slack_webhook
+
+  def end_of_day
+    self.original_end_of_day
+      .change({
+        year: Time.zone.now.year,
+        month: Time.zone.now.month,
+        day: Time.zone.now.day
+      })
+  end
+
+  def notifaction_time
+    self.original_notifaction_time
+      .change({
+        year: Time.zone.now.year,
+        month: Time.zone.now.month,
+        day: Time.zone.now.day
+      })
+  end
 
   def previous_cutoff
     next_cutoff - 1.day
