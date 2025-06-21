@@ -188,7 +188,7 @@ jobs:
     steps:
       - name: Hello World
         env:
-          NEEDS: ${{ needs.deploy.results }}
+          NEEDS: ${{ needs.deploy }}
         run: |
           echo "$NEEDS"
 
