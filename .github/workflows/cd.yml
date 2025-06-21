@@ -115,7 +115,7 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           SHA: ${{ github.sha }}
         run: |
-          curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy Starting - $SHA"}' -H "Content-Type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy Starting - $SHA\"}" -H "Content-Type: application/json"
 
       - name: Start rollbar deploy
         uses: rollbar/github-deploy-action@2.1.2
