@@ -191,6 +191,6 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           DEPLOY_CONCLUSION: ${{ toJson(needs.deploy.result) }}
         run: |
-          CLEAN=sed 's/"//g'
+          CLEAN=$($DEPLOY_CONCLUSION | sed 's/"//g')
           echo "{\"content\":\"Simplehero CD Deploy $CLEAN\"}"
           curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy $CLEAN\"}" -H "content-type: application/json"
