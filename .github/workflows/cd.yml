@@ -113,10 +113,11 @@ jobs:
       - name: Notify start
         env:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+          SHA: ${{ github.sha }}
         run: |
-          curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy Starting"}' -H "Content-Type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy Starting - $SHA"}' -H "Content-Type: application/json"
 
-      - name: Notify start deploy to Rollbar
+      - name: Start rollbar deploy
         uses: rollbar/github-deploy-action@2.1.2
         id: rollbar_pre_deploy
         with:
@@ -188,17 +189,17 @@ jobs:
         env:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           DEPLOY_CONCLUSION: ${{ needs.deploy.result }}
-          DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+          SHA: ${{ github.sha }}
         run: |
-          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy - $DEPLOY_CONCLUSION - $DEPLOY_ID\"}" -H "content-type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy - $DEPLOY_CONCLUSION - $SHA\"}" -H "content-type: application/json"
 
-      - name: Notify finish deploy to Rollbar
+      - name: Finish Rollbar deploy
         uses: rollbar/github-deploy-action@2.1.2
         id: rollbar_post_deploy
         with:
           environment: "production"
           version: ${{ github.sha }}
-          status: "succeeded"
+          status: ${{ needs.deploy.result == 'success' && "succeeded" || "failed" }}
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
           ROLLBAR_USERNAME: ${{ github.actor }}
