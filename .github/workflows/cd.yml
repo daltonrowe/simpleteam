@@ -112,7 +112,8 @@ jobs:
 
     steps:
       - name: Notify start
-        run: curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d "{\"content\":\"Simplehero CD Deploy Starting\"}" --H "content-type: application/json"
+        run: |
+        curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{\"content\":\"Simplehero CD Deploy Starting\"}' --H "Content-Type: application/json"
 
   deploy:
     runs-on: ubuntu-latest
@@ -173,7 +174,8 @@ jobs:
 
     steps:
       - name: Rollbar Deploy
-        run: curl --request POST --url https://api.rollbar.com/api/1/deploy --header 'accept: application/json' --header 'content-type: application/json'
+        run: |
+        curl --request POST --url https://api.rollbar.com/api/1/deploy -H "Content-Type: application/json"
 
   notify_end:
     runs-on: ubuntu-latest
@@ -182,4 +184,5 @@ jobs:
 
     steps:
       - name: Notify end
-        run: curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d "{\"content\":\"Simplehero CD Deploy Complete. Status ${{ github.workflow_conclusion }}\"}" --H "content-type: application/json"
+        run: |
+        curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{"content":"Simplehero CD Deploy Complete. Status ${{ github.workflow_conclusion }}"}' --H "content-type: application/json"
