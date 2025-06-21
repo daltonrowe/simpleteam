@@ -114,7 +114,7 @@ jobs:
         env:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
         run: |
-        curl -X POST $NOTIFY_WEBHOOK_URL -d '{\"content\":\"Simplehero CD Deploy Starting\"}' --H "Content-Type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d '{\"content\":\"Simplehero CD Deploy Starting\"}' --H "Content-Type: application/json"
 
   deploy:
     runs-on: ubuntu-latest
