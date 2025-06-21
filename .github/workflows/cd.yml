@@ -95,7 +95,6 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
@@ -112,8 +111,10 @@ jobs:
 
     steps:
       - name: Notify start
+        env:
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
         run: |
-        curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{\"content\":\"Simplehero CD Deploy Starting\"}' --H "Content-Type: application/json"
+        curl -X POST $NOTIFY_WEBHOOK_URL -d '{\"content\":\"Simplehero CD Deploy Starting\"}' --H "Content-Type: application/json"
 
   deploy:
     runs-on: ubuntu-latest
@@ -184,5 +185,7 @@ jobs:
 
     steps:
       - name: Notify end
+        env:
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
         run: |
-        curl -X POST ${{ secrets.NOTIFY_WEBHOOK_URL }} -d '{"content":"Simplehero CD Deploy Complete. Status ${{ github.workflow_conclusion }}"}' --H "content-type: application/json"
+        curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy Complete. Status ${{ github.workflow_conclusion }}"}' --H "content-type: application/json"
