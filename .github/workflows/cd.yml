@@ -184,17 +184,11 @@ jobs:
   notify_end:
     runs-on: ubuntu-latest
     needs: [deploy]
-    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    if: always()
     steps:
-      - name: Hello World
+      - name: Notify end
         env:
-          NEEDS: ${{ toJson(needs.deploy.result) }}
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+          DEPLOY_CONCLUSION: ${{ toJson(needs.deploy.result) }}
         run: |
-          echo "$NEEDS"
-
-    # steps:
-    #   - name: Notify end
-    #     env:
-    #       NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
-    #     run: |
-    #       curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy $DEPLOY_CONCLUSION"}' -H "content-type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d '{"content":"Simplehero CD Deploy $DEPLOY_CONCLUSION"}' -H "content-type: application/json"
