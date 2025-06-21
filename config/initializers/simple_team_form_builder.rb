@@ -7,10 +7,10 @@ class SimpleTeamFormBuilder < ActionView::Helpers::FormBuilder
     view_context.render ButtonComponent.new(**defaults.merge(args))
   end
 
-  def simple_time_select(**args, &block)
+  def simple_time_select(method, **args, &block)
     defaults = {}
 
-    view_context.render Form::TimeSelectComponent.new(form: self, **defaults.merge(args))
+    view_context.render Form::TimeSelectComponent.new(form: self, method:, **defaults.merge(args))
   end
 
   private

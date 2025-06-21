@@ -42,7 +42,7 @@
     <fieldset class="flex flex-col gap-4">
       <h2 class="font-bold text-2xl">Time Zone</h2>
 
-      <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, value: @team.time_zone, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full" %>
+      <%= form.time_zone_select(:time_zone, ActiveSupport::TimeZone.us_zones, {}, value: @team.time_zone, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full") %>
     </fieldset>
 
     <fieldset class="flex flex-col gap-4">
@@ -50,7 +50,7 @@
 
       <div>
         <span class="inline-block w-35">End of Day</span>
-        <%= form.time_select :end_of_day, ignore_date: true, value: @team.end_of_day %>
+        <%= form.simple_time_select(:end_of_day, ignore_date: true, ampm: true, value: @team.end_of_day) %>
       </div>
     </fieldset>
 
@@ -59,9 +59,9 @@
         <h2 class="font-bold text-2xl">Notifactions</h2>
 
         <div>
-          <%# TODO: Allow enable / disabled of notifactions %>
+          <%# TODO: Allow enable / disable of notifactions %>
           <span class="inline-block w-35">Notifaction Time</span>
-          <%= form.simple_time_select(method: :notifaction_time, ignore_date: true, value: @team.notifaction_time, disabled: true) %>
+          <%= form.simple_time_select(:notifaction_time, ignore_date: true, ampm: true, value: @team.notifaction_time, disabled: true) %>
         </div>
 
         <input disabled type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">
