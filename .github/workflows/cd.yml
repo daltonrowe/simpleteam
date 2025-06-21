@@ -199,7 +199,7 @@ jobs:
         with:
           environment: "production"
           version: ${{ github.sha }}
-          status: ${{ needs.deploy.result == 'success' && "succeeded" || "failed" }}
+          status: ${{ needs.deploy.result == 'success' && 'succeeded' || 'failed' }}
         env:
           ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
           ROLLBAR_USERNAME: ${{ github.actor }}
