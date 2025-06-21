@@ -146,9 +146,6 @@ jobs:
       SERVER_ADDR: 5.161.93.224
 
     steps:
-      - name: fail
-        run: exit 1
-
       - name: Checkout code
         uses: actions/checkout@v4
 
