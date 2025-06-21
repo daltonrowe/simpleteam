@@ -191,5 +191,6 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           DEPLOY_CONCLUSION: ${{ toJson(needs.deploy.result) }}
         run: |
-          echo "{\"content\":\"Simplehero CD Deploy $DEPLOY_CONCLUSION\"}"
-          curl -X POST https://discord.com/api/webhooks/1385873257839726613/w_mFZLzria3z6qvM0xZOOYCbuwErTjvA9_OQE1bNi_WToEy4CDx1Smj5qI1eHTdq1MdK -d "{\"content\":\"Simplehero CD Deploy $DEPLOY_CONCLUSION\"}" -H "content-type: application/json"
+          CLEAN=sed 's/"//g'
+          echo "{\"content\":\"Simplehero CD Deploy $CLEAN\"}"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy $CLEAN\"}" -H "content-type: application/json"
