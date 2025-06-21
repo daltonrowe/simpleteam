@@ -183,7 +183,7 @@ jobs:
     needs: [deploy]
     if: always()
     env:
-      DEPLOY_CONCLUSION: ${{ steps.deploy_kamal.outputs.conclusion }}
+      DEPLOY_CONCLUSION: ${{ job.steps.deploy_kamal.outputs.conclusion }}
 
     steps:
       - name: Notify end
