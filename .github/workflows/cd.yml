@@ -134,9 +134,6 @@ jobs:
       SERVER_ADDR: 5.161.93.224
 
     steps:
-      - name: failed
-        run: exit 1
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -165,7 +162,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy with Kamal
-        id: deploy_kamal
         run: bin/kamal deploy
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_PRODUCTION_MASTER_KEY }}
@@ -191,4 +187,4 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           DEPLOY_CONCLUSION: ${{ needs.deploy.result }}
         run: |
-          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy\\: $DEPLOY_CONCLUSION\"}" -H "content-type: application/json"
+          curl -X POST $NOTIFY_WEBHOOK_URL -d "{\"content\":\"Simplehero CD Deploy - $DEPLOY_CONCLUSION\"}" -H "content-type: application/json"
