@@ -2,6 +2,13 @@
 
 Simpleteam is a set of simple straightforwards tools for developer teams.
 
+## Brand
+
+- The Simpleteam brand emphasis simplicity, and eschewing over decoration and advanced styling
+  seen in modern web properties.
+- The color palette is darkish, using shades of `yin` Tailwind color.
+- The access color is `red` Tailwind color.
+
 ## Code Style
 
 - Use Rails conventions and scaffoldling.
