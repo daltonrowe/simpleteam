@@ -1,5 +1,6 @@
 class SeatsController < ApplicationController
   user_must_have_pending_seat only: %i[create]
+  user_must_be_confirmed
   user_must_have_seat only: %i[destroy]
   def create
     ActiveRecord::Base.transaction do

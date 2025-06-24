@@ -4,7 +4,7 @@
   <h2 class="font-bold text-2xl">Add New Seats</h2>
 
   <% if Current.user.confirmed? %>
-    <%= form_with url: team_pending_seats_path(@team), class: "flex gap-2" do |form| %>
+    <%= form_with url: team_pending_seats_path(@team), class: "flex gap-2 flex-col sm:flex-row" do |form| %>
       <%= form.text_field :pending_emails, placeholder: "member1@mydomain.com, member2@mydomain.com", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
       <%= form.simple_submit(text: "Send Invites", extra_classes: [ "shrink-0" ]) %>
     <% end %>
@@ -48,8 +48,8 @@
     <fieldset class="flex flex-col gap-4">
       <h2 class="font-bold text-2xl">End of Day Cutoff</h2>
 
-      <div>
-        <span class="inline-block w-35">End of Day</span>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+        <span>End of Day:</span>
         <%= form.simple_time_select(:end_of_day, ignore_date: true, ampm: true, value: @team.end_of_day) %>
       </div>
     </fieldset>
@@ -58,9 +58,9 @@
       <fieldset class="flex flex-col gap-4 opacity-40 pointer-events-none">
         <h2 class="font-bold text-2xl">Notifactions</h2>
 
-        <div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
           <%# TODO: Allow enable / disable of notifactions %>
-          <span class="inline-block w-35">Notifaction Time</span>
+          <span>Notifaction Time:</span>
           <%= form.simple_time_select(:notifaction_time, ignore_date: true, ampm: true, value: @team.notifaction_time, disabled: true) %>
         </div>
 

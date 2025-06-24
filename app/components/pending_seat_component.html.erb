@@ -1,9 +1,9 @@
-<div class="flex border border-white p-4 rounded-lg justify-between w-full ">
+<div class="flex flex-col border border-white p-4 rounded-lg justify-between w-full sm:flex-row">
   <strong>
     <%= pending_seat.email_address %>
   </strong>
 
-  <div class="flex gap-4 align-center text-yin-600">
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 align-center text-yin-600">
     <span>
     Sent <%= time_ago_in_words(pending_seat.created_at) %> ago
     </span>
@@ -13,12 +13,9 @@
     <%= render ButtonComponent.new(text: "Revoke", to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
   </span>
   <% else %>
-    <span>
-    <%= render ButtonComponent.new(text: "Accept", to: team_seats_path(pending_seat.team, pending_seat), method: :post, style: :text) %>
-    </span>
-
-    <span>
-    <%= render ButtonComponent.new(text: "Reject", to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
+    <span class="flex gap-2 sm:gap-4">
+      <%= render ButtonComponent.new(text: "Accept", to: team_seats_path(pending_seat.team, pending_seat), method: :post, style: :text) %>
+      <%= render ButtonComponent.new(text: "Reject", to: team_pending_seat_path(pending_seat.team, pending_seat), method: :delete, style: :text) %>
     </span>
   <% end %>
   </div>
