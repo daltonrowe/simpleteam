@@ -48,21 +48,19 @@
     <fieldset class="flex flex-col gap-4">
       <h2 class="font-bold text-2xl">End of Day Cutoff</h2>
 
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-        <span>End of Day:</span>
+      <%= render Form::InlineLayoutComponent.new(label: "End of Day:") do %>
         <%= form.simple_time_select(:end_of_day, ignore_date: true, ampm: true, value: @team.end_of_day) %>
-      </div>
+      <% end %>
     </fieldset>
 
     <div class="cursor-not-allowed">
       <fieldset class="flex flex-col gap-4 opacity-40 pointer-events-none">
         <h2 class="font-bold text-2xl">Notifactions</h2>
 
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-          <%# TODO: Allow enable / disable of notifactions %>
-          <span>Notifaction Time:</span>
+        <%# TODO: Allow enable / disable of notifactions %>
+        <%= render Form::InlineLayoutComponent.new(label: "Notifaction Time:") do %>
           <%= form.simple_time_select(:notifaction_time, ignore_date: true, ampm: true, value: @team.notifaction_time, disabled: true) %>
-        </div>
+        <% end %>
 
         <input disabled type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">
       </fieldset>
