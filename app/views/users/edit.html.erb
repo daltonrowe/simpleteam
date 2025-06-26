@@ -1,10 +1,10 @@
 <h1 class="font-bold text-4xl">Manage Account</h1>
 
-<%= form_with user: Current.user, method: :patch, html: { class: "flex flex-col gap-4" } do |form| %>
+<%= form_with model: Current.user, method: :patch, html: { class: "flex flex-col gap-4" } do |form| %>
   <%= form.text_field :name, required: true, value: Current.user.display_name, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full" %>
 
   <div class="flex gap-2 items-center">
-  <%= form.email_field :email_address, value: Current.user.email_address, readonly: true, disabled: true, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full opacity-40 cursor-not-allowed" %>
+  <%= form.email_field :email_address, readonly: true, disabled: true, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full opacity-40 cursor-not-allowed" %>
   <div class="shrink-0">
 
   <% if Current.user.confirmed? %>
