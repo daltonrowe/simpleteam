@@ -34,6 +34,6 @@ module EncryptionHelper
     data = decrypt(token)
     token_email, token_date, token_purpose = data.split("---")
 
-    { token_email:, token_date:, token_purpose: }
+    { token_email:, token_date:, token_purpose:, token: }
   end
 end
