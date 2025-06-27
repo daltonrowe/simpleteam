@@ -56,7 +56,7 @@ class Team < ApplicationRecord
   def previous_statuses(before:, after:)
     Status.where(
       team: self,
-      created_at: before..after
+      created_at: after..before
     ).order(created_at: :desc)
   end
 

@@ -3,7 +3,7 @@ require "test_helper"
 class StatusesControllerTest < ActionDispatch::IntegrationTest
   test "302 when logged out" do
     team = teams(:basic)
-    get team_statuses_path(team)
+    get new_team_status_path(team)
 
     assert_redirected_to new_session_path
   end
@@ -14,7 +14,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
 
     sign_in(user)
 
-    get team_statuses_path(team)
+    get new_team_status_path(team)
 
     assert_response :success
     assert_dom "summary", "Today's Status"
@@ -26,7 +26,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
 
     sign_in(user)
 
-    get team_statuses_path(team)
+    get new_team_status_path(team)
 
     assert_response :success
     assert_dom "summary", "Today's Status"
@@ -40,7 +40,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
 
     Status.create(user: user, team: team, id: SecureRandom.uuid, sections: basic_status_content)
 
-    get team_statuses_path(team)
+    get new_team_status_path(team)
 
     assert_response :success
     assert_dom "summary", "Today's Status"
@@ -59,7 +59,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
 
     Status.create(user: user, team: team, id: SecureRandom.uuid, sections: basic_status_content)
 
-    get team_statuses_path(team)
+    get new_team_status_path(team)
 
     assert_response :success
     assert_dom "summary", "Today's Status"

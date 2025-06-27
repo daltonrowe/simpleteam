@@ -1,9 +1,9 @@
 <div class="rounded-2xl p-8 text-sm border flex flex-col gap-4">
 
-  <%= render LinkComponent.new(text: team.name, to: team_statuses_path(team), style: :inline, extra_classes: [ "text-2xl" ]) %>
+  <%= render LinkComponent.new(text: team.name, to: new_team_status_path(team), style: :inline, extra_classes: [ "text-2xl" ]) %>
 
   <div class="flex gap-4">
-    <%= render LinkComponent.new(text: "Status Updates", to: team_statuses_path(team)) %>
+    <%= render LinkComponent.new(text: "Status Updates", to: new_team_status_path(team)) %>
 
     <% if team.user == Current.user %>
       <%= render LinkComponent.new(text: "Team Settings", to: edit_team_path(team)) %>

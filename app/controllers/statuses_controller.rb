@@ -5,6 +5,16 @@ class StatusesController < ApplicationController
   before_action :ensure_one_status, only: %i[create]
 
   def index
+    @page = params[:page].to_i || 1
+    offset = @page - 1
+    per_page = 7
+    before = Time.zone.now - (per_page * offset).days
+    after = before - per_page.days
+
+    @team_statuses = @team&.previous_statuses(before:, after:)
+  end
+
+  def new
     @pending_seats = Current.user.pending_seats
     @team_statuses = @team&.current_statuses
     @status = @team_statuses&.where(user: Current.user)&.first
@@ -12,20 +22,15 @@ class StatusesController < ApplicationController
 
     render layout: "wide"
   end
-
-  def history
-    # TODO: List all statuses in paginated view
-    @team_statuses = @team&.previous_statuses(before: "some-date", after: "other-date")
-  end
   def create
     status = Status.new(user: Current.user, team: @team, id: SecureRandom.uuid)
     status.update_sections(params[:sections])
 
     if status.save
       cookies.delete :draft_status
-      redirect_to team_statuses_path(@team), notice: "Status saved!"
+      redirect_to new_team_status_path(@team), notice: "Status saved!"
     else
-      redirect_to team_statuses_path(@team), alert: "Something went wrong."
+      redirect_to new_team_status_path(@team), alert: "Something went wrong."
     end
   end
 
@@ -33,9 +38,9 @@ class StatusesController < ApplicationController
     @status.update_sections(params[:sections])
 
     if @status.save
-      redirect_to team_statuses_path(@team), notice: "Status saved!"
+      redirect_to new_team_status_path(@team), notice: "Status saved!"
     else
-      redirect_to team_statuses_path(@team), alert: "Something went wrong."
+      redirect_to new_team_status_path(@team), alert: "Something went wrong."
     end
   end
 
@@ -44,7 +49,7 @@ class StatusesController < ApplicationController
     status.update_sections(params[:sections])
 
     cookies[:draft_status] = status.sections.to_json
-    redirect_to team_statuses_path(@team), notice: "Draft saved!"
+    redirect_to new_team_status_path(@team), notice: "Draft saved!"
   end
 
   private
