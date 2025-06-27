@@ -5,7 +5,7 @@ class StatusesController < ApplicationController
   before_action :ensure_one_status, only: %i[create]
 
   def index
-    @page = params[:page].to_i || 1
+    @page = params[:page].to_i.positive? ? params[:page].to_i : 1
     offset = @page - 1
     per_page = 7
     before = Time.zone.now - (per_page * offset).days
