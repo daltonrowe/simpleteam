@@ -7,9 +7,9 @@
 <% end %>
 
 <div class="flex justify-center gap-4 items-center">
-  <%= render LinkComponent.new(text: '← Prev', to: team_statuses_path(@team, page: @page - 1), extra_classes: @page <= 1 ? ['opacity-40', 'cursor-not-allowed'] : []) %>
+  <%= render LinkComponent.new(text: "← Prev", to: team_statuses_path(@team, page: @page - 1), extra_classes: @page <= 1 ? [ "opacity-40", "cursor-not-allowed" ] : []) %>
 
   <span class="border rounded p-2"><%= @page %></span>
-  
-  <%= render LinkComponent.new(text: 'Next →', to: team_statuses_path(@team, page: @page + 1)) %>
+
+  <%= render LinkComponent.new(text: "Next →", to: team_statuses_path(@team, page: @page + 1)) %>
 </div>

@@ -55,7 +55,7 @@
       <%= render EmptySectionNoticeComponent.new(text: "No updates yet.") unless @team_statuses&.any? %>
 
       <div class="flex justify-center">
-        <%= render LinkComponent.new(text: 'View Status History', to: team_statuses_path(@team)) %>
+        <%= render LinkComponent.new(text: "View Status History", to: team_statuses_path(@team)) %>
       </div>
     </section>
   </div>
