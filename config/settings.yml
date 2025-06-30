@@ -1,0 +1,5 @@
+slack:
+  client_id: <%= ENV.fetch('SLACK_CLIENT_ID', nil) %>
+  client_secret: <%= ENV.fetch('SLACK_CLIENT_SECRET', nil) %>
+  signing_secret: <%= ENV.fetch('SLACK_SIGNING_SECRET', nil) %>
+  verification_token: <%= ENV.fetch('SLACK_VERIFICATION_TOKEN', nil) %>

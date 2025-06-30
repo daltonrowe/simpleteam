@@ -68,3 +68,5 @@ end
 gem "tailwindcss-rails", "~> 4.2"
 gem "view_component"
 gem "rollbar"
+gem 'dotenv'
+gem 'config'
