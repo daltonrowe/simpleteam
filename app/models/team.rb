@@ -60,6 +60,12 @@ class Team < ApplicationRecord
     ).order(created_at: :desc)
   end
 
+  def most_recent_statuses
+    Status.where(
+      team: self,
+    ).order(created_at: :desc).limit(member_count)
+  end
+
   def pending_seats_for(user)
     self.pending_seats.find_by(email_address: user.email_address)
   end

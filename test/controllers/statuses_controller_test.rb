@@ -66,4 +66,35 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_dom "summary", "Tomorrow's Status (Draft)"
     assert_dom "textarea", "hey hey hey"
   end
+
+  test "status history displays most recent status on page 1" do
+    team = teams(:basic)
+    user = users(:member)
+
+    sign_in(user)
+
+    get team_statuses_path(team)
+
+    assert_response :success
+    assert_dom "h1", "My Awesome Team History"
+    assert_dom "div", "Statuses from May 18, 2025"
+    assert_dom "summary", { text: "John Doe", count: 1 }
+    assert_dom "li", "Its May 18"
+  end
+
+    test "status history displays statuses by date" do
+    team = teams(:basic)
+    user = users(:member)
+    status = statuses(:status_2)
+
+    sign_in(user)
+
+    get team_statuses_path(team, date: status.created_at)
+
+    assert_response :success
+    assert_dom "h1", "My Awesome Team History"
+    assert_dom "div", "Statuses from May 11, 2025"
+    assert_dom "summary", { text: "John Doe", count: 1 }
+    assert_dom "li", "Its May 11"
+  end
 end

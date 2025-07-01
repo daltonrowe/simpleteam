@@ -5,13 +5,21 @@ class StatusesController < ApplicationController
   before_action :ensure_one_status, only: %i[create]
 
   def index
-    @page = params[:page].to_i.positive? ? params[:page].to_i : 1
-    offset = @page - 1
-    per_page = 7
-    before = Time.zone.now - (per_page * offset).days
-    after = before - per_page.days
+    @date = Time.zone.parse(params[:date]).end_of_day if params[:date].present?
 
-    @team_statuses = @team&.previous_statuses(before:, after:)
+    if @date
+      @team_statuses = @team.previous_statuses(before: @date, after: @date - 1.day)
+    else
+      recent_statuses = @team&.most_recent_statuses
+
+      if recent_statuses.any?
+        @date = recent_statuses[0].created_at
+        @team_statuses = recent_statuses.select { |s| s.created_at.between?(@date - 1.day, @date) }
+      end
+    end
+
+    @next = (@date + 1.day).end_of_day
+    @prev = (@date - 1.day).end_of_day
   end
 
   def new
