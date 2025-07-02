@@ -71,7 +71,5 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   # Enable using ngrok for slack app development
-  config.hosts = [
-    /[a-z0-9\-]+\.ngrok-free\.app/
-  ]
+  config.hosts << /[a-z0-9\-]+\.ngrok-free\.app/
 end
