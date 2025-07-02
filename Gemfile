@@ -70,3 +70,4 @@ gem "view_component"
 gem "rollbar"
 gem 'dotenv'
 gem 'config'
+gem 'slack-ruby-client'
