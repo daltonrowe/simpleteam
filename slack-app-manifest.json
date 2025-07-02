@@ -18,6 +18,7 @@
                 "commands",
                 "team:read",
                 "users:read",
+                "users:read.email",
                 "app_mentions:read"
             ]
         }
