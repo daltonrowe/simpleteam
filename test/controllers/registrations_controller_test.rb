@@ -34,14 +34,25 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_dom "#user_email_address[value='pizza@example.com']"
   end
 
+  test "redirects back captcha invalid" do
+    with_captcha_failure
+    post registration_path, params: { user: { email_address: "taco@example.com", password: "abc123", password_confirmation: "abc123" }, cf_token: "bad" }
+
+    assert_response :success
+    assert_routing new_registration_path, controller: "registrations", action: "new"
+    assert_dom "h1", "Sign up"
+  end
+
   test "creates users" do
-    post registration_path, params: { user: { email_address: "taco@example.com", password: "abc123", password_confirmation: "abc123" } }
+    with_captcha_success
+    post registration_path, params: { user: { email_address: "taco@example.com", password: "abc123", password_confirmation: "abc123", cf_token: "good" } }
 
     assert_redirected_to dashboard_path
     assert ::User.find_by(email_address: "taco@example.com")
   end
 
   test "does not create users if password doesn't match" do
+    with_captcha_success
     post registration_path, params: { user: { email_address: "taco@example.com", password: "abc123", password_confirmation: "123abc" } }
 
     assert_response :success
