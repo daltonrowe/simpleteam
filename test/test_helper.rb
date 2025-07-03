@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "webmock/minitest"
 
 module ActiveSupport
   class TestCase
@@ -23,6 +24,20 @@ module ActiveSupport
         { name: "Today", content: [ "i", "love", "tacos", "today" ] },
         { name: "Links", content: [ "i", "love", "tacos", "all the time" ] }
       ]
+    end
+
+    def with_captcha_success
+      stub_request(:any, Rails.application.credentials.turnstile_challenge_url).
+          to_return(body: { "success" => true }.to_json, headers: {
+            "Content-Type" => "application/json"
+          })
+    end
+
+    def with_captcha_failure
+      stub_request(:any, Rails.application.credentials.turnstile_challenge_url).
+          to_return(body: { "success" => false }.to_json, headers: {
+            "Content-Type" => "application/json"
+          })
     end
   end
 end

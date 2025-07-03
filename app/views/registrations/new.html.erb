@@ -1,6 +1,9 @@
 <h1 class="font-bold text-4xl">Sign up</h1>
 
-<%= form_with model: @user, url: registration_url, class: "contents flex flex-col gap-4" do |form| %>
+<%= form_with model: @user, url: registration_url, class: "contents flex flex-col gap-4", data: {
+  controller: "captcha",
+  action: "submit->captcha#submit"
+} do |form| %>
   <%= form.hidden_field :token, value: @valid_token[:token], readonly: true if @valid_token %>
   <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: @user.email_address, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2  w-full" %>
   <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2  w-full" %>

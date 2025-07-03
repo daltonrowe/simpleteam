@@ -19,7 +19,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-yin-900 text-white" data-controller="toggle-class">
+  <body class="bg-yin-900 text-white" data-controller="toggle-class" data-captcha-site-key="<%= Rails.application.credentials.turnstile_site_key %>" data-captcha-enabled="true">
     <%= render SiteHeaderComponent.new do |component| %>
       <% component.with_notice_area do %>
       <%= render BadgeComponent.new(text: "Pending Invites!", path: edit_user_path) if @pending_seats&.any? %>
