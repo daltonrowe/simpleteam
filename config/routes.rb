@@ -25,5 +25,9 @@ Rails.application.routes.draw do
 
   namespace :slack do
     get 'create_team', to: 'teams#create'
+
+    namespace :commands do
+      post 'simple_team', to: 'simple_team#index'
+    end
   end
 end
