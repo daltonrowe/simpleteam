@@ -13,7 +13,7 @@ class StatusesController < ApplicationController
       recent_statuses = @team&.most_recent_statuses
 
       if recent_statuses.any?
-        @date = recent_statuses[0].created_at
+        @date = recent_statuses[0].created_at.end_of_day
         @team_statuses = recent_statuses.select { |s| s.created_at.between?(@date - 1.day, @date) }
       end
     end
