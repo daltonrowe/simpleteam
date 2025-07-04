@@ -19,8 +19,8 @@ module Slack
       private
 
       def list_status
-        statuses = @team.current_statuses
-        if statuses.empty?
+        statuses = @slack_installation.teams.first&.current_statuses
+        if statuses.blank?
           { response_type: "ephemeral", text: "No statuses have been submitted." }
         else
           {

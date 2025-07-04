@@ -3,7 +3,7 @@ module Slack
     class BaseController < ApplicationController
       skip_before_action :verify_authenticity_token
       before_action :authenticate_slack_request!
-      before_action :set_team
+      before_action :set_slack_installation
 
       allow_unauthenticated_access
 
@@ -13,10 +13,10 @@ module Slack
         render json: { error: "Invalid Signature" }, status: 401
       end
 
-      def set_team
-        @team = Team.find_by(team_id: params[:team_id])
+      def set_slack_installation
+        @slack_installation = SlackInstallation.find_by(slack_team_id: params[:team_id])
 
-        render json: { error: "Could not find team: #{params[:team_id]}" }, status: 404 unless @team
+        render json: { error: "Could not find slack team: #{params[:team_id]}" }, status: 404 unless @slack_installation
       end
 
       def set_user
@@ -26,7 +26,7 @@ module Slack
       end
 
       def slack_client
-        @slack_client ||= Slack::Web::Client.new({ token: @team.token })
+        @slack_client ||= Slack::Web::Client.new({ token: @slack_installation.token })
       end
     end
   end
