@@ -32,6 +32,25 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_dom "summary", "Today's Status"
   end
 
+  test "creating a status properly formats the content" do
+    team = teams(:basic)
+    user = users(:member)
+
+    sign_in(user)
+
+    post(team_statuses_path(team), params: basic_status_user_input)
+
+    assert_redirected_to new_team_status_path(team)
+
+    follow_redirect!
+
+    assert_dom "summary", { text: "John Doe", count: 1 }
+    assert_dom "details li", { count: 3 }
+    assert_dom "li", { text: "I love pizza", count: 1 }
+    assert_dom "li", { text: "And taco's", count: 1 }
+    assert_dom "li", { text: "oh yes", count: 1 }
+  end
+
   test "draft input present when today's status complete" do
     team = teams(:basic)
     user = users(:member)
@@ -64,7 +83,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_dom "summary", "Today's Status"
     assert_dom "summary", "Tomorrow's Status (Draft)"
-    assert_dom "textarea", "hey hey hey"
+    assert_dom "textarea", "- hey hey hey"
   end
 
   test "status history displays most recent status on page 1" do
