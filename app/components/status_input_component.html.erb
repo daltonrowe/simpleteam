@@ -1,4 +1,4 @@
-<%= form_with **form_attrs, html: { class: "flex flex-col gap-4" } do |form| %>
+<%= form_with **form_attrs, html: { class: "flex flex-col gap-4", data: { controller: 'status-input' } } do |form| %>
   <%= form.hidden_field :is_draft, value: "1" if is_draft %>
 
   <% team.sections.each_with_index do |section, index| %>
@@ -15,7 +15,15 @@
                       id: section_id(index),
                       value: section_value(section["name"]),
                       rows: 4,
-                      class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full field-size-content-polyfill" %>
+                      class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full field-size-content-polyfill",
+                      data: {
+                        action: 'focus->status-input#focus 
+                        keydown.meta+enter->status-input#submit 
+                        keydown.ctrl+enter->status-input#submit 
+                        keydown.enter->status-input#enter 
+                        input->status-input#input
+                        blur->status-input#blur'
+                      } %>
   </section>
   <% end %>
 
