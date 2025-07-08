@@ -1,7 +1,10 @@
 class RegistrationsController < ApplicationController
   include EncryptionHelper
+  include CaptchaConcern
+
   allow_unauthenticated_access
   unauthenticated_users_only
+  before_action :verify_captcha, only: [ :create ]
 
   def new
     begin
@@ -15,8 +18,12 @@ class RegistrationsController < ApplicationController
 
   def create
     @user = User.new(**create_params.except(:token), id: SecureRandom.uuid)
-    joined_from_seat = PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
 
+    unless @captcha_valid
+      return render :new, alert: "Something went wrong."
+    end
+
+    joined_from_seat = PendingSeatJoinService.new(user: @user, token: create_params[:token]).join
     unless joined_from_seat
       EmailConfirmMailer.request_confirmation(user: @user).deliver_later
     end

@@ -1,0 +1,21 @@
+status_1:
+  user: member
+  team: basic
+  sections:
+    [
+      { "name": "Yesterday", "content": ["Its May 18"] },
+      { "name": "Today", "content": ["Taco"] },
+      { "name": "Links", "content": ["Love"] },
+    ]
+  created_at: "Sat, 18 May 2025 12:30:00 +0000"
+
+status_2:
+  user: member
+  team: basic
+  sections:
+    [
+      { "name": "Yesterday", "content": ["Its May 11"] },
+      { "name": "Today", "content": ["Taco"] },
+      { "name": "Links", "content": ["Love"] },
+    ]
+  created_at: "Sat, 11 May 2025 12:30:00 +0000"

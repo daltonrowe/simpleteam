@@ -53,4 +53,6 @@ Rails.application.configure do
 
   # Mock ENV keys for test
   credentials.encryption_secret_key = "somethingfake"
+  credentials.turnstile_challenge_url = "https://turnstile.example.com"
+  credentials.turnstile_secret_key = "somethingalsofake"
 end

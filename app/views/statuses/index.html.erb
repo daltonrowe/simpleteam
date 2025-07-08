@@ -1,15 +1,18 @@
-<%= render SectionHeaderComponent.new(text: "#{@team.name} History") %>
+<header class="flex flex-col gap-2">
+  <%= render SectionHeaderComponent.new(text: "#{@team.name} History") %>
+  <div class="text-sm text-yin-500">Statuses from <%= @date.strftime("%B %d, %Y") %></div>
+</header>
 
-<% if @team_statuses.any? %>
+<% if @team_statuses&.any? %>
   <%= render StatusComponent.with_collection(@team_statuses) %>
 <% else %>
   <%= render EmptySectionNoticeComponent.new(text: "No statuses to display.") %>
 <% end %>
 
 <div class="flex justify-center gap-4 items-center">
-  <%= render LinkComponent.new(text: "← Prev", to: team_statuses_path(@team, page: @page - 1), extra_classes: @page <= 1 ? [ "opacity-40", "cursor-not-allowed" ] : []) %>
+  <%= render LinkComponent.new(text: "← Prev", to: team_statuses_path(@team, date: @prev)) %>
 
-  <span class="border rounded p-2"><%= @page %></span>
-
-  <%= render LinkComponent.new(text: "Next →", to: team_statuses_path(@team, page: @page + 1)) %>
+  <%= render LinkComponent.new(text: "Next →",
+                               to: team_statuses_path(@team, date: @next),
+                               extra_classes: @next.future? ? [ "opacity-40", "cursor-not-allowed", "pointer-events-none" ] : []) %>
 </div>
