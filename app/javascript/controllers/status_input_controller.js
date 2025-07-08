@@ -2,11 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="status-input"
 export default class extends Controller {
-  connect() {
-    console.log('hey!');
-
-  }
-
   focus(event) {
     if (event.target.value.length === 0) event.target.value = '- '
   }
