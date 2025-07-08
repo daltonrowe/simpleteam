@@ -31,9 +31,11 @@ class Status < ApplicationRecord
   private
 
   def format_section(name, raw_content)
+    content = raw_content.split("\n").map { |s| s.sub("- ", "") }.reject(&:blank?)
+
     {
       name:,
-      content: raw_content.split("\n").reject(&:blank?)
+      content:
     }
   end
 
