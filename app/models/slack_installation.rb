@@ -1,5 +1,5 @@
 class SlackInstallation < ApplicationRecord
-  validates_uniqueness_of :token, message: 'has already been used'
+  validates_uniqueness_of :token, message: "has already been used"
 
   has_many :teams, dependent: :destroy
   belongs_to :user, optional: true
@@ -20,7 +20,7 @@ class SlackInstallation < ApplicationRecord
     auth = client.auth_test
 
     presence = begin
-                 client.users_getPresence(user: auth['user_id'])
+                 client.users_getPresence(user: auth["user_id"])
                rescue Slack::Web::Api::Errors::MissingScope
                  nil
                end
@@ -38,7 +38,7 @@ class SlackInstallation < ApplicationRecord
   rescue Slack::Web::Api::Errors::SlackError => e
     logger.warn "Active team #{self} ping, #{e.message}."
     case e.message
-    when 'account_inactive', 'invalid_auth'
+    when "account_inactive", "invalid_auth"
       deactivate!
     end
   end

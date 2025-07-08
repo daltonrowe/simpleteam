@@ -4,7 +4,6 @@ require "block_formatter"
 module Slack
   module Commands
     class SimpleTeamController < BaseController
-
       def index
         case params[:text]
         when "status"
