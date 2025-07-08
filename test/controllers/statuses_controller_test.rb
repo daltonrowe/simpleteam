@@ -83,7 +83,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_dom "summary", "Today's Status"
     assert_dom "summary", "Tomorrow's Status (Draft)"
-    assert_dom "textarea", "hey hey hey"
+    assert_dom "textarea", "- hey hey hey"
   end
 
   test "status history displays most recent status on page 1" do
