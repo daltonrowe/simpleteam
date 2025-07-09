@@ -61,6 +61,9 @@ jobs:
       - name: Lint erb for consistent style
         run: bundle exec erb_lint --lint-all
 
+      - name: Format js for consistent style
+        run: bin/prettier check
+
   zeitwerk:
     runs-on: ubuntu-latest
     steps:
@@ -89,8 +92,13 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
+          ruby-version-file: .tool-versions
           bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .tool-versions
 
       - name: Run tests
         env:
