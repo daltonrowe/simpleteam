@@ -6,8 +6,8 @@ module Slack
 
     def create
       options = {
-        client_id: Settings.slack.client_id,
-        client_secret: Settings.slack.client_secret,
+        client_id: Rails.configuration.x.slack.client_id,
+        client_secret: Rails.configuration.x.slack.client_secret,
         code: params[:code]
       }
 
