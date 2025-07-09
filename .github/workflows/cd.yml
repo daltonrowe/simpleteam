@@ -21,7 +21,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
@@ -37,7 +36,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
@@ -52,7 +50,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Lint code for consistent style
@@ -73,7 +70,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Ensure correct paths and names
@@ -92,7 +88,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: .tool-versions
           bundler-cache: true
 
       - name: Set up Node
