@@ -50,14 +50,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
-
-  # Mock ENV keys for test
-  credentials.encryption_secret_key = "somethingfake"
-  credentials.turnstile_challenge_url = "https://turnstile.example.com"
-  credentials.turnstile_secret_key = "somethingalsofake"
-
-  credentials.slack.client_id = "fake-client-id"
-  credentials.slack.client_secret = "fake-client-secret"
-  credentials.slack.signing_secret = "fake-signing-secret"
-  credentials.slack.verification_token = "fake-verification-token"
 end
