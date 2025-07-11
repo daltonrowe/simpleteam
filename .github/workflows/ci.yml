@@ -69,6 +69,24 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Debug environment
+        env:
+          RAILS_ENV: test
+          RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
+        run: echo 'puts ENV["RAILS_ENV"]' | bin/rails c
+
+      - name: Debug environment key
+        env:
+          RAILS_ENV: test
+          RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
+        run: echo 'puts ENV["RAILS_TEST_KEY"]' | bin/rails c
+
+      - name: Debug creds
+        env:
+          RAILS_ENV: test
+          RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
+        run: echo 'puts Rails.application.credentials.slack' | bin/rails c
+
       - name: Ensure correct paths and names
         env:
           RAILS_ENV: test
