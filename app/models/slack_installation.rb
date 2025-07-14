@@ -14,6 +14,20 @@ class SlackInstallation < ApplicationRecord
     update!(active: true, token: token)
   end
 
+  def ping_if_active!
+    return unless active?
+
+    ping!
+  rescue Slack::Web::Api::Errors::SlackError => e
+    logger.warn "Active team #{self} ping, #{e.message}."
+    case e.message
+    when "account_inactive", "invalid_auth"
+      deactivate!
+    end
+  end
+
+  private
+
   def ping!
     client = Slack::Web::Client.new(token: token)
 
@@ -29,17 +43,5 @@ class SlackInstallation < ApplicationRecord
       auth: auth,
       presence: presence
     }
-  end
-
-  def ping_if_active!
-    return unless active?
-
-    ping!
-  rescue Slack::Web::Api::Errors::SlackError => e
-    logger.warn "Active team #{self} ping, #{e.message}."
-    case e.message
-    when "account_inactive", "invalid_auth"
-      deactivate!
-    end
   end
 end

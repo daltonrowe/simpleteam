@@ -12,7 +12,6 @@ module Slack
       }
 
       auth = Slack::Web::Client.new.oauth_v2_access(options)
-      access_token = auth.access_token
       token = auth.access_token
       user_id = auth.authed_user&.id
       bot_user_id = auth.bot_user_id
@@ -28,7 +27,7 @@ module Slack
         installation.update!(
           oauth_scope:,
           activated_user_id: user_id,
-          activated_user_access_token: access_token,
+          activated_user_access_token: token,
           bot_user_id:
         )
 
@@ -49,7 +48,7 @@ module Slack
           slack_team_id: team_id,
           name: team_name,
           activated_user_id: user_id,
-          activated_user_access_token: access_token,
+          activated_user_access_token: token,
           bot_user_id:
         )
 
