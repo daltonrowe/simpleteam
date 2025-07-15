@@ -5,10 +5,7 @@ _fixture:
 
 base: &base
   user: member
-  slack_team_id: <%= SecureRandom.uuid %>
-  name: "Slack App"
   domain: "www.example.com"
-  token: <%= SecureRandom.uuid %>
   oauth_scope: "users:read"
   bot_user_id: "123"
   activated_user_id: "789"
@@ -16,7 +13,13 @@ base: &base
 
 default:
   <<: *base
+  slack_team_id: <%= SecureRandom.uuid %>
+  name: "Default Slack App"
+  token: <%= SecureRandom.uuid %>
 
 inactive:
   <<: *base
+  slack_team_id: <%= SecureRandom.uuid %>
+  name: "Inactive Slack App"
+  token: <%= SecureRandom.uuid %>
   active: false
