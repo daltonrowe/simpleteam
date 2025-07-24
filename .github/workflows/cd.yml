@@ -113,7 +113,7 @@ jobs:
 
   deploy_start:
     runs-on: ubuntu-latest
-    needs: [scan_ruby, scan_js, lint, test]
+    needs: [scan_ruby, scan_js, lint, test, zeitwerk]
 
     steps:
       - name: Notify start
@@ -136,7 +136,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [scan_ruby, scan_js, lint, test, zietwerk]
+    needs: [scan_ruby, scan_js, lint, test, zeitwerk]
 
     permissions:
       contents: read
