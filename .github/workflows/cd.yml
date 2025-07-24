@@ -74,6 +74,7 @@ jobs:
 
       - name: Ensure correct paths and names
         env:
+          RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_KEY }}
         run: bin/rails zeitwerk:check
 
