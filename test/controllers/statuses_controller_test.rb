@@ -101,7 +101,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_dom "li", "Its May 18"
   end
 
-    test "status history displays statuses by date" do
+  test "status history displays statuses by date" do
     team = teams(:basic)
     user = users(:member)
     status = statuses(:status_2)
@@ -115,5 +115,19 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_dom "div", "Statuses from May 11, 2025"
     assert_dom "summary", { text: "John Doe", count: 1 }
     assert_dom "li", "Its May 11"
+  end
+
+  test "project management urls are expressed as dates" do
+    team = teams(:with_metadata)
+    user = users(:member)
+    status = statuses(:with_ticket)
+
+    sign_in(user)
+
+    get team_statuses_path(team, date: status.created_at)
+
+    assert_response :success
+    assert_dom "li", "Working on ST-1234 today"
+    assert_dom "a", "ST-1234"
   end
 end

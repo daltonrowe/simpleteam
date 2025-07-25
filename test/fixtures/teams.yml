@@ -17,4 +17,4 @@ basic:
 
 with_metadata:
   <<: *base
-  metadata: { "project_management_url": "https://radshack.com" }
+  metadata: { "project_management_url": "https://radshack.com/" }

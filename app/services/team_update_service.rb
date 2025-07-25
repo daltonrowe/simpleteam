@@ -1,7 +1,7 @@
 class TeamUpdateService
   def initialize(team, update)
     @team = team
-    @update = update
+    @update = update.to_h
   end
 
   attr_accessor :team, :update

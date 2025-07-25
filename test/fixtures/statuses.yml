@@ -19,3 +19,14 @@ status_2:
       { "name": "Links", "content": ["Love"] },
     ]
   created_at: "Sat, 11 May 2025 12:30:00 +0000"
+
+with_ticket:
+  user: member
+  team: with_metadata
+  sections:
+    [
+      { "name": "Yesterday", "content": ["Its May 11"] },
+      { "name": "Today", "content": ["Working on ST-1234 today"] },
+      { "name": "Links", "content": ["Love"] },
+    ]
+  created_at: "Thursday, 1 May 2025 12:30:00 +0000"

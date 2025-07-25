@@ -86,6 +86,6 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
 
     team.project_managementment_url
 
-    assert_equal team.project_managementment_url, "https://radshack.com"
+    assert_equal team.project_managementment_url, "https://radshack.com/"
   end
 end
