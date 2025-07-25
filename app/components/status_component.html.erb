@@ -15,7 +15,7 @@
 
       <ul class="flex flex-col gap-1 list-disc pl-4">
         <% section["content"].each do |content| %>
-          <li><%= content %></li>
+          <li><%== transformed_content(content) %></li>
         <% end %>
       </ul>
 

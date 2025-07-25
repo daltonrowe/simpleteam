@@ -1,3 +1,7 @@
 basic_member:
   team: basic
   user: member
+
+metadata_member:
+  team: with_metadata
+  user: member

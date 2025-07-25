@@ -1,10 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# This model initially had no columns defined. If you add columns to the
-# model remove the "{}" from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-basic:
+base: &base
   user: owner
   name: "My Awesome Team"
   notifaction_time: "Sat, 17 May 2025 22:30:00 +0000"
@@ -17,3 +11,10 @@ basic:
       { "name": "Links", "description": "Read anything good?" },
     ]
   metadata: {}
+
+basic:
+  <<: *base
+
+with_metadata:
+  <<: *base
+  metadata: { "project_management_url": "https://radshack.com/" }
