@@ -9,6 +9,10 @@ class Team < ApplicationRecord
   alias_attribute :original_end_of_day, :end_of_day
   alias_attribute :original_notifaction_time, :notifaction_time
 
+  METADATA_ATTRIBUTES = [
+    "project_management_url"
+  ].freeze
+
   # metadata json:
   # ticket_link
   # slack_webhook
@@ -73,5 +77,9 @@ class Team < ApplicationRecord
 
   def member_count
     self.seats.length + 1
+  end
+
+  def project_managementment_url
+    self.metadata.dig("project_management_url")
   end
 end

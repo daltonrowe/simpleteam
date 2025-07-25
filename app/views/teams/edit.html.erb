@@ -53,6 +53,15 @@
       <% end %>
     </fieldset>
 
+    <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">More Features</h2>
+
+      <%= render Form::InlineLayoutComponent.new(label: "Project Management URL:") do %>
+        <%= form.text_field(:project_management_url, value: @team.project_managementment_url, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full") %>
+      <% end %>
+
+    </fieldset>
+
     <div class="cursor-not-allowed">
       <fieldset class="flex flex-col gap-4 opacity-40 pointer-events-none">
         <h2 class="font-bold text-2xl">Notifactions</h2>
