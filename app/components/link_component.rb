@@ -16,6 +16,6 @@ class LinkComponent < Abstract::NavigatorComponent
   def call
     return link_to text, to, class: classes if to.present?
 
-    tag.a text, to, class: classes
+    tag.a text, nil, class: classes
   end
 end
