@@ -15,7 +15,7 @@ class StatusComponent < ApplicationComponent
     content = strip_tags(content)
 
     if team.project_managementment_url
-      content = content.gsub(/[A-Z]+-[0-9]+/) { |s| tag.a(s, href: "#{team.project_managementment_url}#{s}", target: "_blank", rel: "nofollow noreferrer noopener") }
+      content = content.gsub(/[A-Z]+-[0-9]+/) { |s| render ExternalLinkComponent.new(text: s, to: "#{team.project_managementment_url}#{s}") }
     end
 
     content
