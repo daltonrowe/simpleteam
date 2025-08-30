@@ -17,26 +17,28 @@ export default class extends Controller {
 
       try {
         url = new URL(event.data);
-      } catch (_error) {}
+      } catch (_error) { }
 
-      if (url) this.createMarkdownLink(event);
+      if (url) this.createMarkdownLink(url, event);
     }
   }
 
-  createMarkdownLink(event) {
+  createMarkdownLink(url, event) {
     event.preventDefault();
 
     const beginning = event.target.value.substring(
       0,
       event.target.selectionStart,
     );
-    const middle = event.target.value.substring(
+    let linkText = event.target.value.substring(
       event.target.selectionStart,
       event.target.selectionEnd,
     );
     const end = event.target.value.substring(event.target.selectionEnd);
 
-    const newValue = beginning + `[${middle}](${event.data})` + end;
+    if (!linkText) linkText = url.host
+
+    const newValue = beginning + `[${linkText}](${event.data})` + end;
 
     // doesn't trigger undo history change, but good enough for now
     // unsure if suitable alt to execCommand exists
