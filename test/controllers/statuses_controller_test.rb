@@ -117,7 +117,7 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_dom "li", "Its May 11"
   end
 
-  test "project management urls are expressed as dates" do
+  test "project management urls are expressed as links" do
     team = teams(:with_metadata)
     user = users(:member)
     status = statuses(:with_ticket)
@@ -129,5 +129,19 @@ class StatusesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_dom "li", "Working on ST-1234 today"
     assert_dom "a", "ST-1234"
+  end
+
+  test "markdown urls are expressed as links" do
+    team = teams(:with_metadata)
+    user = users(:member)
+    status = statuses(:with_md_link)
+
+    sign_in(user)
+
+    get team_statuses_path(team, date: status.created_at)
+
+    assert_response :success
+    assert_dom "li", "Working on pizza today"
+    assert_dom "a[href='https://pizzahut.com']", "pizza"
   end
 end
