@@ -30,3 +30,17 @@ with_ticket:
       { "name": "Links", "content": ["Love"] },
     ]
   created_at: "Thursday, 1 May 2025 12:30:00 +0000"
+
+with_md_link:
+  user: member
+  team: with_metadata
+  sections:
+    [
+      { "name": "Yesterday", "content": ["Its May 11"] },
+      {
+        "name": "Today",
+        "content": ["Working on [pizza](https://pizzahut.com) today"],
+      },
+      { "name": "Links", "content": ["Love"] },
+    ]
+  created_at: "Thursday, 1 May 2025 12:30:00 +0000"

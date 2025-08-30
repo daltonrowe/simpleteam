@@ -14,5 +14,7 @@
 
   <%= render LinkComponent.new(text: "Next →",
                                to: team_statuses_path(@team, date: @next),
-                               extra_classes: @next.future? ? [ "opacity-40", "cursor-not-allowed", "pointer-events-none" ] : []) %>
+                               element: {
+                                class: @next.future? ? "opacity-40 cursor-not-allowed pointer-events-none" : ""
+                               }) %>
 </div>
