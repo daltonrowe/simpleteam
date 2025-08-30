@@ -15,7 +15,12 @@ class StatusComponent < ApplicationComponent
     content = strip_tags(content)
 
     if team.project_managementment_url
-      content = content.gsub(/[A-Z]+-[0-9]+/) { |s| render ExternalLinkComponent.new(text: s, to: "#{team.project_managementment_url}#{s}") }
+      content = content.gsub(/[A-Z]+-[0-9]+/) { |text| render LinkComponent.new(text:, to: "#{team.project_managementment_url}#{text}", external: true) }
+    end
+
+    mardown_regex = /\[([^\]]+)\]\(([^)]+)\)/
+    content.scan(mardown_regex).each do |text, to|
+      content = content.gsub("[#{text}](#{to})", "#{render LinkComponent.new(text:, to:, external: true)}")
     end
 
     content

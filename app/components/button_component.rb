@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ButtonComponent < Abstract::NavigatorComponent
-  def initialize(text:, type: nil, to: nil, method: nil, style: :filled, level: :primary, form: nil, extra_classes: [], data: {})
+  def initialize(text:, type: nil, to: nil, method: nil, style: :filled, level: :primary, form: nil, element: nil)
     @text = text
     @type = type
     @to = to
@@ -9,17 +9,22 @@ class ButtonComponent < Abstract::NavigatorComponent
     @style = style
     @level = level
     @form = form
-    @extra_classes = extra_classes
-    @data = data
+    @element_attrs = element
 
     super
   end
 
-  attr_reader :text, :type, :to, :method, :style, :level, :form, :extra_classes, :data
+  attr_reader :text, :type, :to, :method, :style, :level, :form, :element_attrs
 
   def call
-    return button_to(text, to, method:, form:, class: classes, data:) if to.present?
+    attrs = {
+      method:,
+      form:,
+      class: classes
+    }
 
-    tag.button text, type:, class: classes, data:
+    return button_to(text, to, **merge_html_attrs(attrs, element_attrs)) if to.present?
+
+    tag.button(text, type:, **merge_html_attrs(attrs, element_attrs))
   end
 end

@@ -8,6 +8,8 @@ Simple way to collect status updates from small teams.
 bin/dev
 ```
 
+## Run Linting
+
 ## References
 
 https://greg.molnar.io/blog/tailwindcss-and-rails-8/
