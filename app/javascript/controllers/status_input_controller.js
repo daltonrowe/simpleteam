@@ -17,7 +17,7 @@ export default class extends Controller {
 
       try {
         url = new URL(event.data);
-      } catch (_error) { }
+      } catch (_error) {}
 
       if (url) this.createMarkdownLink(url, event);
     }
@@ -36,7 +36,7 @@ export default class extends Controller {
     );
     const end = event.target.value.substring(event.target.selectionEnd);
 
-    if (!linkText) linkText = url.host
+    if (!linkText) linkText = url.host;
 
     const newValue = beginning + `[${linkText}](${event.data})` + end;
 

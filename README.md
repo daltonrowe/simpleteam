@@ -9,6 +9,9 @@ bin/dev
 
 # lint erb
 erb_lint --lint-all -a
+
+# lint js
+bin/prettier write
 ```
 
 ## Run Linting
