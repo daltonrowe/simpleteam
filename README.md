@@ -6,6 +6,9 @@ Simple way to collect status updates from small teams.
 
 ```zsh
 bin/dev
+
+# lint erb
+erb_lint --lint-all -a
 ```
 
 ## Run Linting
