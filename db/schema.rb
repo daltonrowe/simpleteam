@@ -11,6 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_09_10_011214) do
+  create_table "data", id: :string, force: :cascade do |t|
+    t.string "team_id", null: false
+    t.string "name", limit: 120, null: false
+    t.json "content", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "created_at"], name: "index_data_on_name_and_created_at"
+    t.index ["team_id"], name: "index_data_on_team_id"
+  end
+
   create_table "pending_seats", force: :cascade do |t|
     t.string "team_id"
     t.string "email_address"
@@ -103,6 +113,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_10_011214) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "data", "teams"
   add_foreign_key "pending_seats", "teams"
   add_foreign_key "seats", "teams"
   add_foreign_key "seats", "users"
