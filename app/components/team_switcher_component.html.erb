@@ -4,7 +4,7 @@
 
   <div class="flex gap-4">
     <%= render LinkComponent.new(text: "Status Updates", to: new_team_status_path(team)) %>
-    <%= render LinkComponent.new(text: "Data Store", to: new_team_status_path(team)) %>
+    <%= render LinkComponent.new(text: "Data Store", to: team_data_path(team)) %>
 
     <% if team.user == Current.user %>
       <%= render LinkComponent.new(text: "Team Settings", to: edit_team_path(team)) %>

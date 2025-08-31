@@ -19,7 +19,7 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       { "name" => "C" }
     ]
 
-    assert_equal team.sections, expected
+    assert_equal expected, team.sections
   end
 
   test "should collect end_of_day from params" do
@@ -31,9 +31,9 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "time_zone" => "Central Time (US & Canada)"
     }).call
 
-    assert_equal team.end_of_day.hour, 6
-    assert_equal team.end_of_day.min, 45
-    assert_equal team.end_of_day.time_zone.name, "UTC"
+    assert_equal 6, team.end_of_day.hour
+    assert_equal 45, team.end_of_day.min
+    assert_equal "UTC", team.end_of_day.time_zone.name
   end
 
   test "should collect notifaction_time from params" do
@@ -44,9 +44,9 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "notifaction_time(5i)"=>"22"
     }).call
 
-    assert_equal team.notifaction_time.hour, 18
-    assert_equal team.notifaction_time.min, 22
-    assert_equal team.notifaction_time.time_zone.name, "UTC"
+    assert_equal 18, team.notifaction_time.hour
+    assert_equal 22, team.notifaction_time.min
+    assert_equal "UTC", team.notifaction_time.time_zone.name
   end
 
   test "should collect metadata attributes from params" do
@@ -56,7 +56,7 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "project_management_url"=>"https://example.com/someroute"
     }).call
 
-    assert_equal team.project_managementment_url, "https://example.com/someroute"
+    assert_equal "https://example.com/someroute", team.project_managementment_url
   end
 
   test "should overwrite metadata attributes from params" do
@@ -66,7 +66,7 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "project_management_url"=>"https://example.com/tacos"
     }).call
 
-    assert_equal team.project_managementment_url, "https://example.com/tacos"
+    assert_equal "https://example.com/tacos", team.project_managementment_url
   end
 
   test "should convert empty strings to nil" do
@@ -84,8 +84,15 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
 
     TeamUpdateService.new(team, {}).call
 
-    team.project_managementment_url
+    assert_equal "https://radshack.com/", team.project_managementment_url
+  end
 
-    assert_equal team.project_managementment_url, "https://radshack.com/"
+  test "should not overwrite if updates other data" do
+    team = teams(:with_metadata)
+
+    TeamUpdateService.new(team, { "data_api_key" => "tacobell" }).call
+
+    assert_equal "https://radshack.com/", team.project_managementment_url
+    assert_equal "tacobell", team.data_api_key
   end
 end

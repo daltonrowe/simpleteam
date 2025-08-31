@@ -27,9 +27,26 @@ class TeamsController < ApplicationController
     success = TeamUpdateService.new(@team, update_params).call
 
     if success
-      redirect_to edit_team_path(@team), notice: "Team updated!"
+      redirect_to team_data_path(@team), notice: "Team updated!"
     else
-      redirect_to edit_team_path(@team), alert: "Something went wrong."
+      redirect_to team_data_path(@team), alert: "Something went wrong!"
+    end
+  end
+
+  def create_api_key
+    success = TeamUpdateService.new(@team, { data_api_key: SecureRandom.uuid }).call
+
+    if success
+      redirect_to team_data_path(@team), notice: "New API key created!"
+    else
+      redirect_to team_data_path(@team), notice: "New API key created!"
+    end
+  end
+
+  def destroy_api_key
+    @team.api_key = nil
+    if @team.save
+      redirect_to edit_team_path(@team), notice: "API disabled!"
     end
   end
 
