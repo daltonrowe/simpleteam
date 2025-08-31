@@ -17,6 +17,15 @@ class TeamUpdateService
     @team.update(**valid_updates)
   end
 
+  def update_metadata(key, value)
+    return false unless Team::METADATA_ATTRIBUTES.include?(key)
+
+    metadata = JSON.parse Team.metadata
+    metadata[key] = value
+
+    Team.metadata = metadata.to_json
+  end
+
   private
 
   def collect_sections
@@ -57,9 +66,9 @@ class TeamUpdateService
   end
 
   def collect_metadata
-    incoming_metdata = update.select { |key| Team::METADATA_ATTRIBUTES.include?(key) }
-    incoming_metdata = incoming_metdata.transform_values { |value| value.blank? ? nil : value }
+    incoming_metadata = update.select { |key| Team::METADATA_ATTRIBUTES.include?(key) }
+    incoming_metadata = incoming_metadata.transform_values { |value| value.blank? ? nil : value }
 
-    incoming_metdata.any? ? incoming_metdata : nil
+    incoming_metadata.any? ? team.metadata.merge(incoming_metadata) : nil
   end
 end
