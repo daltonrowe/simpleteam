@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :statuses do
       post "draft"
     end
+    resources :data
   end
 
   get "/dashboard/user", to: "dashboard#user"
