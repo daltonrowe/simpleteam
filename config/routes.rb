@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
     post "api_key", to: "teams#create_api_key"
 
-    resources :data, except: [ :update, :edit ]
+    resources :data, only: [ :index ]
   end
 
   get "/dashboard/user", to: "dashboard#user"
