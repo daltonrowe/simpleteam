@@ -15,4 +15,7 @@
       <%= render IconComponent.new(icon: :add, classes: 'size-7 fill-white cursor-pointer hover:opacity-80') %>
     <% end %>
   <% end %>
+
 </div>
+
+<%= turbo_frame_tag 'team_data_index', src: team_data_path(@team, frame: true)  %>

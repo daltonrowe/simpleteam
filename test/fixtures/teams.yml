@@ -18,3 +18,7 @@ basic:
 with_metadata:
   <<: *base
   metadata: { "project_management_url": "https://radshack.com/" }
+
+with_api_key:
+  <<: *base
+  metadata: { "data_api_key": "1234abcd" }
