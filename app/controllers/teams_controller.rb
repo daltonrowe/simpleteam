@@ -37,10 +37,14 @@ class TeamsController < ApplicationController
     success = TeamUpdateService.new(@team, { "data_api_key" => SecureRandom.uuid }).call
 
     if success
-      redirect_to team_data_path(@team), notice: "New API key created!"
+      redirect_to team_data_store_path(@team), notice: "New API key created!"
     else
-      redirect_to team_data_path(@team), notice: "Something went wrong!"
+      redirect_to team_data_store_path(@team), notice: "Something went wrong!"
     end
+  end
+
+  def data_store
+    render "data_store"
   end
 
   private
