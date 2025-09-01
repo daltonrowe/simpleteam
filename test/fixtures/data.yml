@@ -1,0 +1,19 @@
+data_1:
+  team: with_api_key
+  name: Some Data Type
+  content: { "prop": 1 }
+
+data_2:
+  team: with_api_key
+  name: Some Data Type
+  content: { "prop": 2 }
+
+data_3:
+  team: with_api_key
+  name: Another Data Type
+  content: { "another": 1 }
+
+other_data_4:
+  team: other_team
+  name: Some Data Type
+  content: { "prop": 1 }
