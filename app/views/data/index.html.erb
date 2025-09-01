@@ -1,3 +1,18 @@
 <%= render SectionHeaderComponent.new(text: "#{@team.name} Data Store") %>
 
-pizza
+<div class="flex items-center justify-between border rounded-lg p-3">
+  <% if @team.data_api_key %>
+    <span>
+      API Key: <pre class="opacity-60"><%= @team.data_api_key %></pre>
+    </span>
+    <%= button_to team_api_key_path(@team), method: :post, class: 'flex items-center' do %>
+      <%= render IconComponent.new(icon: :refresh, classes: 'w-7 fill-white cursor-pointer hover:opacity-80') %>
+    <% end %>
+  <% else %>
+    <%= 'Create an API Key to get started!' %>
+
+    <%= button_to team_api_key_path(@team), method: :post, class: 'flex items-center' do %>
+      <%= render IconComponent.new(icon: :add, classes: 'size-7 fill-white cursor-pointer hover:opacity-80') %>
+    <% end %>
+  <% end %>
+</div>
