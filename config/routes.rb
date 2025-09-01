@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       post "draft"
     end
 
+    post "api_key", to: "teams#create_api_key"
+
     resources :data, except: [ :update, :edit ]
   end
 

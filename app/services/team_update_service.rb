@@ -1,6 +1,7 @@
 class TeamUpdateService
   def initialize(team, update)
     @team = team
+    # TODO: Symbolize keys so we can pass normal colon assigned hashes in
     @update = update.to_h
   end
 
@@ -15,15 +16,6 @@ class TeamUpdateService
     valid_updates = { sections:, end_of_day:, notifaction_time:, metadata: }.compact
 
     @team.update(**valid_updates)
-  end
-
-  def update_metadata(key, value)
-    return false unless Team::METADATA_ATTRIBUTES.include?(key)
-
-    metadata = JSON.parse Team.metadata
-    metadata[key] = value
-
-    Team.metadata = metadata.to_json
   end
 
   private

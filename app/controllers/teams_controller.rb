@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   include EncryptionHelper
 
   before_action :find_team, except: %i[new create]
-  user_must_have_seat only: %i[show]
+  user_must_have_seat only: %i[show create_api_key]
   user_must_own_team only: %i[edit update]
 
   def new
@@ -34,19 +34,12 @@ class TeamsController < ApplicationController
   end
 
   def create_api_key
-    success = TeamUpdateService.new(@team, { data_api_key: SecureRandom.uuid }).call
+    success = TeamUpdateService.new(@team, { "data_api_key" => SecureRandom.uuid }).call
 
     if success
       redirect_to team_data_path(@team), notice: "New API key created!"
     else
-      redirect_to team_data_path(@team), notice: "New API key created!"
-    end
-  end
-
-  def destroy_api_key
-    @team.api_key = nil
-    if @team.save
-      redirect_to edit_team_path(@team), notice: "API disabled!"
+      redirect_to team_data_path(@team), notice: "Something went wrong!"
     end
   end
 
