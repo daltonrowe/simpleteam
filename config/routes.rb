@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     post "api_key", to: "teams#create_api_key"
     get "data_store", to: "teams#data_store"
 
-    resources :data
+    resources :data do
+      collection do
+        get :names
+      end
+    end
   end
 
   get "/dashboard/user", to: "dashboard#user"
