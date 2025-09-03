@@ -2,7 +2,6 @@ class DataQueryService
   DEFAULT_QUERY_PARAMS = {
     per_page: 30,
     page: 1,
-    name: nil,
     order: "desc"
   }.freeze
 
@@ -14,8 +13,6 @@ class DataQueryService
   attr_reader :data_query
 
   def call
-    query_params = DEFAULT_QUERY_PARAMS.merge(@params)
-
     where_args = {
       team: @team
     }
@@ -24,8 +21,17 @@ class DataQueryService
 
     Datum.where(**where_args)
       .order(created_at: query_params[:order].to_sym)
+      .offset(page_offset)
       .limit(query_params[:per_page])
   end
 
   private
+
+  def query_params
+    @query_params ||= query_params = DEFAULT_QUERY_PARAMS.merge(@params)
+  end
+
+  def page_offset
+    query_params[:per_page].to_i * (query_params[:page].to_i - 1)
+  end
 end
