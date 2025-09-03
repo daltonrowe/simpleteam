@@ -54,6 +54,23 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, data.length
   end
 
+  test "returns the correct page" do
+    team = teams(:with_api_key)
+
+    get(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { per_page: 1, page: 3 }
+    )
+
+    assert_response :ok
+    data = JSON.parse response.body
+
+    puts data[0]["content"]["prop"]
+    assert_equal 1, data.length
+    assert_equal 1, data[0]["content"]["prop"]
+  end
+
   test "returns data with the correct name" do
     team = teams(:with_api_key)
 
