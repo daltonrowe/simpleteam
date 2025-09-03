@@ -69,4 +69,19 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, data.length
     assert_equal "Another Data Type", data[0]["name"]
   end
+
+  # names
+
+  test "returns names of all data" do
+    team = teams(:with_api_key)
+
+    get(names_team_data_path(team), headers: correct_headers)
+
+    assert_response :ok
+    data = JSON.parse response.body
+
+    assert_equal 2, data.length
+    assert_equal "Another Data Type", data[0]
+    assert_equal "Some Data Type", data[1]
+  end
 end
