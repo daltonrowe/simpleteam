@@ -2,7 +2,8 @@ class DataQueryService
   DEFAULT_QUERY_PARAMS = {
     per_page: 30,
     page: 1,
-    order: "desc"
+    order: "desc",
+    name: nil
   }.freeze
 
   def initialize(team:, params:)
