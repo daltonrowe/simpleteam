@@ -66,7 +66,6 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     data = JSON.parse response.body
 
-    puts data[0]["content"]["prop"]
     assert_equal 1, data.length
     assert_equal 1, data[0]["content"]["prop"]
   end
