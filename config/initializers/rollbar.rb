@@ -5,7 +5,7 @@ Rollbar.configure do |config|
   config.access_token = Rails.application.credentials.rollbar_access_token
 
   if Rails.env.development? || Rails.env.test?
-    config.enabled = false
+    config.enabled = true
   end
 
   # By default, Rollbar will try to call the `current_user` controller method
@@ -32,6 +32,11 @@ Rollbar.configure do |config|
   #
   # You can also specify a callable, which will be called with the exception instance.
   # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
+
+  # https://docs.rollbar.com/docs/ruby#exception-level-filters
+  config.exception_level_filters.merge!({
+    "ActionController::RoutingError" => "ignore"
+  })
 
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
   # is not installed)

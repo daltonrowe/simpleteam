@@ -51,7 +51,7 @@ class TeamsController < ApplicationController
       :notifaction_time,
       :end_of_day,
       :time_zone,
-      :metadata
+      :project_management_url
     )
   end
 end

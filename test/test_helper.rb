@@ -27,6 +27,10 @@ module ActiveSupport
       ]
     end
 
+    def basic_status_user_input
+      { "sections"=>{ "Yesterday"=>"- I love pizza\n- And taco's\n- oh yes", "Today"=>"- ", "Links"=>"" } }
+    end
+
     def with_captcha_success
       stub_request(:any, Rails.application.credentials.turnstile_challenge_url).
           to_return(body: { "success" => true }.to_json, headers: {

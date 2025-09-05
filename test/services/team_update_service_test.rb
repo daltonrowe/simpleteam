@@ -48,4 +48,44 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
     assert_equal team.notifaction_time.min, 22
     assert_equal team.notifaction_time.time_zone.name, "UTC"
   end
+
+  test "should collect metadata attributes from params" do
+    team = teams(:basic)
+
+    TeamUpdateService.new(team, {
+      "project_management_url"=>"https://example.com/someroute"
+    }).call
+
+    assert_equal team.project_managementment_url, "https://example.com/someroute"
+  end
+
+  test "should overwrite metadata attributes from params" do
+    team = teams(:with_metadata)
+
+    TeamUpdateService.new(team, {
+      "project_management_url"=>"https://example.com/tacos"
+    }).call
+
+    assert_equal team.project_managementment_url, "https://example.com/tacos"
+  end
+
+  test "should convert empty strings to nil" do
+    team = teams(:with_metadata)
+
+    TeamUpdateService.new(team, {
+      "project_management_url" => ""
+    }).call
+
+    assert_nil team.project_managementment_url
+  end
+
+  test "should not overwrite if new metadata not present" do
+    team = teams(:with_metadata)
+
+    TeamUpdateService.new(team, {}).call
+
+    team.project_managementment_url
+
+    assert_equal team.project_managementment_url, "https://radshack.com/"
+  end
 end

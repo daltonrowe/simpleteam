@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+if [ $1 = "write" ]; then
+  npx --yes prettier --write 'app/**/*.js'
+fi
+
+if [ $1 = "check" ]; then
+  npx --yes prettier --check 'app/**/*.js'
+fi

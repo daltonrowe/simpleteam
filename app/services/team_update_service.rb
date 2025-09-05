@@ -1,7 +1,7 @@
 class TeamUpdateService
   def initialize(team, update)
     @team = team
-    @update = update
+    @update = update.to_h
   end
 
   attr_accessor :team, :update
@@ -10,8 +10,9 @@ class TeamUpdateService
     sections = collect_sections
     end_of_day = collect_time("end_of_day")
     notifaction_time = collect_time("notifaction_time")
+    metadata = collect_metadata
 
-    valid_updates = { sections:, end_of_day:, notifaction_time: }.compact
+    valid_updates = { sections:, end_of_day:, notifaction_time:, metadata: }.compact
 
     @team.update(**valid_updates)
   end
@@ -53,5 +54,12 @@ class TeamUpdateService
     new_time = Time.zone.now.in_time_zone(tz).change({ hour:, min: })
 
     new_time
+  end
+
+  def collect_metadata
+    incoming_metdata = update.select { |key| Team::METADATA_ATTRIBUTES.include?(key) }
+    incoming_metdata = incoming_metdata.transform_values { |value| value.blank? ? nil : value }
+
+    incoming_metdata.any? ? incoming_metdata : nil
   end
 end

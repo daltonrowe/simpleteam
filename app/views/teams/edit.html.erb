@@ -6,7 +6,7 @@
   <% if Current.user.confirmed? %>
     <%= form_with url: team_pending_seats_path(@team), class: "flex gap-2 flex-col sm:flex-row" do |form| %>
       <%= form.text_field :pending_emails, placeholder: "member1@mydomain.com, member2@mydomain.com", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" %>
-      <%= form.simple_submit(text: "Send Invites", extra_classes: [ "shrink-0" ]) %>
+      <%= form.simple_submit(text: "Send Invites", element: { class: "shrink-0" }) %>
     <% end %>
   <% else %>
     <%= render EmptySectionNoticeComponent.new(text: "Confirm your email address before inviting team members.") if @team.seats.empty? %>
@@ -51,6 +51,15 @@
       <%= render Form::InlineLayoutComponent.new(label: "End of Day:") do %>
         <%= form.simple_time_select(:end_of_day, ignore_date: true, ampm: true, value: @team.end_of_day) %>
       <% end %>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">More Features</h2>
+
+      <%= render Form::InlineLayoutComponent.new(label: "Project Management URL:") do %>
+        <%= form.text_field(:project_management_url, value: @team.project_managementment_url, class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full") %>
+      <% end %>
+
     </fieldset>
 
     <div class="cursor-not-allowed">

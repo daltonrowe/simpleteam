@@ -38,7 +38,7 @@ class StatusInputComponent < ApplicationComponent
     section = sections.detect { |section| section["name"] == name }
     return nil unless section
 
-    section["content"].join("\n")
+    section["content"].map { |s| "- #{s}" }.join("\n")
   end
 
   def submit_text

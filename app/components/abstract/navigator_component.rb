@@ -9,8 +9,6 @@ class Abstract::NavigatorComponent < ApplicationComponent
     classes_array.push(*text_classes) if style == :text
     classes_array.push(*inline_classes) if style == :inline
 
-    classes_array.push(*extra_classes) if extra_classes.any?
-
     classes_array.join(" ")
   end
 
@@ -34,7 +32,9 @@ class Abstract::NavigatorComponent < ApplicationComponent
   end
 
   def text_classes
-    classes_array = [ "inline-block", "p-0", "underline", "hover:no-underline" ]
+    classes_array = [ "inline-flex", "p-0", "underline", "hover:no-underline" ]
+
+    classes_array.push(external? ? "decoration-dashed" : "underline")
 
     classes_array.push("text-white", "hover:text-gray-200") if level == :primary
     classes_array.push("text-gray-400", "hover:text-gray-200") if level == :secondary
@@ -49,5 +49,10 @@ class Abstract::NavigatorComponent < ApplicationComponent
     classes_array.push("text-gray-400", "hover:text-gray-200") if level == :secondary
 
     classes_array
+  end
+
+  def external?
+    # this is smelly but gotta fix
+    defined?(external) && external
   end
 end
