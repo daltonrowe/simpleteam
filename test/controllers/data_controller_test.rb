@@ -3,6 +3,7 @@ require "test_helper"
 class DataControllerTest < ActionDispatch::IntegrationTest
   correct_headers = {
       "Accept": "application/json",
+      "Content-Type": "application/json",
       "X-API-Key": "the-correct-key"
     }
   test "returns a 406 unacceptable unless request is json" do
@@ -99,5 +100,25 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, data.length
     assert_equal "Another Data Type", data[0]
     assert_equal "Some Data Type", data[1]
+  end
+
+  # create
+
+  test "creates data if all valid" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      content: { some_data: 1 }
+    }
+
+    post team_data_path(team), headers: correct_headers, params: params.to_json
+
+    assert_response :ok
+
+    json = JSON.parse response.body
+
+    assert json["id"].class == String
+    assert_equal params[:content], json["content"].symbolize_keys
   end
 end

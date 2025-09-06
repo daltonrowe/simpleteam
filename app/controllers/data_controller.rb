@@ -14,10 +14,29 @@ class DataController < ApplicationController
     render json: names.to_json
   end
 
+  def create
+    return head :bad_request unless create_params["name"] && create_params["content"]
+
+    content = create_params["content"].to_h
+    return head :bad_request unless content.is_a? Hash
+
+    data = Datum.create!(id: SecureRandom.uuid, team: @team, **create_params)
+
+    render json: data.to_json
+  end
+
+  def destroy
+    Datum.find_by(team: @team, id: params[:id]).destroy!
+  end
+
   private
 
   def query_params
     params.permit(:name, :per_page, :page)
+  end
+
+  def create_params
+    params.require(:datum).permit(:name, content: {})
   end
 
   def validate_api_key
