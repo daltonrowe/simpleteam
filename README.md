@@ -10,6 +10,9 @@ bin/dev
 # lint erb
 erb_lint --lint-all -a
 
+# lint rb
+bin/rubocop -f github
+
 # lint js
 bin/prettier write
 ```
