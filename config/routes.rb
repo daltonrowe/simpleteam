@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     post "api_key", to: "teams#create_api_key"
     get "data_store", to: "teams#data_store"
 
-    resources :data do
+    resources :data, only: [ :index, :create, :destroy ] do
       collection do
         get :names
       end
