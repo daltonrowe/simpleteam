@@ -118,7 +118,10 @@ class DataControllerTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse response.body
 
+    puts json
+
     assert json["id"].class == String
+    assert_equal json["team_id"], team.id
     assert_equal params[:content], json["content"].symbolize_keys
   end
 end
