@@ -124,4 +124,27 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal json["team_id"], team.id
     assert_equal params[:content], json["content"].symbolize_keys
   end
+
+
+  # create
+
+  test "destroys data if all valid" do
+    team = teams(:with_api_key)
+    data = data(:data_1)
+
+    delete team_datum_path(team, data.id), headers: correct_headers
+
+    assert_response :no_content
+    assert_equal 0, Datum.where(id: data.id).length
+  end
+
+  test "doesnt data if not from team" do
+    team = teams(:with_api_key)
+    data = data(:other_data_4)
+
+    delete team_datum_path(team, data.id), headers: correct_headers
+
+    assert_response :bad_request
+    assert_equal 1, Datum.where(id: data.id).length
+  end
 end

@@ -26,7 +26,10 @@ class DataController < ApplicationController
   end
 
   def destroy
-    Datum.find_by(team: @team, id: params[:id]).destroy!
+    data = Datum.find_by(team: @team, id: params[:id])
+    return head :bad_request unless data
+
+    data.destroy!
   end
 
   private
