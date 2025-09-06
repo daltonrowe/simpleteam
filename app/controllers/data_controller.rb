@@ -10,7 +10,7 @@ class DataController < ApplicationController
   end
 
   def names
-    names = Datum.where(team: @team).order(created_at: :desc).select(:name).distinct.pluck(:name)
+    names = @team.data_names
     render json: names.to_json
   end
 
