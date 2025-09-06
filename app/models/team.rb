@@ -77,6 +77,10 @@ class Team < ApplicationRecord
     self.seats.length + 1
   end
 
+  def data_names
+    Datum.where(team: self).order(created_at: :desc).select(:name).distinct.pluck(:name)
+  end
+
   def project_managementment_url
     self.metadata.dig("project_management_url")
   end

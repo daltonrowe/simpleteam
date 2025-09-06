@@ -118,15 +118,38 @@ class DataControllerTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse response.body
 
-    puts json
-
     assert json["id"].class == String
     assert_equal json["team_id"], team.id
     assert_equal params[:content], json["content"].symbolize_keys
   end
 
+  test "bad_request if not json" do
+    team = teams(:with_api_key)
 
-  # create
+    params = {
+      name: "My Data",
+      content: "something bad {{{"
+    }
+
+    post team_data_path(team), headers: correct_headers, params: params.to_json
+
+    assert_response :bad_request
+  end
+
+  test "bad_request if not hash" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      content: "[1,2,3,4]"
+    }
+
+    post team_data_path(team), headers: correct_headers, params: params.to_json
+
+    assert_response :bad_request
+  end
+
+  # destroy
 
   test "destroys data if all valid" do
     team = teams(:with_api_key)
