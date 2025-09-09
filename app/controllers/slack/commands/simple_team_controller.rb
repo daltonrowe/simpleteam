@@ -12,8 +12,8 @@ module Slack
           render json: create_team
         when "status"
           render json: list_status
-        when "add member"
-          render json: add_member
+        when "join team"
+          render json: join_team
         else
           render json: { response_type: "ephemeral", text: "Unknown option: #{params[:text]}" }
         end
@@ -22,7 +22,8 @@ module Slack
       private
 
       def list_status
-        statuses = @slack_installation.teams.first&.current_statuses
+        statuses = @slack_installation.teams.find_by(name: params[:channel_name])&.current_statuses
+
         if statuses.blank?
           { response_type: "ephemeral", text: "No statuses have been submitted." }
         else
@@ -35,19 +36,24 @@ module Slack
 
       def create_team
         set_user
-        team = @slack_installation.teams.find_or_create_by(name: params[:channel_name], user: @user)
+
+        team = Team.create_with(id: SecureRandom.uuid, user: @user)
+                   .find_or_create_by(slack_installation: @slack_installation, name: params[:channel_name])
         Seat.create(user: @user, team:)
 
         { response_type: "ephemeral", text: "Created team: #{params[:channel_name]}" }
       end
 
-      def add_member
+      def join_team
         set_user
         team = @slack_installation.teams.find_by(name: params[:channel_name])
 
         if team
-          Seat.create(user: @user, team:)
-          { response_type: "ephemeral", text: "Added member to #{params[:channel_name]} team." }
+          if Seat.find_or_create_by(user: @user, team:)
+            { response_type: "ephemeral", text: "Joined #{params[:channel_name]} team." }
+          else
+            { response_type: "ephemeral", text: "Failed to join #{params[:channel_name]} team." }
+          end
         else
           { response_type: "ephemeral", text: "Sorry, #{params[:channel_name]} team does not exist." }
         end
