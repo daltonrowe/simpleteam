@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_04_114540) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_10_011214) do
   create_table "pending_seats", force: :cascade do |t|
     t.string "team_id"
     t.string "email_address"
@@ -61,6 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_04_114540) do
   create_table "slack_users", id: :string, force: :cascade do |t|
     t.string "user_id"
     t.string "slack_user_id"
+    t.string "slack_installation_id"
+    t.index ["slack_installation_id"], name: "index_slack_users_on_slack_installation_id"
     t.index ["user_id"], name: "index_slack_users_on_user_id"
   end
 
@@ -106,6 +108,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_04_114540) do
   add_foreign_key "seats", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "slack_installations", "users"
+  add_foreign_key "slack_users", "slack_installations"
   add_foreign_key "slack_users", "users"
   add_foreign_key "statuses", "teams"
   add_foreign_key "statuses", "users"

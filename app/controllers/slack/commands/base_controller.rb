@@ -21,7 +21,7 @@ module Slack
       def user
         return @user if defined?(@user)
 
-        @user = find_or_create_slack_user(params[:user_id], slack_installation.token)
+        @user = find_or_create_slack_user(params[:user_id], slack_installation.token, slack_installation)
       end
 
       def team

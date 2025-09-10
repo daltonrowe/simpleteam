@@ -27,7 +27,7 @@ module Slack
       end
 
       def user
-        @user ||= find_or_create_slack_user(payload_params.user.id, slack_installation.token)
+        @user ||= find_or_create_slack_user(payload_params.user.id, slack_installation.token, slack_installation)
       end
     end
   end

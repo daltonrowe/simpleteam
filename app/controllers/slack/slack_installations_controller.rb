@@ -2,7 +2,7 @@ require "securerandom"
 
 module Slack
   class SlackInstallationsController < BaseController
-    allow_unauthenticated_access only: %i[ create ]
+    skip_before_action :authenticate_slack_request!
 
     def create
       options = {
@@ -39,9 +39,8 @@ module Slack
       else
 
 
-        SlackInstallation.create!(
+        slack_installation = SlackInstallation.create!(
           id: SecureRandom.uuid,
-          user: find_or_create_slack_user(user_id, token),
           token:,
           oauth_version: :v2,
           oauth_scope:,
@@ -51,6 +50,9 @@ module Slack
           activated_user_access_token: token,
           bot_user_id:
         )
+
+        user = find_or_create_slack_user(user_id, token, slack_installation)
+        slack_installation.update(user:)
 
         redirect_to root_path, notice: "Slack Team created!"
       end

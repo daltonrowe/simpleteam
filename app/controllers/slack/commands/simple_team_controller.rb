@@ -98,7 +98,7 @@ module Slack
         status.save!
 
         slack_client.chat_postEphemeral(channel: team.name,
-                                  user: user.slack_users.first.slack_user_id,
+                                  user: user.slack_users.find_by(slack_installation:).slack_user_id,
                                   text: "Status was added! :raised_hands:")
         { "response_action": "clear" }
       end
