@@ -77,10 +77,10 @@ module Slack
       def add_status_modal
         existing_status = team.current_statuses.where(user:).first
         view = if existing_status
-                 edit_status_view(existing_status)
-               else
-                 add_status_view
-               end
+          edit_status_view(existing_status)
+        else
+          add_status_view
+        end
 
         slack_client.views_open(trigger_id: params["trigger_id"], view: view)
       end

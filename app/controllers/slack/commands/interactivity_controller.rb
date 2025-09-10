@@ -7,11 +7,11 @@ module Slack
         payload = JSON.parse(params[:payload], object_class: OpenStruct)
         callback = payload&.actions&.first&.action_id || payload&.view&.callback_id
         controller = case callback
-                     when *SimpleTeamController::CALLBACKS
-                       SimpleTeamController.new
-                     else
-                       render status: :bad_request, json: "Action not recognized" and return
-                     end
+        when *SimpleTeamController::CALLBACKS
+          SimpleTeamController.new
+        else
+          render status: :bad_request, json: "Action not recognized" and return
+        end
 
         render json: controller.confirm(payload, slack_installation, user, callback)
       end
