@@ -1,5 +1,6 @@
 class DataController < ApplicationController
   allow_unauthenticated_access
+  skip_before_action :verify_authenticity_token
   before_action :ensure_json_request
   before_action :find_team
   before_action :validate_api_key
@@ -15,10 +16,10 @@ class DataController < ApplicationController
   end
 
   def create
-    return head :bad_request unless create_params["name"] && create_params["content"]
+    return head :bad_request unless create_params[:name] && create_params[:content]
 
     content = create_params["content"].to_h
-    return head :bad_request unless content.is_a? Hash
+    return head :teapot unless content.is_a? Hash
 
     data = Datum.create!(id: SecureRandom.uuid, team: @team, **create_params)
 
@@ -39,7 +40,11 @@ class DataController < ApplicationController
   end
 
   def create_params
-    params.require(:datum).permit(:name, content: {})
+    # TODO: Struggling to permit arbitrary data in a hash from params
+    {
+      name: params["name"],
+      content: params["content"]
+    }
   end
 
   def validate_api_key

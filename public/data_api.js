@@ -1,7 +1,7 @@
 class SimpleteamDataApi {
   host = null
   api_key = null
-  team_id = nill
+  team_id = null
 
   constructor({ team_id, api_key, host = 'https://simpleteam.dev' }) {
     this.api_key = api_key
@@ -18,14 +18,46 @@ class SimpleteamDataApi {
   }
 
   list(params) {
-    return fetch(this.listUrl(), {
+    return fetch(this.apiUrl(), {
       method: 'GET',
       headers: this.headers(),
       params
     })
   }
 
-  listUrl() {
-    return new URL(`/teams/${team_id}/data`, this.host)
+  last(name) {
+    return fetch(this.apiUrl(), {
+      method: 'GET',
+      headers: this.headers(),
+      params: {
+        ...params,
+        name,
+        per_page: 1,
+        page: 1
+      }
+    })
+  }
+
+  create(name, content) {
+    return fetch(this.apiUrl(), {
+      method: 'POST',
+      headers: this.headers(),
+      body: JSON.stringify({
+        name,
+        content
+      })
+    })
+  }
+
+  destroy(id) {
+    return fetch(`${this.apiUrl()}/${id}`, {
+      method: 'DELETE',
+      headers: this.headers(),
+    })
+  }
+
+  apiUrl() {
+    const url = new URL(`/teams/${this.team_id}/data`, this.host)
+    return url.toString()
   }
 }
