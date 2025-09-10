@@ -30,6 +30,10 @@ module Slack
         render json: { error: "Could not find user: #{params[:user_id]}" }, status: 404 unless @user
       end
 
+      def set_team
+        @team = @slack_installation.teams.find_by(name: params[:channel_name])
+      end
+
       def slack_client
         @slack_client ||= Slack::Web::Client.new({ token: @slack_installation.token })
       end

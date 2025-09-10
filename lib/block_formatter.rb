@@ -6,7 +6,9 @@ module BlockFormatter
   def block_for_statuses(statuses, show_actions: false)
     block = [ title_section, divider ]
     statuses.each do |status|
-      block << header_for_user(status.user.slack_id)
+      # TODO: Figure out how to handle multiple slack users per user
+      # Could use first/last name here and let go of the @user linking
+      block << header_for_user(status.user.slack_users.first.slack_user_id)
       block = block + status_section(status, show_actions:)
     end
     block
