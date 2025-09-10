@@ -21,7 +21,7 @@ module Slack
         when "join team"
           render json: join_team
         else
-          render json: { response_type: "ephemeral", text: "Unknown option: #{params[:text]}" }
+          render json: { response_type: "ephemeral", text: "Unknown option: #{params[:text]} :grimacing:" }
         end
       end
 
@@ -42,11 +42,10 @@ module Slack
       private
 
       def list_status
-        set_team
-        statuses = @team&.current_statuses
+        statuses = team&.current_statuses
 
         if statuses.blank?
-          { response_type: "ephemeral", text: "No statuses have been submitted." }
+          { response_type: "ephemeral", text: "No statuses have been submitted. :disappointed:" }
         else
           {
             response_type: "ephemeral",
@@ -56,35 +55,27 @@ module Slack
       end
 
       def create_team
-        set_user
+        team = Team.create_with(id: SecureRandom.uuid, user:)
+                   .find_or_create_by(slack_installation:, name: params[:channel_name])
+        Seat.find_or_create_by(user:, team:)
 
-        team = Team.create_with(id: SecureRandom.uuid, user: @user)
-                   .find_or_create_by(slack_installation: @slack_installation, name: params[:channel_name])
-        Seat.create(user: @user, team:)
-
-        { response_type: "ephemeral", text: "Created team: #{params[:channel_name]}" }
+        { response_type: "ephemeral", text: "Created #{params[:channel_name]} team! :partying_face:" }
       end
 
       def join_team
-        set_user
-        set_team
-
-        if @team
-          if Seat.find_or_create_by(user: @user, team: @team)
-            { response_type: "ephemeral", text: "Joined #{params[:channel_name]} team." }
+        if team
+          if Seat.find_or_create_by(user:, team:)
+            { response_type: "ephemeral", text: "You joined the #{params[:channel_name]} team! :tada:" }
           else
-            { response_type: "ephemeral", text: "Failed to join #{params[:channel_name]} team." }
+            { response_type: "ephemeral", text: "Failed to join the #{params[:channel_name]} team! :boom:" }
           end
         else
-          { response_type: "ephemeral", text: "Sorry, #{params[:channel_name]} team does not exist." }
+          { response_type: "ephemeral", text: "Sorry, #{params[:channel_name]} team does not exist. :disappointed:" }
         end
       end
 
       def add_status_modal
-        set_team
-        set_user
-
-        existing_status = @team.current_statuses.where(user: @user).first
+        existing_status = team.current_statuses.where(user:).first
         view = if existing_status
                  edit_status_view(existing_status)
                else
@@ -95,19 +86,19 @@ module Slack
       end
 
       def add_status(payload)
-        team = Team.find(payload.view.private_metadata)
+        @team = Team.find(payload.view.private_metadata)
 
         section_data = {}
         payload.view.state.values.to_h.map { |_k, v| v.to_h }.each do |section|
           section_data[section.keys.first.to_s] = section.values.first.value
         end
 
-        status = Status.new(user: @user, team:, id: SecureRandom.uuid)
+        status = Status.new(user:, team:, id: SecureRandom.uuid)
         status.update_sections(section_data)
         status.save!
 
         slack_client.chat_postEphemeral(channel: team.name,
-                                  user: @user.slack_users.first.slack_user_id,
+                                  user: user.slack_users.first.slack_user_id,
                                   text: "Status was added! :raised_hands:")
         { "response_action": "clear" }
       end
@@ -121,6 +112,7 @@ module Slack
 
       def edit_status(payload)
         status = Status.find(payload.view.private_metadata)
+        @team = status.team
 
         section_data = {}
         payload.view.state.values.to_h.map { |_k, v| v.to_h }.each do |section|
@@ -128,6 +120,9 @@ module Slack
         end
         status.update_sections(section_data)
 
+        slack_client.chat_postEphemeral(channel: team.name,
+                                        user: user.slack_users.first.slack_user_id,
+                                        text: "Status was updated! :raised_hands:")
         { "response_action": "clear" }
       end
 
@@ -177,7 +172,7 @@ module Slack
       end
 
       def add_status_view
-        inputs = @team.sections.map do |section|
+        inputs = team.sections.map do |section|
           {
             "type": "input",
             "element": {
@@ -209,7 +204,7 @@ module Slack
           "blocks": inputs,
           "type": "modal",
           "callback_id": ADD_STATUS_CONFIRM,
-          "private_metadata": @team.id
+          "private_metadata": team.id
         }
       end
     end
