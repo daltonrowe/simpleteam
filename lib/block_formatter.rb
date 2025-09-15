@@ -6,7 +6,8 @@ module BlockFormatter
   def block_for_statuses(statuses, show_actions: false)
     block = [ title_section, divider ]
     statuses.each do |status|
-      block << header_for_user(status.user.slack_id)
+      slack_user_id = status.user.slack_users.find_by(slack_installation: status.team.slack_installation).slack_user_id
+      block << header_for_user(slack_user_id)
       block = block + status_section(status, show_actions:)
     end
     block

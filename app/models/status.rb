@@ -15,7 +15,7 @@ class Status < ApplicationRecord
   def update_sections(incoming)
     self.sections = team.sections.map do |team_section|
       key = team_section["name"]
-      incoming.key?(key) ? format_section(team_section["name"], incoming[key]) : nil
+      incoming.key?(key) ? format_section(key, incoming[key]) : nil
     end.compact
   end
 

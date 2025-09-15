@@ -1,31 +1,35 @@
 {
-  "display_information": {
-    "name": "Simpleteam",
-    "description": "Status updates and retro tool",
-    "background_color": "#805199"
-  },
-  "features": {
-    "bot_user": {
-      "display_name": "Simpleteam",
-      "always_online": true
+    "display_information": {
+        "name": "Simple Team",
+        "description": "Status updates and retro tool",
+        "background_color": "#805199"
+    },
+    "features": {
+        "bot_user": {
+            "display_name": "Simple Team",
+            "always_online": true
+        }
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "app_mentions:read",
+                "chat:write",
+                "chat:write.public",
+                "commands",
+                "team:read",
+                "users:read",
+                "users:read.email",
+                "channels:read",
+                "groups:read",
+                "im:read",
+                "mpim:read"
+            ]
+        }
+    },
+    "settings": {
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
     }
-  },
-  "oauth_config": {
-    "scopes": {
-      "bot": [
-        "chat:write",
-        "chat:write.public",
-        "commands",
-        "team:read",
-        "users:read",
-        "users:read.email",
-        "app_mentions:read"
-      ]
-    }
-  },
-  "settings": {
-    "org_deploy_enabled": false,
-    "socket_mode_enabled": false,
-    "token_rotation_enabled": false
-  }
 }
