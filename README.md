@@ -27,6 +27,6 @@ https://medium.com/@rob__race/adding-sign-up-to-the-rails-8-authentication-gener
 - All settings are stored in a settings initializer: `config/initializers/settings.rb`
 
 ```
-# edit credits for a given env
-RAIL_ENV=something VISUAL="code --wait" bin/rails credentials:edit
+# edit credentials for a given env
+RAILS_ENV=something VISUAL="code --wait" bin/rails credentials:edit
 ```
