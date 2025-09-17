@@ -38,7 +38,7 @@ module BlockFormatter
     text = "*#{status_section["name"]}:* "
 
     status_section["content"].each do |line|
-      text += "\n #{line}"
+      text += "\n - #{line}"
     end
 
     {

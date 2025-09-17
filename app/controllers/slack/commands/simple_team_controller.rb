@@ -90,7 +90,7 @@ module Slack
 
         section_data = {}
         payload.view.state.values.to_h.map { |_k, v| v.to_h }.each do |section|
-          section_data[section.keys.first.to_s] = section.values.first.value
+          section_data[section.keys.first.to_s] = section.values.first.value || ""
         end
 
         status = Status.new(user:, team:, id: SecureRandom.uuid)
@@ -116,9 +116,10 @@ module Slack
 
         section_data = {}
         payload.view.state.values.to_h.map { |_k, v| v.to_h }.each do |section|
-          section_data[section.keys.first.to_s] = section.values.first.value
+          section_data[section.keys.first.to_s] = section.values.first.value || ""
         end
         status.update_sections(section_data)
+        status.save!
 
         slack_client.chat_postEphemeral(channel: team.name,
                                         user: user.slack_users.first.slack_user_id,
@@ -132,6 +133,7 @@ module Slack
         inputs = status.sections.map do |section|
           {
             "type": "input",
+            "optional": true,
             "element": {
               "type": "plain_text_input",
               "multiline": true,
@@ -175,6 +177,7 @@ module Slack
         inputs = team.sections.map do |section|
           {
             "type": "input",
+            "optional": true,
             "element": {
               "type": "plain_text_input",
               "multiline": true,
