@@ -27,18 +27,24 @@ module BlockFormatter
   def status_section(status, show_actions: false)
     section = []
     status.sections.each do |s|
-      section << section_details(s)
+      section << section_details(s, status)
     end
     section << edit_button(status) if show_actions
     section << divider
     section
   end
 
-  def section_details(status_section)
+  def section_details(status_section, status)
     text = "*#{status_section["name"]}:* "
 
     status_section["content"].each do |line|
-      text += "\n - #{line}"
+      if status.team.project_managementment_url
+        line = line.gsub(/[A-Z]+-[0-9]+/) do |ticket|
+          url = "#{status.team.project_managementment_url.chomp('/')}/#{ticket}"
+          "<#{url}|#{ticket}>"
+        end
+      end
+      text += "\n • #{line}"
     end
 
     {
