@@ -15,6 +15,18 @@ Rails.application.routes.draw do
     resources :statuses do
       post "draft"
     end
+
+    post "api_key", to: "teams#create_api_key"
+
+    get "data_store", to: "teams#data_store"
+    get "data_store/:name", to: "teams#data_store_name", as: "data_name"
+    get "data_store/:name/visualize", to: "teams#data_store_visualize", as: "data_visualize"
+
+    resources :data, only: [ :index, :create, :destroy ] do
+      collection do
+        get :names
+      end
+    end
   end
 
   get "/dashboard/user", to: "dashboard#user"

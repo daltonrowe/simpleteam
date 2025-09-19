@@ -1,0 +1,61 @@
+<%= render SectionHeaderComponent.new(text: "#{@team.name} Data Store") %>
+
+<div class="flex items-center justify-between border rounded-lg p-3">
+  <% if @team.data_api_key %>
+    <span>
+      API Key: <pre class="opacity-60"><%= @team.data_api_key %></pre>
+    </span>
+    <%= button_to team_api_key_path(@team), method: :post, class: "flex items-center" do %>
+      <%= render IconComponent.new(icon: :refresh, classes: "w-7 fill-white cursor-pointer hover:opacity-80") %>
+    <% end %>
+  <% else %>
+    <%= "Create an API Key to get started!" %>
+
+    <%= button_to team_api_key_path(@team), method: :post, class: "flex items-center" do %>
+      <%= render IconComponent.new(icon: :add, classes: "size-7 fill-white cursor-pointer hover:opacity-80") %>
+    <% end %>
+  <% end %>
+</div>
+
+<section class="flex flex-col gap-4">
+  <%= render SectionHeaderComponent.new(text: "Your Data Types") %>
+
+  <% @team.data_names.each do |name| %>
+  <%= render LinkComponent.new(to: team_data_name_path(name:), text: name, style: :outlined, level: :secondary, element: { class: "text-left" }) %>
+  <% end %>
+</section>
+
+<section class="flex flex-col gap-4">
+  <%= render SectionHeaderComponent.new(text: "API Documentation") %>
+
+  <strong>Headers</strong>
+  <div>
+    <pre>"Content-Type": "application/json"</pre>
+    <pre>"Accept": "application/json"</pre>
+    <pre>"X-API-Key": "<%= @team.data_api_key %>"</pre>
+  </div>
+
+  <strong>List Data</strong>
+  <div>
+    <pre>GET <%= team_data_path(@team) %></pre>
+    <div>
+      Optional Params: <pre>name: str, per_page: int, page: int, order: 'asc' | 'desc'</pre>
+    </div>
+  </div>
+
+  <strong>List Data Types</strong>
+  <div>
+    <pre>GET <%= names_team_data_path(@team) %></pre>
+  </div>
+
+  <strong>Create Data</strong>
+  <div>
+    <pre>POST <%= team_data_path(@team) %></pre>
+    <pre>{ name: "My Data Type", content: { must_be: "object at the top level" } }</pre>
+  </div>
+
+  <strong>Delete Data</strong>
+  <div>
+    <pre>DELETE <%= team_data_path(@team) %>/<em>&laquo;data_id&raquo;</em></pre>
+  </div>
+</section>

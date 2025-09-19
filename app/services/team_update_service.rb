@@ -1,6 +1,7 @@
 class TeamUpdateService
   def initialize(team, update)
     @team = team
+    # TODO: Symbolize keys so we can pass normal colon assigned hashes in
     @update = update.to_h
   end
 
@@ -57,9 +58,9 @@ class TeamUpdateService
   end
 
   def collect_metadata
-    incoming_metdata = update.select { |key| Team::METADATA_ATTRIBUTES.include?(key) }
-    incoming_metdata = incoming_metdata.transform_values { |value| value.blank? ? nil : value }
+    incoming_metadata = update.select { |key| Team::METADATA_ATTRIBUTES.include?(key) }
+    incoming_metadata = incoming_metadata.transform_values { |value| value.blank? ? nil : value }
 
-    incoming_metdata.any? ? incoming_metdata : nil
+    incoming_metadata.any? ? team.metadata.merge(incoming_metadata) : nil
   end
 end

@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   include EncryptionHelper
 
   before_action :find_team, except: %i[new create]
-  user_must_have_seat only: %i[show]
+  user_must_have_seat only: %i[show create_api_key]
   user_must_own_team only: %i[edit update]
 
   def new
@@ -27,10 +27,29 @@ class TeamsController < ApplicationController
     success = TeamUpdateService.new(@team, update_params).call
 
     if success
-      redirect_to edit_team_path(@team), notice: "Team updated!"
+      redirect_to team_data_path(@team), notice: "Team updated!"
     else
-      redirect_to edit_team_path(@team), alert: "Something went wrong."
+      redirect_to team_data_path(@team), alert: "Something went wrong!"
     end
+  end
+
+  def create_api_key
+    success = TeamUpdateService.new(@team, { "data_api_key" => SecureRandom.uuid }).call
+
+    if success
+      redirect_to team_data_store_path(@team), notice: "New API key created!"
+    else
+      redirect_to team_data_store_path(@team), notice: "Something went wrong!"
+    end
+  end
+
+  def data_store; end
+  def data_store_name
+    # @name = data_store_name_params[:name]
+    # @data = DataQueryService.new(team: @team, params: data_store_name_params).call
+    # @data_keys = collect_keys
+
+    head :ok
   end
 
   private
@@ -53,5 +72,9 @@ class TeamsController < ApplicationController
       :time_zone,
       :project_management_url
     )
+  end
+
+  def data_store_name_params
+    params.permit(:name)
   end
 end

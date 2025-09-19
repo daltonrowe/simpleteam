@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SeatsControllerTest < ActionDispatch::IntegrationTest
+class DatumTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

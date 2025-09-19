@@ -11,7 +11,8 @@ class Team < ApplicationRecord
 
   # TODO: Webhook notifaction
   METADATA_ATTRIBUTES = [
-    "project_management_url"
+    "project_management_url",
+    "data_api_key"
   ].freeze
 
   def end_of_day
@@ -76,7 +77,16 @@ class Team < ApplicationRecord
     self.seats.length + 1
   end
 
+  def data_names
+    Datum.where(team: self).order(created_at: :desc).select(:name).distinct.pluck(:name)
+  end
+
   def project_managementment_url
     self.metadata.dig("project_management_url")
+  end
+
+  # TODO: handle with method missing
+  def data_api_key
+    self.metadata.dig("data_api_key")
   end
 end
