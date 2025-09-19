@@ -19,7 +19,7 @@
   <%= render SectionHeaderComponent.new(text: "#{@name} Records") %>
 
   <% @data.each do |datum| %>
-    <%= render LinkComponent.new(to: 'pizza', text: datum.created_at.strftime("%B %d, %Y - %H:%m %Z"), 
-                                  style: :outlined, element: { class: 'text-left' }) %>
+    <%= render LinkComponent.new(to: datum.name, text: datum.created_at.strftime("%B %d, %Y - %H:%m %Z"),
+                                  style: :outlined, element: { class: "text-left" }) %>
   <% end %>
 </section>

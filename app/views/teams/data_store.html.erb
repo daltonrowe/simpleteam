@@ -20,9 +20,8 @@
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: "Your Data Types") %>
 
-
   <% @team.data_names.each do |name| %>
-  <%= render LinkComponent.new(to: team_data_name_path(name:), text: name, style: :outlined, level: :secondary, element: { class: 'text-left'}) %>
+  <%= render LinkComponent.new(to: team_data_name_path(name:), text: name, style: :outlined, level: :secondary, element: { class: "text-left" }) %>
   <% end %>
 </section>
 
@@ -35,7 +34,6 @@
     <pre>"Accept": "application/json"</pre>
     <pre>"X-API-Key": "<%= @team.data_api_key %>"</pre>
   </div>
-  
 
   <strong>List Data</strong>
   <div>
@@ -61,4 +59,3 @@
     <pre>DELETE <%= team_data_path(@team) %>/<em>&laquo;data_id&raquo;</em></pre>
   </div>
 </section>
-
