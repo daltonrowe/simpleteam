@@ -17,11 +17,13 @@
   <% end %>
 </div>
 
-<section>
+<section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: "Your Data Types") %>
 
 
-  <%= @team.data_names %>
+  <% @team.data_names.each do |name| %>
+  <%= render LinkComponent.new(to: team_data_name_path(name:), text: name, style: :outlined, level: :secondary, element: { class: 'text-left'}) %>
+  <% end %>
 </section>
 
 <section class="flex flex-col gap-4">
@@ -51,7 +53,7 @@
   <strong>Create Data</strong>
   <div>
     <pre>POST <%= team_data_path(@team) %></pre>
-    <pre>{ name: "My Data Type", content: { only: "json objects, not arrays" } }</pre>
+    <pre>{ name: "My Data Type", content: { must_be: "object at the top level" } }</pre>
   </div>
 
   <strong>Delete Data</strong>

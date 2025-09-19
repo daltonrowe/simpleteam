@@ -43,8 +43,13 @@ class TeamsController < ApplicationController
     end
   end
 
-  def data_store
-    render "data_store"
+  def data_store; end
+  def data_store_name
+    # @name = data_store_name_params[:name]
+    # @data = DataQueryService.new(team: @team, params: data_store_name_params).call
+    # @data_keys = collect_keys
+
+    head :ok
   end
 
   private
@@ -67,5 +72,9 @@ class TeamsController < ApplicationController
       :time_zone,
       :project_management_url
     )
+  end
+
+  def data_store_name_params
+    params.permit(:name)
   end
 end
