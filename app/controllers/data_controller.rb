@@ -16,12 +16,13 @@ class DataController < ApplicationController
   end
 
   def create
-    return head :bad_request unless create_params[:name] && create_params[:content]
+    return head :bad_request unless create_params[:name] && create_params[:content] && create_params[:content].instance_of?(ActionController::Parameters)
 
-    content = create_params["content"].to_h
-    return head :teapot unless content.is_a? Hash
+    content = create_params[:content].permit!.to_h
+    return head :bad_request unless content.is_a? Hash
+    return head :bad_request unless content.keys.length.positive?
 
-    data = Datum.create!(id: SecureRandom.uuid, team: @team, **create_params)
+    data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], content:)
 
     render json: data.to_json
   end

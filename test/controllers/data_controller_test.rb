@@ -112,7 +112,7 @@ class DataControllerTest < ActionDispatch::IntegrationTest
       content: { some_data: 1 }
     }
 
-    post team_data_path(team), headers: correct_headers, params: params.to_json
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
 
     assert_response :ok
 
@@ -141,10 +141,10 @@ class DataControllerTest < ActionDispatch::IntegrationTest
 
     params = {
       name: "My Data",
-      content: "[1,2,3,4]"
+      content: [ 1, 2, 3, 4 ]
     }
 
-    post team_data_path(team), headers: correct_headers, params: params.to_json
+    post(team_data_path(team), headers: correct_headers, params: params, as: :json)
 
     assert_response :bad_request
   end
