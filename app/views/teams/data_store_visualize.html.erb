@@ -1,7 +1,9 @@
+<%= @name %>
+
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
-  <%= form_with url: team_data_visualize_path do |form| %>
+  <%= form_with url: team_data_store_visualize_path do |form| %>
 
     <% @data_keys.each do |key| %>
       <%= form.label :paid do %>

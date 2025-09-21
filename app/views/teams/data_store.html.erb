@@ -21,7 +21,7 @@
   <%= render SectionHeaderComponent.new(text: "Your Data Types") %>
 
   <% @team.data_names.each do |name| %>
-  <%= render LinkComponent.new(to: team_data_name_path(name:), text: name, style: :outlined, level: :secondary, element: { class: "text-left" }) %>
+  <%= render LinkComponent.new(to: team_data_store_visualize_path(name:), text: name, style: :outlined, level: :secondary, element: { class: "text-left" }) %>
   <% end %>
 </section>
 
