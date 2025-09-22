@@ -3,12 +3,14 @@
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
-  <%= form_with url: team_data_store_visualize_path do |form| %>
+  <%= form_with url: team_data_store_visualize_path, method: :get do |form| %>
 
     <% @data_keys.each do |key| %>
-      <%= form.label :paid do %>
-        <%= form.checkbox :paid %>
-        <span>Paid</span>
+      <%= form.label key do %>
+        <%= form.checkbox "keys[#{key}]", 
+            checked: @visualize_keys&.include?(key), 
+            include_hidden: false %>
+        <span><%= key %></span>
       <% end %>
     <% end %>
 
