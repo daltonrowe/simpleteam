@@ -24,8 +24,6 @@ export default class extends Controller {
 
     this.apiResult = await this.queryData();
 
-    console.debug(this.apiResult);
-
     this.drawChart();
   }
 
@@ -33,52 +31,32 @@ export default class extends Controller {
     console.debug(this.canvasTarget);
 
     new window.Chart(this.canvasTarget, {
-      type: 'bar',
-      data: {
-        datasets: this.datasets,
-      },
+      type: 'line',
+      data: this.chartData,
       options: {
         aspectRatio: 1.77,
-        elements: {
-          bar: {
-            borderSkipped: true,
-          },
-        },
         plugins: {
           legend: {
-            display: false,
-          },
-          tooltip: {
-            enabled: false,
-            position: 'nearest',
-            xAlign: 'center',
-            yAlign: 'top',
+            display: true,
           },
         },
         scales: {
           x: {
             grid: {
-              display: false,
+              display: true,
             },
             title: {
               display: true,
-              text: 'xAxisx',
-              color: '#0e2332',
+              text: 'Date',
+              color: 'white',
               font: {
-                weight: 'bold',
-                size: 16,
+                size: 12,
               },
             },
           },
           y: {
             title: {
-              display: true,
-              color: '#0e2332',
-              font: {
-                weight: 'bold',
-                size: 16,
-              },
-              text: 'yAxisy',
+              display: false,
             },
           },
         },
@@ -106,17 +84,13 @@ export default class extends Controller {
       host: this.hostValue
     })
 
-    console.debug(this.nameValue);
-
     const req = await api.list({ name: this.nameValue })
     const json = await req.json();
 
     return json
   }
 
-  get datasets() {
-    console.debug(this.keys);
-
+  get chartData() {
     const sets = [];
 
     this.keys.forEach(key => {
@@ -125,13 +99,17 @@ export default class extends Controller {
         data: this.apiResult.map(row => row.content[key]),
         backgroundColor: '#4878f1',
         hoverBackgroundColor: '#4878f1',
-        barPercentage: 1,
+        fill: 'red',
       },)
     })
 
-    console.debug(sets);
-
-    return sets
+    return {
+      labels: this.apiResult.map(row => {
+        const d = new Date(row.created_at)
+        return `${d.getUTCMonth()}-${d.getUTCDay()}-${d.getUTCFullYear()}`
+      }),
+      datasets: sets,
+    }
   }
 
   get keys() {
