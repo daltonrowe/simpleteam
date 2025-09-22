@@ -24,6 +24,8 @@ export default class extends Controller {
 
     this.apiResult = await this.queryData();
 
+    console.debug(this.apiResult);
+
     this.drawChart();
   }
 
@@ -33,7 +35,7 @@ export default class extends Controller {
     new window.Chart(this.canvasTarget, {
       type: 'bar',
       data: {
-        datasets: [],
+        datasets: this.datasets,
       },
       options: {
         aspectRatio: 1.77,
@@ -104,10 +106,32 @@ export default class extends Controller {
       host: this.hostValue
     })
 
+    console.debug(this.nameValue);
+
     const req = await api.list({ name: this.nameValue })
     const json = await req.json();
 
     return json
+  }
+
+  get datasets() {
+    console.debug(this.keys);
+
+    const sets = [];
+
+    this.keys.forEach(key => {
+      sets.push({
+        label: key,
+        data: this.apiResult.map(row => row.content[key]),
+        backgroundColor: '#4878f1',
+        hoverBackgroundColor: '#4878f1',
+        barPercentage: 1,
+      },)
+    })
+
+    console.debug(sets);
+
+    return sets
   }
 
   get keys() {

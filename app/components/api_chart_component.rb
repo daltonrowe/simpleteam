@@ -13,7 +13,7 @@ class ApiChartComponent < ApplicationComponent
   attr_accessor :name, :team, :keys, :host
 
   def call
-    tag.div class: "aspect-video bg-yin-800 rounded-lg", data: {
+    tag.div class: "aspect-video bg-yin-800 rounded-lg p-2", data: {
       controller: "api-chart",
       api_chart_name_value: name,
       api_chart_team_id_value: team.id,

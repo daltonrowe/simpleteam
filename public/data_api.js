@@ -18,23 +18,20 @@ class SimpleteamDataApi {
   }
 
   list(params) {
-    return fetch(this.apiUrl(), {
+    return fetch(this.apiUrl(params), {
       method: 'GET',
       headers: this.headers(),
-      params
     })
   }
 
   last(name) {
-    return fetch(this.apiUrl(), {
+    return fetch(this.apiUrl({
+      name,
+      per_page: 1,
+      page: 1
+    }), {
       method: 'GET',
       headers: this.headers(),
-      params: {
-        ...params,
-        name,
-        per_page: 1,
-        page: 1
-      }
     })
   }
 
@@ -56,8 +53,15 @@ class SimpleteamDataApi {
     })
   }
 
-  apiUrl() {
+  apiUrl(params = null) {
     const url = new URL(`/teams/${this.team_id}/data`, this.host)
+
+    if (params) {
+      Object.keys(params).forEach(key => {
+        url.searchParams.append(key, params[key])
+      });
+    }
+
     return url.toString()
   }
 }
