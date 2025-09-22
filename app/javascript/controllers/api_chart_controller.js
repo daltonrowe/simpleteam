@@ -1,6 +1,9 @@
 import { Controller } from "@hotwired/stimulus";
 
-const colors = ["red", "blue", "green", "yellow", "purple", "cyan", "fuschia"];
+function lineColor(step, max) {
+  const angle = (step / max) * 360;
+  return `oklch(75.5% 0.269 ${angle}deg)`;
+}
 
 // Connects to data-controller="api-chart"
 export default class extends Controller {
@@ -30,8 +33,6 @@ export default class extends Controller {
   }
 
   drawChart() {
-    console.debug(this.canvasTarget);
-
     new window.Chart(this.canvasTarget, {
       type: "line",
       data: this.chartData,
@@ -105,8 +106,8 @@ export default class extends Controller {
       sets.push({
         label: key,
         data: this.apiResult.map((row) => row.content[key]),
-        backgroundColor: colors[i] ?? "white",
-        borderColor: colors[i] ?? "white",
+        backgroundColor: lineColor(i + 1, this.keys.length),
+        borderColor: lineColor(i + 1, this.keys.length),
       });
     });
 
