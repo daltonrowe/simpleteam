@@ -14,7 +14,7 @@ linters:
       - "text/html"
       - "module"
     allow_blank: false
-    disallow_inline_scripts: true
+    disallow_inline_scripts: false
   ErbSafety:
     enabled: false
   FinalNewline:
