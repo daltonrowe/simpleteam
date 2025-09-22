@@ -3,10 +3,14 @@
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
-  <%= form_with url: team_data_store_visualize_path, method: :get do |form| %>
+  <%= render ApiChartComponent.new(name: @name, team: @team, keys: @visualize_keys) %>
+
+  <%= form_with url: team_data_store_visualize_path, method: :get, html: {
+    class: 'grid grid-cols-2 gap-4'
+  } do |form| %>
 
     <% @data_keys.each do |key| %>
-      <%= form.label key do %>
+      <%= form.label "keys[#{key}]", class: 'border p-3 rounded border-yin-600 cursor-pointer auto-rows-auto' do %>
         <%= form.checkbox "keys[#{key}]", 
             checked: @visualize_keys&.include?(key), 
             include_hidden: false %>
@@ -14,7 +18,7 @@
       <% end %>
     <% end %>
 
-  <%= form.simple_submit(text: "Visualize") %>
+  <%= form.simple_submit(text: "Visualize Keys", element: { class: 'col-span-2'}) %>
   <% end %>
 
 </section>
