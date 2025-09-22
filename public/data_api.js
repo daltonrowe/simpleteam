@@ -61,3 +61,5 @@ class SimpleteamDataApi {
     return url.toString()
   }
 }
+
+if (window) window.SimpleteamDataApi = SimpleteamDataApi

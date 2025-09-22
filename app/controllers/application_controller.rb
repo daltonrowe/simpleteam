@@ -25,4 +25,8 @@ class ApplicationController < ActionController::Base
       user
     end
   end
+
+  def current_host
+    request.protocol + request.host_with_port
+  end
 end

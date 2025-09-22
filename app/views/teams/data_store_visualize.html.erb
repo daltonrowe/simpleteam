@@ -1,9 +1,15 @@
-<%= @name %>
+<%= content_for :head do %>
+  <script id="chart-js" src="<%= current_host %>/vendor/chart.umd.min.js" async></script>
+  <script id="data-api" src="<%= current_host %>/data_api.js" async></script>
+<% end %>
 
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
-  <%= render ApiChartComponent.new(name: @name, team: @team, keys: @visualize_keys) %>
+  <%= render ApiChartComponent.new(name: @name, 
+                                   team: @team, 
+                                   keys: @visualize_keys, 
+                                   host: current_host) %>
 
   <%= form_with url: team_data_store_visualize_path, method: :get, html: {
     class: 'grid grid-cols-2 gap-4'
