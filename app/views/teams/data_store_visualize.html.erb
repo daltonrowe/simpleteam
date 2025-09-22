@@ -6,27 +6,27 @@
 <section class="flex flex-col gap-4">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
-  <%= render ApiChartComponent.new(name: @name, 
-                                   team: @team, 
-                                   keys: @visualize_keys&.join(',') || @data_keys&.join(','),
+  <%= render ApiChartComponent.new(name: @name,
+                                   team: @team,
+                                   keys: @visualize_keys&.join(",") || @data_keys&.join(","),
                                    host: current_host) %>
 
   <%= form_with url: team_data_store_visualize_path, method: :get, html: {
-    class: 'grid grid-cols-2 gap-4'
+    class: "grid grid-cols-2 gap-4"
   } do |form| %>
 
     <% @data_keys.each do |key| %>
       <% checked = @visualize_keys ? @visualize_keys&.include?(key) : true %>
 
-      <%= form.label "keys[#{key}]", class: 'border p-3 rounded border-yin-600 cursor-pointer auto-rows-auto' do %>
-        <%= form.checkbox "keys[#{key}]", 
-            checked:, 
+      <%= form.label "keys[#{key}]", class: "border p-3 rounded border-yin-600 cursor-pointer auto-rows-auto" do %>
+        <%= form.checkbox "keys[#{key}]",
+            checked:,
             include_hidden: false %>
         <span><%= key %></span>
       <% end %>
     <% end %>
 
-  <%= form.simple_submit(text: "Visualize", element: { class: 'col-span-2'}) %>
+  <%= form.simple_submit(text: "Visualize", element: { class: "col-span-2" }) %>
   <% end %>
 
 </section>
