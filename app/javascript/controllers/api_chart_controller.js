@@ -1,5 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
+const colors = [
+  'red',
+  'blue',
+  'green',
+  'yellow',
+  'purple',
+  'cyan',
+  'fuschia'
+]
+
 // Connects to data-controller="api-chart"
 export default class extends Controller {
   apiResult = null;
@@ -93,11 +103,11 @@ export default class extends Controller {
   get chartData() {
     const sets = [];
 
-    this.keys.forEach(key => {
+    this.keys.forEach((key, i) => {
       sets.push({
         label: key,
         data: this.apiResult.map(row => row.content[key]),
-        backgroundColor: '#4878f1',
+        backgroundColor: colors[i] ?? 'red',
         hoverBackgroundColor: '#4878f1',
         fill: 'red',
       },)
@@ -106,7 +116,7 @@ export default class extends Controller {
     return {
       labels: this.apiResult.map(row => {
         const d = new Date(row.created_at)
-        return `${d.getUTCMonth()}-${d.getUTCDay()}-${d.getUTCFullYear()}`
+        return `${d.getUTCMonth()}/${d.getUTCDay()}/${d.getUTCFullYear()}`
       }),
       datasets: sets,
     }
