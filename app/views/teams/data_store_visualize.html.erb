@@ -3,7 +3,7 @@
   <script id="data-api" src="<%= current_host %>/data_api.js" async></script>
 <% end %>
 
-<section class="flex flex-col gap-4">
+<section class="flex flex-col gap-8">
   <%= render SectionHeaderComponent.new(text: @name) %>
 
   <%= render ApiChartComponent.new(name: @name,
@@ -31,11 +31,14 @@
 
 </section>
 
-<section class="flex flex-col gap-4">
+<section class="flex flex-col gap-8">
   <%= render SectionHeaderComponent.new(text: "#{@name} Records") %>
 
+<div class="flex flex-col gap-4">
   <% @data.each do |datum| %>
     <%= render LinkComponent.new(to: datum.name, text: datum.created_at.strftime("%B %d, %Y - %H:%m %Z"),
                                   style: :outlined, element: { class: "text-left" }) %>
   <% end %>
+</div>
+
 </section>
