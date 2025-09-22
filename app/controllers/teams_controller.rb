@@ -49,6 +49,8 @@ class TeamsController < ApplicationController
     @data = DataQueryService.new(team: @team, params: visualize_query_params).call
     @data_keys = @data.first&.content_keys
     @visualize_keys = visualize_keys
+
+    render layout: "wide"
   end
 
   private

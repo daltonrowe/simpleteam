@@ -4,12 +4,16 @@
 <% end %>
 
 <section class="flex flex-col gap-8">
-  <%= render SectionHeaderComponent.new(text: @name) %>
+  <div class="mx-auto max-w-2xl container">
+    <%= render SectionHeaderComponent.new(text: @name) %>
+  </div>
 
   <%= render ApiChartComponent.new(name: @name,
                                    team: @team,
                                    keys: @visualize_keys&.join(",") || @data_keys&.join(","),
                                    host: current_host) %>
+
+  <div class="mx-auto max-w-2xl container">
 
   <%= form_with url: team_data_store_visualize_path, method: :get, html: {
     class: "grid grid-cols-2 gap-4"
@@ -29,9 +33,11 @@
   <%= form.simple_submit(text: "Visualize", element: { class: "col-span-2" }) %>
   <% end %>
 
+  </div>
+
 </section>
 
-<section class="flex flex-col gap-8">
+<section class="flex flex-col gap-8 mx-auto max-w-2xl container">
   <%= render SectionHeaderComponent.new(text: "#{@name} Records") %>
 
 <div class="flex flex-col gap-4">

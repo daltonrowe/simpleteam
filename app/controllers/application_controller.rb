@@ -29,4 +29,6 @@ class ApplicationController < ActionController::Base
   def current_host
     request.protocol + request.host_with_port
   end
+
+  helper_method :current_host
 end
