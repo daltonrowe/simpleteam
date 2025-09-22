@@ -92,6 +92,11 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
 
     TeamUpdateService.new(team, { "data_api_key" => "tacobell" }).call
 
+    assert_equal [
+      { "name" => "Yesterday" },
+      { "name" => "Today" },
+      { "name" => "Links", "description" => "Read anything good?" }
+    ], team.sections
     assert_equal "https://radshack.com/", team.project_managementment_url
     assert_equal "tacobell", team.data_api_key
   end

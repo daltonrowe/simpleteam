@@ -15,6 +15,8 @@ class TeamUpdateService
 
     valid_updates = { sections:, end_of_day:, notifaction_time:, metadata: }.compact
 
+    return unless valid_updates.length.positive?
+
     @team.update(**valid_updates)
   end
 
@@ -22,7 +24,7 @@ class TeamUpdateService
 
   def collect_sections
     incoming_sections = update.select { |key| key.include? "section_" }
-    return unless incoming_sections
+    return unless incoming_sections.length.positive?
 
     sections = []
 
