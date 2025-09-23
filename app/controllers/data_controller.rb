@@ -20,7 +20,7 @@ class DataController < ApplicationController
 
     content = create_params[:content].permit!.to_h
     return head :bad_request unless content.is_a? Hash
-    return head :bad_request unless content.keys.length.positive?
+    return head :bad_request unless content.length.positive?
 
     data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], content:)
 

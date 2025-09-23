@@ -1,0 +1,50 @@
+<%= content_for :head do %>
+  <script type="text/javascript" id="chart-js" src="<%= current_host %>/vendor/chart.umd.min.js" async></script>
+  <script type="text/javascript" id="data-api" src="<%= current_host %>/data_api.js" async></script>
+<% end %>
+
+<section class="flex flex-col gap-8">
+  <div class="mx-auto max-w-2xl container">
+    <%= render SectionHeaderComponent.new(text: @name) %>
+  </div>
+
+  <%= render ApiChartComponent.new(name: @name,
+                                   team: @team,
+                                   keys: @visualize_keys&.join(",") || @data_keys&.join(","),
+                                   host: current_host) %>
+
+  <div class="mx-auto max-w-2xl container">
+
+  <%= form_with url: team_data_store_visualize_path, method: :get, html: {
+    class: "grid grid-cols-2 gap-4"
+  } do |form| %>
+
+    <% @data_keys.each do |key| %>
+      <% checked = @visualize_keys ? @visualize_keys&.include?(key) : true %>
+
+      <%= form.label "keys[#{key}]", class: "border p-3 rounded border-yin-600 cursor-pointer auto-rows-auto" do %>
+        <%= form.checkbox "keys[#{key}]",
+            checked:,
+            include_hidden: false %>
+        <span><%= key %></span>
+      <% end %>
+    <% end %>
+
+  <%= form.simple_submit(text: "Visualize", element: { class: "col-span-2" }) %>
+  <% end %>
+
+  </div>
+
+</section>
+
+<section class="flex flex-col gap-8 mx-auto max-w-2xl container">
+  <%= render SectionHeaderComponent.new(text: "#{@name} Records") %>
+
+<div class="flex flex-col gap-4">
+  <% @data.each do |datum| %>
+    <%= render LinkComponent.new(to: datum.name, text: datum.created_at.strftime("%B %d, %Y - %H:%m %Z"),
+                                  style: :outlined, element: { class: "text-left" }) %>
+  <% end %>
+</div>
+
+</section>

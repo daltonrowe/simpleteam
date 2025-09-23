@@ -11,8 +11,6 @@ class DataQueryService
     @params = params.to_h.symbolize_keys
   end
 
-  attr_reader :data_query
-
   def call
     where_args = {
       team: @team
