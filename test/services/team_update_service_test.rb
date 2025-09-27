@@ -36,17 +36,17 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
     assert_equal "UTC", team.end_of_day.time_zone.name
   end
 
-  test "should collect notifaction_time from params" do
+  test "should collect notification_time from params" do
     team = teams(:basic)
 
     TeamUpdateService.new(team, {
-      "notifaction_time(4i)"=>"13",
-      "notifaction_time(5i)"=>"22"
+      "notification_time(4i)"=>"13",
+      "notification_time(5i)"=>"22"
     }).call
 
-    assert_equal 18, team.notifaction_time.hour
-    assert_equal 22, team.notifaction_time.min
-    assert_equal "UTC", team.notifaction_time.time_zone.name
+    assert_equal 18, team.notification_time.hour
+    assert_equal 22, team.notification_time.min
+    assert_equal "UTC", team.notification_time.time_zone.name
   end
 
   test "should collect metadata attributes from params" do
