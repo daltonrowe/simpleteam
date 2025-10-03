@@ -28,3 +28,10 @@ other_team:
   user: other_owner
   name: "Other Cool Team"
   metadata: { "data_api_key": "the-correct-key" }
+
+slack_team:
+  <<: *base
+  user: owner
+  name: "Slack Team"
+  notification_time: '09:00 UTC'
+  slack_installation: default
