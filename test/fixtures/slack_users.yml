@@ -1,3 +1,9 @@
 default:
   user: member
   slack_user_id: <%= SecureRandom.uuid %>
+  slack_installation: default
+
+rando:
+  user: rando
+  slack_user_id: <%= SecureRandom.uuid %>
+  slack_installation: default

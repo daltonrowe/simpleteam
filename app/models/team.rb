@@ -7,7 +7,7 @@ class Team < ApplicationRecord
   validates :name, presence: true, length: { maximum: 120 }
 
   alias_attribute :original_end_of_day, :end_of_day
-  alias_attribute :original_notifaction_time, :notifaction_time
+  alias_attribute :original_notification_time, :notification_time
 
   # TODO: Webhook notifaction
   METADATA_ATTRIBUTES = [
@@ -24,8 +24,8 @@ class Team < ApplicationRecord
       })
   end
 
-  def notifaction_time
-    self.original_notifaction_time
+  def notification_time
+    self.original_notification_time
       .change({
         year: Time.zone.now.year,
         month: Time.zone.now.month,

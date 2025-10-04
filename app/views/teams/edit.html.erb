@@ -68,7 +68,7 @@
 
         <%# TODO: Allow enable / disable of notifactions %>
         <%= render Form::InlineLayoutComponent.new(label: "Notifaction Time:") do %>
-          <%= form.simple_time_select(:notifaction_time, ignore_date: true, ampm: true, value: @team.notifaction_time, disabled: true) %>
+          <%= form.simple_time_select(:notification_time, ignore_date: true, ampm: true, value: @team.notification_time, disabled: true) %>
         <% end %>
 
         <input disabled type="text" name="metadata[slack_webhook]" class="block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2  w-full" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX" autocomplete="off">

@@ -1,7 +1,7 @@
 base: &base
   user: owner
   name: "My Awesome Team"
-  notifaction_time: "Sat, 17 May 2025 22:30:00 +0000"
+  notification_time: "Sat, 17 May 2025 22:30:00 +0000"
   end_of_day: "Sat, 17 May 2025 20:44:15 +0000"
   time_zone: "Central Time (US & Canada)"
   sections:
@@ -28,3 +28,10 @@ other_team:
   user: other_owner
   name: "Other Cool Team"
   metadata: { "data_api_key": "the-correct-key" }
+
+slack_team:
+  <<: *base
+  user: owner
+  name: "Slack Team"
+  notification_time: '09:00 UTC'
+  slack_installation: default

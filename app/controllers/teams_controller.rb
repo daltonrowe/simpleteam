@@ -68,7 +68,7 @@ class TeamsController < ApplicationController
       :section_1_description,
       :section_2_name,
       :section_2_description,
-      :notifaction_time,
+      :notification_time,
       :end_of_day,
       :time_zone,
       :project_management_url

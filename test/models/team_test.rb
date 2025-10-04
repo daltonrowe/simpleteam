@@ -7,7 +7,7 @@ class TeamTest < ActiveSupport::TestCase
 
     travel_to central_time do
       time_til_eod = team.end_of_day - Time.current
-      time_til_notify = team.notifaction_time - Time.current
+      time_til_notify = team.notification_time - Time.current
 
       assert_equal(time_til_eod, 44.minutes + 15.seconds)
       assert_equal(time_til_notify, 2.hours + 30.minutes)
@@ -18,6 +18,6 @@ class TeamTest < ActiveSupport::TestCase
     team = teams(:basic)
 
     assert(team.end_of_day.time_zone, "(GMT+00:00) UTC")
-    assert(team.notifaction_time.time_zone, "(GMT+00:00) UTC")
+    assert(team.notification_time.time_zone, "(GMT+00:00) UTC")
   end
 end

@@ -5,3 +5,11 @@ basic_member:
 metadata_member:
   team: with_metadata
   user: member
+
+slack_member:
+  team: slack_team
+  user: member
+
+slack_rando:
+  team: slack_team
+  user: rando
