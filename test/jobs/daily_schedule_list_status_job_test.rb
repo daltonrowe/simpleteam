@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class DailyScheduleListStatusJobTest < ActiveJob::TestCase
   setup do
@@ -8,6 +8,6 @@ class DailyScheduleListStatusJobTest < ActiveJob::TestCase
 
   test "schedules list status job for each slack installation" do
     DailyScheduleListStatusJob.perform_now
-    assert_enqueued_with(job: SlackListStatusJob, args: [@slack_team.id], at: Time.parse('09:00 UTC'))
+    assert_enqueued_with(job: SlackListStatusJob, args: [ @slack_team.id ], at: Time.parse("09:00 UTC"))
   end
 end

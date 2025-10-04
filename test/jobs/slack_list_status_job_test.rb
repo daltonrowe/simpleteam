@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class SlackListStatusJobTest < ActiveJob::TestCase
   def with_stubbed_slack_client
@@ -22,8 +22,8 @@ class SlackListStatusJobTest < ActiveJob::TestCase
     seats(:slack_rando)
   end
 
-  test 'handles invalid/missing team ids' do
-    assert_nil(SlackListStatusJob.perform_now('invalid-team-id'))
+  test "handles invalid/missing team ids" do
+    assert_nil(SlackListStatusJob.perform_now("invalid-team-id"))
   end
 
   test "sends slack status message to each user" do

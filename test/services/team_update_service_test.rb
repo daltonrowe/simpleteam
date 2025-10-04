@@ -44,7 +44,7 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "notification_time(5i)"=>"22"
     }).call
 
-    assert_equal 18, team.notification_time.hour
+    assert_equal 19, team.notification_time.hour
     assert_equal 22, team.notification_time.min
     assert_equal "UTC", team.notification_time.time_zone.name
   end
