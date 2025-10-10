@@ -5,12 +5,26 @@ module BlockFormatter
 
   def block_for_statuses(statuses, show_actions: false)
     block = [ title_section, divider ]
-    statuses.each do |status|
-      slack_user_id = status.user.slack_users.find_by(slack_installation: status.team.slack_installation).slack_user_id
-      block << header_for_user(slack_user_id)
-      block = block + status_section(status, show_actions:)
+    if statuses.blank?
+      markdown_block("No statuses have been submitted. :disappointed:")
+    else
+      statuses.each do |status|
+        slack_user_id = status.user.slack_users.find_by(slack_installation: status.team.slack_installation).slack_user_id
+        block << header_for_user(slack_user_id)
+        block = block + status_section(status, show_actions:)
+      end
     end
     block
+  end
+
+  def markdown_block(text)
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": text
+      }
+    }
   end
 
   def header_for_user(user_id)
@@ -27,6 +41,8 @@ module BlockFormatter
   def status_section(status, show_actions: false)
     section = []
     status.sections.each do |s|
+      next if s["content"].blank?
+
       section << section_details(s, status)
     end
     section << edit_button(status) if show_actions

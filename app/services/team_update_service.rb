@@ -10,10 +10,10 @@ class TeamUpdateService
   def call
     sections = collect_sections
     end_of_day = collect_time("end_of_day")
-    notifaction_time = collect_time("notifaction_time")
+    notification_time = collect_time("notification_time")
     metadata = collect_metadata
 
-    valid_updates = { sections:, end_of_day:, notifaction_time:, metadata: }.compact
+    valid_updates = { sections:, end_of_day:, notification_time:, metadata: }.compact
 
     return unless valid_updates.length.positive?
 

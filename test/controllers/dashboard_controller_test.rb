@@ -8,7 +8,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create team message when no teams" do
-    user = users(:rando)
+    user = users(:teamless_user)
 
     sign_in(user)
     get dashboard_path

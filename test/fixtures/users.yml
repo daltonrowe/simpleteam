@@ -16,6 +16,12 @@ rando:
   password_digest: "abc123"
   confirmed_at: "Sat, 17 May 2025 18:44:15 +0000"
 
+teamless_user:
+  name: "Sans Team"
+  email_address: "burger@king.com"
+  password_digest: "efg456"
+  confirmed_at: "Sat, 17 May 2025 18:44:15 +0000"
+
 other_owner:
   name: "Bob Dude"
   email_address: "somebody@else.com"

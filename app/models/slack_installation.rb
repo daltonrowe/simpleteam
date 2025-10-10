@@ -26,6 +26,10 @@ class SlackInstallation < ApplicationRecord
     end
   end
 
+  def slack_client
+    @slack_client ||= Slack::Web::Client.new({ token: token })
+  end
+
   private
 
   def ping!
