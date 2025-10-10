@@ -9,7 +9,6 @@ class Team < ApplicationRecord
   alias_attribute :original_end_of_day, :end_of_day
   alias_attribute :original_notification_time, :notification_time
 
-  # TODO: Webhook notifaction
   METADATA_ATTRIBUTES = [
     "project_management_url",
     "data_api_key"
