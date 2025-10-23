@@ -3,5 +3,5 @@ production:
     class: DailyScheduleListStatusJob
     queue: cron
     args:
-    schedule: at 12am every day
+    schedule: 0 0 * * 1-5
 
