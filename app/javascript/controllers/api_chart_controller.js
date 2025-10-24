@@ -61,6 +61,7 @@ export default class extends Controller {
             },
           },
           y: {
+            beginAtZero: true,
             ticks: {
               color: "#DDD",
             },
