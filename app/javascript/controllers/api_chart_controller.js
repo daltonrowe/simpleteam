@@ -94,7 +94,7 @@ export default class extends Controller {
       host: this.hostValue,
     });
 
-    const req = await api.list({ name: this.nameValue, order: 'asc' });
+    const req = await api.list({ name: this.nameValue, order: "asc" });
     const json = await req.json();
 
     return json;
