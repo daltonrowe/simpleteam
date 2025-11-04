@@ -17,6 +17,32 @@ module BlockFormatter
     block
   end
 
+  def block_for_status_reminder
+    [
+      {
+       "type": "section",
+       "text": {
+         "type": "mrkdwn",
+         "text": "*Daily Status Reminder*"
+       }
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Add Status",
+              "emoji": true
+            },
+            "action_id": "add-status"
+          }
+        ]
+      }
+    ]
+  end
+
   def markdown_block(text)
     {
       "type": "section",

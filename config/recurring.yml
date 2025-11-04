@@ -1,6 +1,11 @@
 production:
-  periodic_cleanup:
+  daily_list_status:
     class: DailyScheduleListStatusJob
+    queue: cron
+    args:
+    schedule: 0 0 * * 1-5
+  daily_status_reminder:
+    class: DailyScheduleStatusReminderJob
     queue: cron
     args:
     schedule: 0 0 * * 1-5

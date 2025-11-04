@@ -6,8 +6,9 @@ module Slack
     class SimpleTeamController < BaseController
       EDIT_STATUS = "edit-status"
       EDIT_STATUS_CONFIRM = "edit-status-confirm"
+      ADD_STATUS = "add-status"
       ADD_STATUS_CONFIRM = "add-status-confirm"
-      CALLBACKS = [ EDIT_STATUS, EDIT_STATUS_CONFIRM, ADD_STATUS_CONFIRM ].freeze
+      CALLBACKS = [ EDIT_STATUS, EDIT_STATUS_CONFIRM, ADD_STATUS, ADD_STATUS_CONFIRM ].freeze
 
       def index
         case params[:text]
@@ -32,6 +33,8 @@ module Slack
         case callback
         when EDIT_STATUS
           edit_status_modal(payload)
+        when ADD_STATUS
+          add_status_modal
         when ADD_STATUS_CONFIRM
           add_status(payload)
         when EDIT_STATUS_CONFIRM
@@ -82,7 +85,13 @@ module Slack
           add_status_view
         end
 
-        slack_client.views_open(trigger_id: params["trigger_id"], view: view)
+        trigger_id = if params[:payload]
+                       JSON.parse(params[:payload], object_class: OpenStruct).trigger_id
+        else
+                       params["trigger_id"]
+        end
+
+        slack_client.views_open(trigger_id:, view: view)
       end
 
       def add_status(payload)

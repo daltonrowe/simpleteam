@@ -8,7 +8,9 @@ module Slack
         callback = payload&.actions&.first&.action_id || payload&.view&.callback_id
         controller = case callback
         when *SimpleTeamController::CALLBACKS
-          SimpleTeamController.new
+          controller = SimpleTeamController.new
+          controller.params = params
+          controller
         else
           render status: :bad_request, json: "Action not recognized" and return
         end
