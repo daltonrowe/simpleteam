@@ -61,6 +61,7 @@ export default class extends Controller {
             },
           },
           y: {
+            beginAtZero: true,
             ticks: {
               color: "#DDD",
             },
@@ -93,7 +94,7 @@ export default class extends Controller {
       host: this.hostValue,
     });
 
-    const req = await api.list({ name: this.nameValue });
+    const req = await api.list({ name: this.nameValue, order: "asc" });
     const json = await req.json();
 
     return json;
@@ -114,7 +115,7 @@ export default class extends Controller {
     return {
       labels: this.apiResult.map((row) => {
         const d = new Date(row.created_at);
-        return `${d.getUTCMonth()}/${d.getUTCDay()}/${d.getUTCFullYear()}`;
+        return `${d.getUTCMonth() + 1}/${d.getUTCDate()}/${d.getUTCFullYear()}`;
       }),
       datasets: sets,
     };

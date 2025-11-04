@@ -37,7 +37,7 @@ class DataController < ApplicationController
   private
 
   def query_params
-    params.permit(:name, :per_page, :page)
+    params.permit(:name, :per_page, :page, :order)
   end
 
   def create_params

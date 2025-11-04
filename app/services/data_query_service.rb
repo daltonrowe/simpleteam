@@ -27,7 +27,7 @@ class DataQueryService
   private
 
   def query_params
-    @query_params ||= query_params = DEFAULT_QUERY_PARAMS.merge(@params)
+    @query_params ||= DEFAULT_QUERY_PARAMS.merge(@params)
   end
 
   def page_offset
