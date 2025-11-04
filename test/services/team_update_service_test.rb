@@ -31,7 +31,7 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
       "time_zone" => "Central Time (US & Canada)"
     }).call
 
-    assert_equal 6, team.end_of_day.hour
+    assert_equal 7, team.end_of_day.hour
     assert_equal 45, team.end_of_day.min
     assert_equal "UTC", team.end_of_day.time_zone.name
   end

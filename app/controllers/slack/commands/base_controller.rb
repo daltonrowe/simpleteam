@@ -27,7 +27,13 @@ module Slack
       def team
         return @team if defined?(@team)
 
-        @team = slack_installation.teams.find_by(name: params[:channel_name])
+        channel_name = if params[:payload]
+                         JSON.parse(params[:payload], object_class: OpenStruct).channel.name
+        else
+                         params[:channel_name]
+        end
+
+        @team = slack_installation.teams.find_by(name: channel_name)
       end
 
       def slack_client
