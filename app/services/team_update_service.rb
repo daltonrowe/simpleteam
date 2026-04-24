@@ -50,13 +50,10 @@ class TeamUpdateService
   def collect_time(key)
     return unless update["#{key}(4i)"] && update["#{key}(5i)"]
 
-    hour = update["#{key}(4i)"]
-    min = update["#{key}(5i)"]
-    tz = update[:time_zone] || team.time_zone
+    hour = update["#{key}(4i)"].to_i
+    min = update["#{key}(5i)"].to_i
 
-    new_time = Time.zone.now.in_time_zone(tz).change({ hour:, min: })
-
-    new_time
+    Time.utc(2000, 1, 1, hour, min)
   end
 
   def collect_metadata
