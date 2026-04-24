@@ -15,21 +15,11 @@ class Team < ApplicationRecord
   ].freeze
 
   def end_of_day
-    self.original_end_of_day
-      .change({
-        year: Time.zone.now.year,
-        month: Time.zone.now.month,
-        day: Time.zone.now.day
-      })
+    in_team_zone(self.original_end_of_day)
   end
 
   def notification_time
-    self.original_notification_time
-      .change({
-        year: Time.zone.now.year,
-        month: Time.zone.now.month,
-        day: Time.zone.now.day
-      })
+    in_team_zone(self.original_notification_time)
   end
 
   def previous_cutoff
@@ -37,11 +27,9 @@ class Team < ApplicationRecord
   end
 
   def next_cutoff
-    cutoff_date = Time.zone.now.change(
-      { hour: self.end_of_day.hour, minutes: self.end_of_day.min }
-    )
+    cutoff_date = end_of_day
 
-    if Time.zone.now >= cutoff_date
+    if Time.current >= cutoff_date
       cutoff_date + 1.day
     else
       cutoff_date
@@ -87,5 +75,13 @@ class Team < ApplicationRecord
   # TODO: handle with method missing
   def data_api_key
     self.metadata.dig("data_api_key")
+  end
+
+  private
+
+  def in_team_zone(time)
+    zone = ActiveSupport::TimeZone[self.time_zone] || Time.zone
+    today = zone.today
+    zone.local(today.year, today.month, today.day, time.hour, time.min, time.sec)
   end
 end

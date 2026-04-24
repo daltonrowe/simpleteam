@@ -14,10 +14,23 @@ class TeamTest < ActiveSupport::TestCase
     end
   end
 
-  test "eod is in utc" do
+  test "times are in the team's time zone" do
     team = teams(:basic)
 
-    assert(team.end_of_day.time_zone, "(GMT+00:00) UTC")
-    assert(team.notification_time.time_zone, "(GMT+00:00) UTC")
+    assert_equal "Central Time (US & Canada)", team.end_of_day.time_zone.name
+    assert_equal "Central Time (US & Canada)", team.notification_time.time_zone.name
+  end
+
+  test "notification_time honors daylight savings" do
+    team = teams(:basic) # Central Time
+    team.update!(notification_time: Time.utc(2000, 1, 1, 9, 30))
+
+    travel_to Time.utc(2026, 7, 1, 12, 0) do
+      assert_equal "14:30:00", team.notification_time.utc.strftime("%H:%M:%S")
+    end
+
+    travel_to Time.utc(2026, 1, 15, 12, 0) do
+      assert_equal "15:30:00", team.notification_time.utc.strftime("%H:%M:%S")
+    end
   end
 end
