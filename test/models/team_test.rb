@@ -21,6 +21,18 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal "Central Time (US & Canada)", team.notification_time.time_zone.name
   end
 
+  test "notification_time advances to tomorrow when today's wall clock has passed" do
+    team = teams(:basic) # Central Time
+    team.update!(notification_time: Time.utc(2000, 1, 1, 9, 40))
+
+    # Cron fires at 00:00 UTC, which is 19:00 Central the previous day.
+    # The next occurrence of 09:40 Central must be the upcoming Central morning,
+    # not the same Central calendar day (which would be in the past).
+    travel_to Time.utc(2026, 4, 28, 0, 0) do
+      assert_equal Time.utc(2026, 4, 28, 14, 40), team.notification_time.utc
+    end
+  end
+
   test "notification_time honors daylight savings" do
     team = teams(:basic) # Central Time
     team.update!(notification_time: Time.utc(2000, 1, 1, 9, 30))

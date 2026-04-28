@@ -15,11 +15,11 @@ class Team < ApplicationRecord
   ].freeze
 
   def end_of_day
-    in_team_zone(self.original_end_of_day)
+    next_occurrence_in_team_zone(self.original_end_of_day)
   end
 
   def notification_time
-    in_team_zone(self.original_notification_time)
+    next_occurrence_in_team_zone(self.original_notification_time)
   end
 
   def previous_cutoff
@@ -27,13 +27,7 @@ class Team < ApplicationRecord
   end
 
   def next_cutoff
-    cutoff_date = end_of_day
-
-    if Time.current >= cutoff_date
-      cutoff_date + 1.day
-    else
-      cutoff_date
-    end
+    end_of_day
   end
 
   def current_statuses
@@ -79,9 +73,10 @@ class Team < ApplicationRecord
 
   private
 
-  def in_team_zone(time)
+  def next_occurrence_in_team_zone(time)
     zone = ActiveSupport::TimeZone[self.time_zone] || Time.zone
     today = zone.today
-    zone.local(today.year, today.month, today.day, time.hour, time.min, time.sec)
+    candidate = zone.local(today.year, today.month, today.day, time.hour, time.min, time.sec)
+    candidate <= Time.current ? candidate + 1.day : candidate
   end
 end
