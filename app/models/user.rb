@@ -24,11 +24,13 @@ class User < ApplicationRecord
   end
 
   def member_of?(team)
-    self == team.user || self.seats.where(team:).any?
+    owns?(team) || self.seats.where(team:).any?
   end
 
+  # Super admins act as the owner of every team, so they pass every
+  # ownership check regardless of who the team actually belongs to.
   def owns?(team)
-    self == team.user
+    super_admin? || self == team.user
   end
 
   def default_team

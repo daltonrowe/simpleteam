@@ -1,4 +1,4 @@
-<%= render SectionHeaderComponent.new(text: @team.name, badge: @team.user == Current.user ? "Owner" : nil) %>
+<%= render SectionHeaderComponent.new(text: @team.name, badge: Current.user.owns?(@team) ? "Owner" : nil) %>
 
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Add New Seats</h2>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_27_105956) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_26_000000) do
   create_table "data", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
     t.string "name", limit: 120, null: false
@@ -109,6 +109,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_27_105956) do
     t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "super_admin", default: false, null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 

@@ -9,6 +9,6 @@ class PendingSeatComponent < ApplicationComponent
   attr_reader :pending_seat, :user
 
   def owner
-    pending_seat.team.user == user
+    user.owns?(pending_seat.team)
   end
 end
