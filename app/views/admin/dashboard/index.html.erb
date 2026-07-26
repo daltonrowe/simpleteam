@@ -1,0 +1,13 @@
+<%= render SectionHeaderComponent.new(text: "Admin") %>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <%= link_to admin_teams_path, class: "border border-yin-600 rounded-lg p-6 flex flex-col gap-1 hover:bg-yin-800" do %>
+    <span class="text-3xl font-bold"><%= @team_count %></span>
+    <span class="text-yin-400">Teams</span>
+  <% end %>
+
+  <%= link_to admin_users_path, class: "border border-yin-600 rounded-lg p-6 flex flex-col gap-1 hover:bg-yin-800" do %>
+    <span class="text-3xl font-bold"><%= @user_count %></span>
+    <span class="text-yin-400">Users</span>
+  <% end %>
+</div>

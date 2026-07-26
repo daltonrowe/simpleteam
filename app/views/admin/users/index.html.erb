@@ -1,0 +1,28 @@
+<%= render SectionHeaderComponent.new(text: "Users", badge: @users.size.to_s) %>
+
+<%= render LinkComponent.new(text: "← Admin", to: admin_root_path, style: :text, level: :secondary) %>
+
+<div class="overflow-x-auto">
+  <table class="w-full text-left text-sm border-collapse">
+    <thead>
+      <tr class="border-b border-yin-600 text-yin-400">
+        <th class="py-2 pr-4 font-medium">Name</th>
+        <th class="py-2 pr-4 font-medium">Email</th>
+        <th class="py-2 pr-4 font-medium">Super Admin</th>
+        <th class="py-2 pr-4 font-medium">Confirmed</th>
+        <th class="py-2 pr-4 font-medium">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class="border-b border-yin-700">
+          <td class="py-2 pr-4"><%= user.display_name %></td>
+          <td class="py-2 pr-4"><%= user.email_address %></td>
+          <td class="py-2 pr-4"><%= user.super_admin? ? "Yes" : "—" %></td>
+          <td class="py-2 pr-4"><%= user.confirmed? ? "Yes" : "—" %></td>
+          <td class="py-2 pr-4"><%= user.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
