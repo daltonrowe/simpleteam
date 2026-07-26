@@ -46,6 +46,40 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
     assert_equal 22, team.original_notification_time.min
   end
 
+  test "should collect time_zone from params" do
+    team = teams(:basic)
+
+    TeamUpdateService.new(team, {
+      "time_zone" => "Eastern Time (US & Canada)"
+    }).call
+
+    assert_equal "Eastern Time (US & Canada)", team.reload.time_zone
+  end
+
+  test "should ignore a blank time_zone" do
+    team = teams(:basic)
+    original = team.time_zone
+
+    TeamUpdateService.new(team, {
+      "time_zone" => "",
+      "project_management_url" => "https://example.com/keep-update-valid"
+    }).call
+
+    assert_equal original, team.reload.time_zone
+  end
+
+  test "should ignore an unrecognized time_zone" do
+    team = teams(:basic)
+    original = team.time_zone
+
+    TeamUpdateService.new(team, {
+      "time_zone" => "Not A Real Zone",
+      "project_management_url" => "https://example.com/keep-update-valid"
+    }).call
+
+    assert_equal original, team.reload.time_zone
+  end
+
   test "should collect metadata attributes from params" do
     team = teams(:basic)
 
