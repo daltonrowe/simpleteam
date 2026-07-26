@@ -47,4 +47,25 @@
   <% end %>
 </div>
 
+<% keys_param = params.permit(keys: {})[:keys] %>
+<% if @page > 1 || @has_next_page %>
+  <nav class="flex items-center justify-between gap-4" aria-label="Records pagination">
+    <% if @page > 1 %>
+      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page - 1, keys: keys_param),
+                                    text: "← Previous", style: :outlined, level: :secondary) %>
+    <% else %>
+      <span></span>
+    <% end %>
+
+    <span class="text-yin-400 text-sm">Page <%= @page %></span>
+
+    <% if @has_next_page %>
+      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page + 1, keys: keys_param),
+                                    text: "Next →", style: :outlined, level: :secondary) %>
+    <% else %>
+      <span></span>
+    <% end %>
+  </nav>
+<% end %>
+
 </section>
