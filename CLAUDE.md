@@ -22,6 +22,14 @@ Simpleteam is a set of simple straightforwards tools for developer teams.
 - Creating new HTML View Components components can be performed with `bin/rails g component MyComponentName`
 - Creating new JS controller (if absolutely necessary) can be performed with `bin/rails g stimulus MyControllerName`
 
+## Continuous Integration
+
+- The CI workflow (`.github/workflows/ci.yml`) posts a `✅ CI passed` comment on the
+  pull request once every check succeeds. That comment is delivered as a webhook event.
+- When watching a pull request, always rely on this success comment to confirm CI is
+  green. Do not poll or schedule self check-ins to detect CI success — wait for the
+  webhook.
+
 ## References
 
 - Rails 8 guides and explanations available at https://guides.rubyonrails.org/
