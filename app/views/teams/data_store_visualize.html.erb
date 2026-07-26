@@ -10,23 +10,32 @@
 
   <%= render ApiChartComponent.new(name: @name,
                                    team: @team,
-                                   keys: @visualize_keys&.join(",") || @data_keys&.join(","),
+                                   keys: @visualize_keys&.join(",") || @data_keys&.first,
                                    host: current_host,
                                    page: @page) %>
 
   <div class="mx-auto max-w-2xl container">
 
   <%= form_with url: team_data_store_visualize_path, method: :get, html: {
-    class: "grid grid-cols-2 gap-4"
+    class: "grid grid-cols-2 gap-4",
+    data: { controller: "checkbox-group" }
   } do |form| %>
 
+    <div class="col-span-2 flex gap-4">
+      <%= render ButtonComponent.new(text: "Select all", type: :button, style: :outlined, level: :secondary,
+                                     element: { data: { action: "checkbox-group#selectAll" } }) %>
+      <%= render ButtonComponent.new(text: "Deselect all", type: :button, style: :outlined, level: :secondary,
+                                     element: { data: { action: "checkbox-group#deselectAll" } }) %>
+    </div>
+
     <% @data_keys.each do |key| %>
-      <% checked = @visualize_keys ? @visualize_keys&.include?(key) : true %>
+      <% checked = @visualize_keys ? @visualize_keys&.include?(key) : (key == @data_keys.first) %>
 
       <%= form.label "keys[#{key}]", class: "border p-3 rounded border-yin-600 cursor-pointer auto-rows-auto" do %>
         <%= form.checkbox "keys[#{key}]",
             checked:,
-            include_hidden: false %>
+            include_hidden: false,
+            data: { checkbox_group_target: "checkbox" } %>
         <span><%= key %></span>
       <% end %>
     <% end %>
