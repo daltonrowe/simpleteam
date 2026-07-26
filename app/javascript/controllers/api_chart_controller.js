@@ -15,6 +15,7 @@ export default class extends Controller {
     apiKey: String,
     keys: String,
     host: String,
+    page: Number,
   };
 
   static targets = ["canvas"];
@@ -94,10 +95,16 @@ export default class extends Controller {
       host: this.hostValue,
     });
 
-    const req = await api.list({ name: this.nameValue, order: "asc" });
+    const req = await api.list({
+      name: this.nameValue,
+      order: "desc",
+      page: this.pageValue || 1,
+    });
     const json = await req.json();
 
-    return json;
+    // The API returns the most recent entries first. Reverse them so the
+    // chart plots the last n entries in chronological order.
+    return json.reverse();
   }
 
   get chartData() {
