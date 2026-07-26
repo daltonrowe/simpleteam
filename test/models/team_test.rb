@@ -33,6 +33,34 @@ class TeamTest < ActiveSupport::TestCase
     end
   end
 
+  test "notification_time falls back to the default zone when time_zone is blank" do
+    team = teams(:basic)
+    team.update_columns(time_zone: "", notification_time: Time.utc(2000, 1, 1, 16, 38))
+
+    # A blank zone must NOT be treated as UTC (which would fire at 16:38 UTC =
+    # 11:38 Central, hours before the intended local time).
+    travel_to Time.utc(2026, 7, 16, 0, 0) do
+      assert_equal Time.utc(2026, 7, 16, 21, 38), team.notification_time.utc
+    end
+  end
+
+  test "notification_time falls back to the default zone when time_zone is unrecognized" do
+    team = teams(:basic)
+    team.update_columns(time_zone: "Not A Real Zone", notification_time: Time.utc(2000, 1, 1, 16, 38))
+
+    travel_to Time.utc(2026, 7, 16, 0, 0) do
+      assert_equal Time.utc(2026, 7, 16, 21, 38), team.notification_time.utc
+    end
+  end
+
+  test "requires a time_zone" do
+    team = teams(:basic)
+    team.time_zone = ""
+
+    assert_not team.valid?
+    assert_includes team.errors[:time_zone], "can't be blank"
+  end
+
   test "notification_time honors daylight savings" do
     team = teams(:basic) # Central Time
     team.update!(notification_time: Time.utc(2000, 1, 1, 9, 30))

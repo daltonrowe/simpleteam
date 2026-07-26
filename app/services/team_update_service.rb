@@ -11,9 +11,10 @@ class TeamUpdateService
     sections = collect_sections
     end_of_day = collect_time("end_of_day")
     notification_time = collect_time("notification_time")
+    time_zone = collect_time_zone
     metadata = collect_metadata
 
-    valid_updates = { sections:, end_of_day:, notification_time:, metadata: }.compact
+    valid_updates = { sections:, end_of_day:, notification_time:, time_zone:, metadata: }.compact
 
     return unless valid_updates.length.positive?
 
@@ -54,6 +55,16 @@ class TeamUpdateService
     min = update["#{key}(5i)"].to_i
 
     Time.utc(2000, 1, 1, hour, min)
+  end
+
+  def collect_time_zone
+    tz = update["time_zone"]
+    return if tz.blank?
+    # Ignore values ActiveSupport can't resolve so the column never ends up
+    # blank/invalid, which would push notifications back to UTC time.
+    return unless ActiveSupport::TimeZone[tz]
+
+    tz
   end
 
   def collect_metadata

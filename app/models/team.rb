@@ -1,10 +1,13 @@
 class Team < ApplicationRecord
+  DEFAULT_TIME_ZONE = "Central Time (US & Canada)".freeze
+
   belongs_to :slack_installation, optional: true
   belongs_to :user
   has_many :seats, dependent: :destroy
   has_many :pending_seats, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }
+  validates :time_zone, presence: true
 
   alias_attribute :original_end_of_day, :end_of_day
   alias_attribute :original_notification_time, :notification_time
@@ -73,8 +76,16 @@ class Team < ApplicationRecord
 
   private
 
+  # Always resolve to a valid zone. A blank or unrecognized `time_zone` would
+  # otherwise make `ActiveSupport::TimeZone[...]` return nil (or raise on nil),
+  # silently falling back to the app default (UTC) and sending notifications at
+  # the wrong wall-clock time. Fall back to the team default instead.
+  def team_zone
+    ActiveSupport::TimeZone[self.time_zone.to_s] || ActiveSupport::TimeZone[DEFAULT_TIME_ZONE]
+  end
+
   def next_occurrence_in_team_zone(time)
-    zone = ActiveSupport::TimeZone[self.time_zone] || Time.zone
+    zone = team_zone
     today = zone.today
     candidate = zone.local(today.year, today.month, today.day, time.hour, time.min, time.sec)
     candidate <= Time.current ? candidate + 1.day : candidate
