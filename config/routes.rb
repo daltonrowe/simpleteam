@@ -32,6 +32,12 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
   get "/dashboard/:team_id", to: "dashboard#index"
 
+  namespace :admin do
+    root "dashboard#index"
+    resources :teams, only: :index
+    resources :users, only: :index
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :slack do
