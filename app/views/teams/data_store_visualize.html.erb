@@ -11,7 +11,8 @@
   <%= render ApiChartComponent.new(name: @name,
                                    team: @team,
                                    keys: @visualize_keys&.join(",") || @data_keys&.join(","),
-                                   host: current_host) %>
+                                   host: current_host,
+                                   page: @page) %>
 
   <div class="mx-auto max-w-2xl container">
 

@@ -15,6 +15,7 @@ export default class extends Controller {
     apiKey: String,
     keys: String,
     host: String,
+    page: Number,
   };
 
   static targets = ["canvas"];
@@ -94,7 +95,11 @@ export default class extends Controller {
       host: this.hostValue,
     });
 
-    const req = await api.list({ name: this.nameValue, order: "desc" });
+    const req = await api.list({
+      name: this.nameValue,
+      order: "desc",
+      page: this.pageValue || 1,
+    });
     const json = await req.json();
 
     // The API returns the most recent entries first. Reverse them so the
