@@ -3,8 +3,8 @@
 module BlockFormatter
   module_function
 
-  def block_for_statuses(statuses, show_actions: false)
-    block = [ title_section, divider ]
+  def block_for_statuses(statuses, team:, show_actions: false)
+    block = [ title_section("*#{team.name} Statuses For Today*"), divider ]
     if statuses.blank?
       markdown_block("No statuses have been submitted. :disappointed:")
     else

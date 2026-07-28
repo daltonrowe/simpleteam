@@ -4,7 +4,7 @@ class SlackListStatusJob < ApplicationJob
     return unless team
 
     statuses = team.current_statuses
-    blocks = BlockFormatter.block_for_statuses(statuses)
+    blocks = BlockFormatter.block_for_statuses(statuses, team:)
 
     SlackUser.where(slack_installation_id: team.slack_installation.id).each do |slack_user|
       next unless slack_user.user.all_teams.include? team
