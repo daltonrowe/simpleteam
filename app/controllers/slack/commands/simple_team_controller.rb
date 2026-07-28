@@ -52,7 +52,7 @@ module Slack
         else
           {
             response_type: "ephemeral",
-            blocks: BlockFormatter.block_for_statuses(statuses)
+            blocks: BlockFormatter.block_for_statuses(statuses, team:)
           }
         end
       end
