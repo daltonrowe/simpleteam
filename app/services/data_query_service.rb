@@ -1,6 +1,6 @@
 class DataQueryService
   DEFAULT_QUERY_PARAMS = {
-    per_page: 30,
+    per_page: 25,
     page: 1,
     order: "desc",
     name: nil,
@@ -8,6 +8,9 @@ class DataQueryService
   }.freeze
 
   RESOLUTIONS = %w[full weekly monthly quarterly].freeze
+
+  LIMIT_OPTIONS = [ 25, 50, 75, 100 ].freeze
+  UNLIMITED = "none".freeze
 
   def initialize(team:, params:)
     @team = team
@@ -17,9 +20,7 @@ class DataQueryService
   def call
     return paginate(base_scope.order(created_at: order)) if resolution == "full"
 
-    records = collapse_by_period(base_scope.order(created_at: :asc).to_a)
-    records.reverse! if order == :desc
-    records[page_offset, per_page] || []
+    paginate(collapsed_records)
   end
 
   private
@@ -31,8 +32,27 @@ class DataQueryService
     Datum.where(**where_args)
   end
 
-  def paginate(scope)
-    scope.offset(page_offset).limit(per_page)
+  def collapsed_records
+    records = collapse_by_period(base_scope.order(created_at: :asc).to_a)
+    records.reverse! if order == :desc
+    records
+  end
+
+  # Applies the requested limit/page. Works for both an ActiveRecord relation
+  # (full resolution) and an already-collapsed array (weekly/monthly/quarterly).
+  # A limit of "none" returns everything unpaginated.
+  def paginate(collection)
+    return collection if unlimited?
+
+    if collection.respond_to?(:offset)
+      collection.offset(page_offset).limit(per_page)
+    else
+      collection[page_offset, per_page] || []
+    end
+  end
+
+  def unlimited?
+    query_params[:per_page].to_s.downcase == UNLIMITED
   end
 
   # Keep only the earliest entry within each week/month/quarter. `records` must

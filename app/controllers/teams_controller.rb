@@ -48,10 +48,11 @@ class TeamsController < ApplicationController
     @name = visualize_query_params[:name]
     @page = [ visualize_query_params[:page].to_i, 1 ].max
     @resolution = DataQueryService::RESOLUTIONS.include?(visualize_query_params[:resolution]) ? visualize_query_params[:resolution] : "full"
-    @data = DataQueryService.new(team: @team, params: visualize_query_params.merge(page: @page)).call
+    @limit = visualize_limit
+    @data = DataQueryService.new(team: @team, params: visualize_query_params.merge(page: @page, per_page: @limit)).call
     @data_keys = @data.first&.content_keys
     @visualize_keys = visualize_keys
-    @has_next_page = @data.length == DataQueryService::DEFAULT_QUERY_PARAMS[:per_page]
+    @has_next_page = @limit != DataQueryService::UNLIMITED && @data.length == @limit.to_i
 
     render layout: "wide"
   end
@@ -79,7 +80,14 @@ class TeamsController < ApplicationController
   end
 
   def visualize_query_params
-    params.permit(:name, :page, :resolution)
+    params.permit(:name, :page, :resolution, :per_page)
+  end
+
+  def visualize_limit
+    limit = visualize_query_params[:per_page].to_s
+    return DataQueryService::UNLIMITED if limit == DataQueryService::UNLIMITED
+
+    DataQueryService::LIMIT_OPTIONS.map(&:to_s).include?(limit) ? limit : "25"
   end
 
   def visualize_keys

@@ -13,7 +13,8 @@
                                    keys: @visualize_keys&.join(",") || @data_keys&.first,
                                    host: current_host,
                                    page: @page,
-                                   resolution: @resolution) %>
+                                   resolution: @resolution,
+                                   limit: @limit) %>
 
   <div class="mx-auto max-w-2xl container">
 
@@ -22,10 +23,18 @@
     data: { controller: "checkbox-group" }
   } do |form| %>
 
-    <label class="col-span-2 flex flex-col gap-1">
+    <label class="flex flex-col gap-1">
       <span class="text-sm text-yin-400">Resolution</span>
       <%= form.select :resolution,
             options_for_select(DataQueryService::RESOLUTIONS.map { |r| [ r.titleize, r ] }, @resolution),
+            {},
+            class: "border p-3 rounded border-yin-600 bg-yin-800 text-white" %>
+    </label>
+
+    <label class="flex flex-col gap-1">
+      <span class="text-sm text-yin-400">Limit</span>
+      <%= form.select :per_page,
+            options_for_select(DataQueryService::LIMIT_OPTIONS.map { |n| [ n.to_s, n.to_s ] } + [ [ "None", DataQueryService::UNLIMITED ] ], @limit),
             {},
             class: "border p-3 rounded border-yin-600 bg-yin-800 text-white" %>
     </label>
@@ -70,7 +79,7 @@
 <% if @page > 1 || @has_next_page %>
   <nav class="flex items-center justify-between gap-4" aria-label="Records pagination">
     <% if @page > 1 %>
-      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page - 1, keys: keys_param, resolution: @resolution),
+      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page - 1, keys: keys_param, resolution: @resolution, per_page: @limit),
                                     text: "← Previous", style: :outlined, level: :secondary) %>
     <% else %>
       <span></span>
@@ -79,7 +88,7 @@
     <span class="text-yin-400 text-sm">Page <%= @page %></span>
 
     <% if @has_next_page %>
-      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page + 1, keys: keys_param, resolution: @resolution),
+      <%= render LinkComponent.new(to: team_data_store_visualize_path(@team, @name, page: @page + 1, keys: keys_param, resolution: @resolution, per_page: @limit),
                                     text: "Next →", style: :outlined, level: :secondary) %>
     <% else %>
       <span></span>
