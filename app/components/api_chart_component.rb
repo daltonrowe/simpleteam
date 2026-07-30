@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class ApiChartComponent < ApplicationComponent
-  def initialize(name:, team:, keys:, host:, page: 1, resolution: "full")
+  def initialize(name:, team:, keys:, host:, page: 1, resolution: "full", limit: "25")
       @name = name
       @team = team
       @keys = keys
       @host = host
       @page = page
       @resolution = resolution
+      @limit = limit
 
       super
   end
 
-  attr_accessor :name, :team, :keys, :host, :page, :resolution
+  attr_accessor :name, :team, :keys, :host, :page, :resolution, :limit
 
   def call
     tag.div class: "aspect-[3/1] bg-yin-800 rounded-lg py-2 px-4", data: {
@@ -23,7 +24,8 @@ class ApiChartComponent < ApplicationComponent
       api_chart_host_value: host,
       api_chart_keys_value: keys,
       api_chart_page_value: page,
-      api_chart_resolution_value: resolution
+      api_chart_resolution_value: resolution,
+      api_chart_limit_value: limit
     } do
       tag.canvas class: "w-full h-full", data: {
         api_chart_target: "canvas"

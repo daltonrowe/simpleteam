@@ -17,6 +17,7 @@ export default class extends Controller {
     host: String,
     page: Number,
     resolution: String,
+    limit: String,
   };
 
   static targets = ["canvas"];
@@ -101,6 +102,7 @@ export default class extends Controller {
       order: "desc",
       page: this.pageValue || 1,
       resolution: this.resolutionValue || "full",
+      per_page: this.limitValue || "25",
     });
     const json = await req.json();
 
