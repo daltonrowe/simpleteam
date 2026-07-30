@@ -1,6 +1,6 @@
 class DataQueryService
   DEFAULT_QUERY_PARAMS = {
-    per_page: 30,
+    per_page: 25,
     page: 1,
     order: "desc",
     name: nil,
