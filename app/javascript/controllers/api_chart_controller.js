@@ -16,6 +16,7 @@ export default class extends Controller {
     keys: String,
     host: String,
     page: Number,
+    resolution: String,
   };
 
   static targets = ["canvas"];
@@ -99,6 +100,7 @@ export default class extends Controller {
       name: this.nameValue,
       order: "desc",
       page: this.pageValue || 1,
+      resolution: this.resolutionValue || "full",
     });
     const json = await req.json();
 

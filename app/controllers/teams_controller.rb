@@ -47,6 +47,7 @@ class TeamsController < ApplicationController
   def data_store_visualize
     @name = visualize_query_params[:name]
     @page = [ visualize_query_params[:page].to_i, 1 ].max
+    @resolution = DataQueryService::RESOLUTIONS.include?(visualize_query_params[:resolution]) ? visualize_query_params[:resolution] : "full"
     @data = DataQueryService.new(team: @team, params: visualize_query_params.merge(page: @page)).call
     @data_keys = @data.first&.content_keys
     @visualize_keys = visualize_keys
@@ -78,7 +79,7 @@ class TeamsController < ApplicationController
   end
 
   def visualize_query_params
-    params.permit(:name, :page)
+    params.permit(:name, :page, :resolution)
   end
 
   def visualize_keys
