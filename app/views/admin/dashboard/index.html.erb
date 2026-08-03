@@ -10,4 +10,9 @@
     <span class="text-3xl font-bold"><%= @user_count %></span>
     <span class="text-yin-400">Users</span>
   <% end %>
+
+  <%= link_to admin_slack_installations_path, class: "border border-yin-600 rounded-lg p-6 flex flex-col gap-1 hover:bg-yin-800" do %>
+    <span class="text-3xl font-bold"><%= @slack_installation_count %></span>
+    <span class="text-yin-400">Slack Installations</span>
+  <% end %>
 </div>

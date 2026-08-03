@@ -20,7 +20,19 @@ class TeamsControllerTest < ActionDispatch::IntegrationTest
     patch team_path(team), params: { team: { name: "Renamed Team" } }
 
     assert_equal "Renamed Team", team.reload.name
-    assert_response :found
+  end
+
+  test "updating a team redirects to settings with a flash notice using see_other" do
+    team = teams(:basic)
+    sign_in(users(:owner))
+
+    patch team_path(team), params: { team: { name: "Renamed Team" } }
+
+    # 303 See Other so Turbo follows the PATCH redirect with a GET instead of
+    # re-issuing PATCH to the target.
+    assert_response :see_other
+    assert_redirected_to edit_team_path(team)
+    assert_equal "Team updated!", flash[:notice]
   end
 
   test "owner can delete their team" do
