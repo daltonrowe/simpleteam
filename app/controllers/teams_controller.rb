@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
 
   before_action :find_team, except: %i[new create]
   user_must_have_seat only: %i[show create_api_key]
-  user_must_own_team only: %i[edit update]
+  user_must_own_team only: %i[edit update destroy]
 
   def new
     @team = Team.new(user: Current.user)
@@ -31,6 +31,12 @@ class TeamsController < ApplicationController
     else
       redirect_to team_data_path(@team), alert: "Something went wrong!"
     end
+  end
+
+  def destroy
+    @team.destroy
+
+    redirect_to dashboard_path, notice: "Team deleted."
   end
 
   def create_api_key
