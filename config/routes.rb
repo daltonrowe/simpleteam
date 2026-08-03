@@ -34,8 +34,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index"
-    resources :teams, only: :index
+    resources :teams, only: %i[index destroy]
     resources :users, only: :index
+    resources :slack_installations, only: :index
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

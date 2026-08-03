@@ -26,17 +26,21 @@ class TeamsController < ApplicationController
   def update
     success = TeamUpdateService.new(@team, update_params).call
 
+    # Turbo submits this form with PATCH; a 302 would be followed with PATCH
+    # again (per the Fetch spec), so use 303 See Other to force a GET of the
+    # redirect target. team_data_path is a JSON API endpoint, so send the user
+    # back to the settings page where the flash actually renders.
     if success
-      redirect_to team_data_path(@team), notice: "Team updated!"
+      redirect_to edit_team_path(@team), notice: "Team updated!", status: :see_other
     else
-      redirect_to team_data_path(@team), alert: "Something went wrong!"
+      redirect_to edit_team_path(@team), alert: "Something went wrong!", status: :see_other
     end
   end
 
   def destroy
     @team.destroy
 
-    redirect_to dashboard_path, notice: "Team deleted."
+    redirect_to dashboard_path, notice: "Team deleted.", status: :see_other
   end
 
   def create_api_key

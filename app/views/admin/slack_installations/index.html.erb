@@ -1,0 +1,32 @@
+<%= render SectionHeaderComponent.new(text: "Slack Installations", badge: @slack_installations.size.to_s) %>
+
+<%= render LinkComponent.new(text: "← Admin", to: admin_root_path, style: :text, level: :secondary) %>
+
+<div class="overflow-x-auto">
+  <table class="w-full text-left text-sm border-collapse">
+    <thead>
+      <tr class="border-b border-yin-600 text-yin-400">
+        <th class="py-2 pr-4 font-medium">Name</th>
+        <th class="py-2 pr-4 font-medium">Installed By</th>
+        <th class="py-2 pr-4 font-medium">Teams</th>
+        <th class="py-2 pr-4 font-medium">Status</th>
+        <th class="py-2 pr-4 font-medium">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @slack_installations.each do |installation| %>
+        <tr class="border-b border-yin-700">
+          <td class="py-2 pr-4"><%= installation.name.presence || "—" %></td>
+          <td class="py-2 pr-4"><%= installation.user&.email_address || "—" %></td>
+          <td class="py-2 pr-4"><%= installation.teams.size %></td>
+          <td class="py-2 pr-4"><%= installation.active? ? "Active" : "Inactive" %></td>
+          <td class="py-2 pr-4"><%= installation.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @slack_installations.empty? %>
+    <%= render EmptySectionNoticeComponent.new(text: "No Slack installations yet.") %>
+  <% end %>
+</div>
