@@ -12,7 +12,9 @@ class User < ApplicationRecord
   end
 
   def all_teams
-    [ *self.teams, *self.seats.map { |seat| seat.team } ]
+    # An owner can also hold a seat on their own team, so dedupe to avoid
+    # listing (and notifying for) the same team twice.
+    [ *self.teams, *self.seats.map { |seat| seat.team } ].uniq
   end
 
   def all_alone?

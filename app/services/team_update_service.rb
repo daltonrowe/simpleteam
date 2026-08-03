@@ -8,13 +8,14 @@ class TeamUpdateService
   attr_accessor :team, :update
 
   def call
+    name = collect_name
     sections = collect_sections
     end_of_day = collect_time("end_of_day")
     notification_time = collect_time("notification_time")
     time_zone = collect_time_zone
     metadata = collect_metadata
 
-    valid_updates = { sections:, end_of_day:, notification_time:, time_zone:, metadata: }.compact
+    valid_updates = { name:, sections:, end_of_day:, notification_time:, time_zone:, metadata: }.compact
 
     return unless valid_updates.length.positive?
 
@@ -22,6 +23,14 @@ class TeamUpdateService
   end
 
   private
+
+  def collect_name
+    name = update["name"]
+    # Ignore a blank name so the update can't wipe out a required value.
+    return if name.blank?
+
+    name.strip
+  end
 
   def collect_sections
     incoming_sections = update.select { |key| key.include? "section_" }

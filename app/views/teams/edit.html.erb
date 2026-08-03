@@ -27,10 +27,17 @@
 </section>
 
 <section class="flex flex-col gap-4">
-  <h2 class="font-bold text-2xl">Status Sections</h2>
+  <h2 class="font-bold text-2xl">Team Settings</h2>
 
   <%= form_with model: @team, url: team_path(@team), method: :patch, html: { class: "flex flex-col gap-8" } do |form| %>
     <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">Team Name</h2>
+
+      <%= form.text_field :name, value: @team.name, placeholder: "Team Name", class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 w-full" %>
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl">Status Sections</h2>
       <% @team.sections.each_with_index do |section, index| %>
       <div class="border border-gray-400 rounded-md">
         <%= form.text_field "section_#{index}_name", value: section["name"], placeholder: "Section Name", class: "block rounded-md focus:outline-solid focus:outline-blue-600 px-3 py-2 font-bold w-full" %>
@@ -76,4 +83,18 @@
 
   <% end %>
 
+</section>
+
+<section class="flex flex-col gap-4">
+  <h2 class="font-bold text-2xl">Danger Zone</h2>
+
+  <p class="text-sm text-yin-300">Deleting a team permanently removes its statuses, data, and members. This cannot be undone.</p>
+
+  <div>
+    <%= button_to "Delete Team",
+          team_path(@team),
+          method: :delete,
+          class: "cursor-pointer w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 inline-block font-medium bg-red-600 hover:bg-red-700 text-white",
+          form: { data: { turbo_confirm: "Delete #{@team.name}? This permanently removes the team, its statuses, and its data." } } %>
+  </div>
 </section>

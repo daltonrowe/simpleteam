@@ -22,6 +22,26 @@ class TeamUpdateServiceTest < ActiveSupport::TestCase
     assert_equal expected, team.sections
   end
 
+  test "should collect the name from params" do
+    team = teams(:basic)
+
+    TeamUpdateService.new(team, { "name" => "  Renamed Team  " }).call
+
+    assert_equal "Renamed Team", team.reload.name
+  end
+
+  test "should ignore a blank name" do
+    team = teams(:basic)
+    original = team.name
+
+    TeamUpdateService.new(team, {
+      "name" => "",
+      "project_management_url" => "https://example.com/keep-update-valid"
+    }).call
+
+    assert_equal original, team.reload.name
+  end
+
   test "should collect end_of_day from params" do
     team = teams(:basic)
 
