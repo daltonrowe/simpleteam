@@ -1,0 +1,64 @@
+<%= render SectionHeaderComponent.new(text: "Notifications") %>
+
+<%= render LinkComponent.new(text: "← Admin", to: admin_root_path, style: :text, level: :secondary) %>
+
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Scheduled</h2>
+  <p class="text-sm text-yin-400">Next daily reminder and digest for each team, in the team's time zone. Sends run on weekdays.</p>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-yin-600 text-yin-400">
+          <th class="py-2 pr-4 font-medium">Team</th>
+          <th class="py-2 pr-4 font-medium">Type</th>
+          <th class="py-2 pr-4 font-medium">Next send</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @scheduled.each do |entry| %>
+          <tr class="border-b border-yin-700">
+            <td class="py-2 pr-4"><%= entry[:team].name.presence || "—" %></td>
+            <td class="py-2 pr-4"><%= Notification::LABELS.fetch(entry[:kind], entry[:kind]) %></td>
+            <td class="py-2 pr-4"><%= entry[:at].strftime("%a %b %-d, %-I:%M %p %Z") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @scheduled.empty? %>
+      <%= render EmptySectionNoticeComponent.new(text: "No teams are connected to Slack yet.") %>
+    <% end %>
+  </div>
+</section>
+
+<section class="flex flex-col gap-2">
+  <h2 class="font-bold text-2xl">Recently Sent</h2>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-yin-600 text-yin-400">
+          <th class="py-2 pr-4 font-medium">Team</th>
+          <th class="py-2 pr-4 font-medium">Type</th>
+          <th class="py-2 pr-4 font-medium">Recipients</th>
+          <th class="py-2 pr-4 font-medium">Sent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sent.each do |notification| %>
+          <tr class="border-b border-yin-700">
+            <td class="py-2 pr-4"><%= notification.team.name.presence || "—" %></td>
+            <td class="py-2 pr-4"><%= notification.label %></td>
+            <td class="py-2 pr-4"><%= notification.recipient_count %></td>
+            <td class="py-2 pr-4"><%= notification.created_at.strftime("%b %-d, %Y %-I:%M %p") %> UTC</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @sent.empty? %>
+      <%= render EmptySectionNoticeComponent.new(text: "No notifications have been sent yet.") %>
+    <% end %>
+  </div>
+</section>

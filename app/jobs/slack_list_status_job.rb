@@ -6,10 +6,14 @@ class SlackListStatusJob < ApplicationJob
     statuses = team.current_statuses
     blocks = BlockFormatter.block_for_statuses(statuses, team:)
 
+    recipient_count = 0
     SlackUser.where(slack_installation_id: team.slack_installation.id).each do |slack_user|
       next unless slack_user.user.all_teams.include? team
 
       team.slack_installation.slack_client.chat_postMessage(channel: slack_user.slack_user_id, blocks:)
+      recipient_count += 1
     end
+
+    team.notifications.create!(kind: Notification::STATUS_LIST, recipient_count:)
   end
 end

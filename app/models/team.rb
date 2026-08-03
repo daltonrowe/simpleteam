@@ -7,6 +7,7 @@ class Team < ApplicationRecord
   has_many :pending_seats, dependent: :destroy
   has_many :statuses, dependent: :destroy
   has_many :data, class_name: "Datum", dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }
   validates :time_zone, presence: true

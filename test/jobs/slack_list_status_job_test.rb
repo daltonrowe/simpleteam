@@ -33,4 +33,14 @@ class SlackListStatusJobTest < ActiveJob::TestCase
 
     assert(client.verify)
   end
+
+  test "records a sent notification with the recipient count" do
+    with_stubbed_slack_client do
+      SlackListStatusJob.perform_now(@slack_team.id)
+    end
+
+    notifications = @slack_team.notifications.where(kind: Notification::STATUS_LIST)
+    assert_equal 1, notifications.count
+    assert_equal 2, notifications.last.recipient_count
+  end
 end
