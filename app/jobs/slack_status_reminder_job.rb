@@ -6,6 +6,7 @@ class SlackStatusReminderJob < ApplicationJob
     statuses = team.current_statuses
     blocks = BlockFormatter.block_for_status_reminder
 
+    recipient_count = 0
     SlackUser.where(slack_installation_id: team.slack_installation.id).each do |slack_user|
       next unless slack_user.user.all_teams.include? team
       next if statuses.any? { |s| s.user == slack_user.user }
@@ -13,6 +14,9 @@ class SlackStatusReminderJob < ApplicationJob
       team.slack_installation.slack_client.chat_postEphemeral(channel: team.name,
                                                               user: slack_user.slack_user_id,
                                                               blocks:)
+      recipient_count += 1
     end
+
+    team.notifications.create!(kind: Notification::STATUS_REMINDER, recipient_count:)
   end
 end

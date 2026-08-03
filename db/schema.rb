@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_26_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_03_000000) do
   create_table "data", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
     t.string "name", limit: 120, null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_26_000000) do
     t.datetime "updated_at", null: false
     t.index ["name", "created_at"], name: "index_data_on_name_and_created_at"
     t.index ["team_id"], name: "index_data_on_team_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "team_id", null: false
+    t.string "kind", null: false
+    t.integer "recipient_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_notifications_on_created_at"
+    t.index ["team_id"], name: "index_notifications_on_team_id"
   end
 
   create_table "pending_seats", force: :cascade do |t|
@@ -114,6 +124,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_26_000000) do
   end
 
   add_foreign_key "data", "teams"
+  add_foreign_key "notifications", "teams"
   add_foreign_key "pending_seats", "teams"
   add_foreign_key "seats", "teams"
   add_foreign_key "seats", "users"
