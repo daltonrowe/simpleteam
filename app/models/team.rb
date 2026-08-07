@@ -28,6 +28,12 @@ class Team < ApplicationRecord
     next_occurrence_in_team_zone(self.original_notification_time)
   end
 
+  # The resolved time zone (never nil), for converting stored UTC timestamps
+  # into the team's local wall clock.
+  def zone
+    team_zone
+  end
+
   def previous_cutoff
     next_cutoff - 1.day
   end

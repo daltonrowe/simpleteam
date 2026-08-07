@@ -51,7 +51,7 @@
             <td class="py-2 pr-4"><%= notification.team.name.presence || "—" %></td>
             <td class="py-2 pr-4"><%= notification.label %></td>
             <td class="py-2 pr-4"><%= notification.recipient_count %></td>
-            <td class="py-2 pr-4"><%= notification.created_at.strftime("%b %-d, %Y %-I:%M %p") %> UTC</td>
+            <td class="py-2 pr-4 whitespace-nowrap"><%= notification.created_at.in_time_zone(notification.team.zone).strftime("%b %-d, %Y %-I:%M %p %Z") %></td>
           </tr>
         <% end %>
       </tbody>
