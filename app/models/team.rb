@@ -28,6 +28,13 @@ class Team < ApplicationRecord
     next_occurrence_in_team_zone(self.original_notification_time)
   end
 
+  # The next time a digest actually goes out. Daily sends only run on weekdays
+  # (see config/recurring.yml), so roll a weekend occurrence forward to Monday
+  # rather than implying a Saturday/Sunday send that never happens.
+  def next_notification_time
+    skip_weekend(notification_time)
+  end
+
   # The resolved time zone (never nil), for converting stored UTC timestamps
   # into the team's local wall clock.
   def zone
@@ -84,6 +91,16 @@ class Team < ApplicationRecord
   end
 
   private
+
+  # Roll a Saturday/Sunday occurrence forward to Monday, preserving the local
+  # wall-clock time. Adding whole days keeps the same hour across DST changes.
+  def skip_weekend(time)
+    case time.wday
+    when 6 then time + 2.days # Saturday -> Monday
+    when 0 then time + 1.day  # Sunday -> Monday
+    else time
+    end
+  end
 
   # Always resolve to a valid zone. A blank or unrecognized `time_zone` would
   # otherwise make `ActiveSupport::TimeZone[...]` return nil (or raise on nil),
