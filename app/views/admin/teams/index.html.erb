@@ -9,6 +9,9 @@
         <th class="py-2 pr-4 font-medium">Name</th>
         <th class="py-2 pr-4 font-medium">Owner</th>
         <th class="py-2 pr-4 font-medium">Members</th>
+        <th class="py-2 pr-4 font-medium">Time Zone</th>
+        <th class="py-2 pr-4 font-medium">Notify at</th>
+        <th class="py-2 pr-4 font-medium">Next send</th>
         <th class="py-2 pr-4 font-medium">Created</th>
         <th class="py-2 pr-4 font-medium sr-only">Actions</th>
       </tr>
@@ -19,6 +22,9 @@
           <td class="py-2 pr-4"><%= team.name %></td>
           <td class="py-2 pr-4"><%= team.user&.email_address %></td>
           <td class="py-2 pr-4"><%= team.member_count %></td>
+          <td class="py-2 pr-4"><%= team.time_zone.presence || "—" %></td>
+          <td class="py-2 pr-4"><%= team.original_notification_time&.strftime("%l:%M %p")&.strip || "—" %></td>
+          <td class="py-2 pr-4 whitespace-nowrap"><%= team.original_notification_time ? team.notification_time.strftime("%a %l:%M %p %Z").squish : "—" %></td>
           <td class="py-2 pr-4"><%= team.created_at.strftime("%B %d, %Y") %></td>
           <td class="py-2 pr-4 text-right">
             <%= button_to "Delete",
