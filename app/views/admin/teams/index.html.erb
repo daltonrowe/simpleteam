@@ -24,7 +24,7 @@
           <td class="py-2 pr-4"><%= team.member_count %></td>
           <td class="py-2 pr-4"><%= team.time_zone.presence || "—" %></td>
           <td class="py-2 pr-4"><%= team.original_notification_time&.strftime("%l:%M %p")&.strip || "—" %></td>
-          <td class="py-2 pr-4 whitespace-nowrap"><%= team.original_notification_time ? team.notification_time.strftime("%a %l:%M %p %Z").squish : "—" %></td>
+          <td class="py-2 pr-4 whitespace-nowrap"><%= team.original_notification_time ? team.next_notification_time.strftime("%a %l:%M %p %Z").squish : "—" %></td>
           <td class="py-2 pr-4"><%= team.created_at.strftime("%B %d, %Y") %></td>
           <td class="py-2 pr-4 text-right">
             <%= button_to "Delete",
