@@ -4,4 +4,4 @@
 # block security scanning in CI. Skip the EOL check here and track the upgrade
 # separately.
 :skip_checks:
-- EOLRails
+- CheckEOLRails
