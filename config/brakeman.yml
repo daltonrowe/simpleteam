@@ -1,7 +1,0 @@
----
-# Rails 8.0.2 reaches end-of-life on 2026-10-07. That's a dependency-maintenance
-# concern (plan a Rails upgrade), not a code security finding, so it shouldn't
-# block security scanning in CI. Skip the EOL check here and track the upgrade
-# separately.
-:skip_checks:
-- CheckEOLRails
