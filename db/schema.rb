@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_03_000000) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_10_000000) do
   create_table "data", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
     t.string "name", limit: 120, null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_03_000000) do
     t.integer "recipient_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "scheduled_at"
     t.index ["created_at"], name: "index_notifications_on_created_at"
     t.index ["team_id"], name: "index_notifications_on_team_id"
   end

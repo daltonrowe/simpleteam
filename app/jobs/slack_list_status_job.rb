@@ -1,5 +1,5 @@
 class SlackListStatusJob < ApplicationJob
-  def perform(team_id)
+  def perform(team_id, scheduled_at_iso = nil)
     team = Team.find_by(id: team_id)
     return unless team
 
@@ -14,6 +14,18 @@ class SlackListStatusJob < ApplicationJob
       recipient_count += 1
     end
 
-    team.notifications.create!(kind: Notification::STATUS_LIST, recipient_count:)
+    team.notifications.create!(
+      kind: Notification::STATUS_LIST,
+      recipient_count:,
+      scheduled_at: parse_scheduled_at(scheduled_at_iso)
+    )
+  end
+
+  private
+
+  def parse_scheduled_at(value)
+    Time.iso8601(value) if value.present?
+  rescue ArgumentError
+    nil
   end
 end

@@ -43,4 +43,13 @@ class SlackListStatusJobTest < ActiveJob::TestCase
     assert_equal 1, notifications.count
     assert_equal 2, notifications.last.recipient_count
   end
+
+  test "records the intended scheduled_at when given one" do
+    with_stubbed_slack_client do
+      SlackListStatusJob.perform_now(@slack_team.id, "2026-04-27T09:00:00Z")
+    end
+
+    notification = @slack_team.notifications.where(kind: Notification::STATUS_LIST).last
+    assert_equal Time.utc(2026, 4, 27, 9, 0), notification.scheduled_at
+  end
 end
