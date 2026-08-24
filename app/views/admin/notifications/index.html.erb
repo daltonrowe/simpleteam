@@ -4,32 +4,37 @@
 
 <section class="flex flex-col gap-2">
   <h2 class="font-bold text-2xl">Scheduled</h2>
-  <p class="text-sm text-yin-400">Next daily reminder and digest for each team, in the team's time zone. Sends run on weekdays.</p>
 
-  <div class="overflow-x-auto">
-    <table class="w-full text-left text-sm border-collapse">
-      <thead>
-        <tr class="border-b border-yin-600 text-yin-400">
-          <th class="py-2 pr-4 font-medium">Team</th>
-          <th class="py-2 pr-4 font-medium">Type</th>
-          <th class="py-2 pr-4 font-medium">Next send</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @scheduled.each do |entry| %>
-          <tr class="border-b border-yin-700">
-            <td class="py-2 pr-4"><%= entry[:team].name.presence || "—" %></td>
-            <td class="py-2 pr-4"><%= Notification::LABELS.fetch(entry[:kind], entry[:kind]) %></td>
-            <td class="py-2 pr-4"><%= entry[:at].strftime("%a %b %-d, %-I:%M %p %Z") %></td>
+  <% if Notification.sending_enabled? %>
+    <p class="text-sm text-yin-400">Next daily reminder and digest for each team, in the team's time zone. Sends run on weekdays.</p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm border-collapse">
+        <thead>
+          <tr class="border-b border-yin-600 text-yin-400">
+            <th class="py-2 pr-4 font-medium">Team</th>
+            <th class="py-2 pr-4 font-medium">Type</th>
+            <th class="py-2 pr-4 font-medium">Next send</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @scheduled.each do |entry| %>
+            <tr class="border-b border-yin-700">
+              <td class="py-2 pr-4"><%= entry[:team].name.presence || "—" %></td>
+              <td class="py-2 pr-4"><%= Notification::LABELS.fetch(entry[:kind], entry[:kind]) %></td>
+              <td class="py-2 pr-4"><%= entry[:at].strftime("%a %b %-d, %-I:%M %p %Z") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-    <% if @scheduled.empty? %>
-      <%= render EmptySectionNoticeComponent.new(text: "No teams are connected to Slack yet.") %>
-    <% end %>
-  </div>
+      <% if @scheduled.empty? %>
+        <%= render EmptySectionNoticeComponent.new(text: "No teams are connected to Slack yet.") %>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render EmptySectionNoticeComponent.new(text: "Slack notifications are turned off. Nothing is scheduled to send.") %>
+  <% end %>
 </section>
 
 <section class="flex flex-col gap-2">

@@ -1,5 +1,7 @@
 class DailyScheduleListStatusJob < ApplicationJob
   def perform
+    return unless Notification.sending_enabled?
+
     SlackInstallation.all.each do |installation|
       installation.teams.each do |team|
         send_at = team.notification_time

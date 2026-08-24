@@ -6,8 +6,10 @@ class SlackStatusReminderJobTest < ActiveJob::TestCase
     mock_slack_client.expect :chat_postEphemeral, true, channel: @slack_team.name, user: @slack_user_1.slack_user_id, blocks: Array
     mock_slack_client.expect :chat_postEphemeral, true, channel: @slack_team.name, user: @slack_user_2.slack_user_id, blocks: Array
 
-    Slack::Web::Client.stub :new, mock_slack_client do
-      yield
+    with_slack_notifications_enabled do
+      Slack::Web::Client.stub :new, mock_slack_client do
+        yield
+      end
     end
 
     mock_slack_client
@@ -34,5 +36,11 @@ class SlackStatusReminderJobTest < ActiveJob::TestCase
     notifications = @slack_team.notifications.where(kind: Notification::STATUS_REMINDER)
     assert_equal 1, notifications.count
     assert_equal 2, notifications.last.recipient_count
+  end
+
+  test "sends nothing when slack notifications are disabled" do
+    SlackStatusReminderJob.perform_now(@slack_team.id)
+
+    assert_empty @slack_team.notifications
   end
 end

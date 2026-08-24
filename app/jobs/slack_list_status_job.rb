@@ -1,5 +1,7 @@
 class SlackListStatusJob < ApplicationJob
   def perform(team_id, scheduled_at_iso = nil)
+    return unless Notification.sending_enabled?
+
     team = Team.find_by(id: team_id)
     return unless team
 

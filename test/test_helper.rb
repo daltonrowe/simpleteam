@@ -31,6 +31,16 @@ module ActiveSupport
       { "sections"=>{ "Yesterday"=>"- I love pizza\n- And taco's\n- oh yes", "Today"=>"- ", "Links"=>"" } }
     end
 
+    # Slack notification sending is off by default, so tests that exercise a
+    # send have to turn it back on for the duration of the block.
+    def with_slack_notifications_enabled
+      previous = Rails.configuration.x.slack.notifications_enabled
+      Rails.configuration.x.slack.notifications_enabled = true
+      yield
+    ensure
+      Rails.configuration.x.slack.notifications_enabled = previous
+    end
+
     def with_captcha_success
       stub_request(:any, Rails.application.credentials.turnstile_challenge_url).
           to_return(body: { "success" => true }.to_json, headers: {

@@ -16,4 +16,8 @@ class NotificationTest < ActiveSupport::TestCase
     assert_not notification.valid?
     assert_includes notification.errors[:kind], "can't be blank"
   end
+
+  test "sending is disabled by default" do
+    assert_not Notification.sending_enabled?
+  end
 end

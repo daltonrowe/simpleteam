@@ -8,7 +8,7 @@ class DailyScheduleListStatusJobTest < ActiveJob::TestCase
 
   test "schedules list status job for each slack installation" do
     travel_to Time.utc(2026, 4, 27, 0, 0) do
-      DailyScheduleListStatusJob.perform_now
+      with_slack_notifications_enabled { DailyScheduleListStatusJob.perform_now }
       # Passes the intended send time (UTC ISO8601) alongside the team id so the
       # send can be compared against when it actually fires.
       assert_enqueued_with(
@@ -16,6 +16,12 @@ class DailyScheduleListStatusJobTest < ActiveJob::TestCase
         args: [ @slack_team.id, "2026-04-27T09:00:00Z" ],
         at: Time.utc(2026, 4, 27, 9, 0)
       )
+    end
+  end
+
+  test "schedules nothing when slack notifications are disabled" do
+    assert_no_enqueued_jobs do
+      DailyScheduleListStatusJob.perform_now
     end
   end
 end

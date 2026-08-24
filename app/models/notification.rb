@@ -13,6 +13,12 @@ class Notification < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
 
+  # Kill switch for every outbound Slack notification, set in
+  # config/initializers/settings.rb.
+  def self.sending_enabled?
+    Rails.configuration.x.slack.notifications_enabled
+  end
+
   def label
     LABELS.fetch(kind, kind)
   end
