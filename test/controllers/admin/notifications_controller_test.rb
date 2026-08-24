@@ -11,8 +11,18 @@ class Admin::NotificationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h2", text: "Scheduled"
     assert_select "h2", text: "Recently Sent"
-    # The slack_team is connected, so it shows up in the scheduled list.
+    # The slack_team is connected, so its sent notification shows up.
     assert_select "td", text: teams(:slack_team).name
+  end
+
+  test "the scheduled list is replaced with a notice while sending is disabled" do
+    sign_in(users(:super_admin))
+
+    get admin_notifications_path
+
+    assert_response :success
+    assert_select "th", text: "Next send", count: 0
+    assert_select "div", text: /Slack notifications are turned off/
   end
 
   test "a non super admin is redirected away from notifications" do

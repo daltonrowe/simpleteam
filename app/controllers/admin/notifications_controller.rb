@@ -2,7 +2,7 @@ class Admin::NotificationsController < Admin::BaseController
   SENT_LIMIT = 50
 
   def index
-    @scheduled = scheduled_notifications
+    @scheduled = Notification.sending_enabled? ? scheduled_notifications : []
     @sent = Notification.includes(:team).recent.limit(SENT_LIMIT)
   end
 

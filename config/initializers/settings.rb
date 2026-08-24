@@ -5,4 +5,8 @@ Rails.application.configure do
   config.x.slack.signing_secret = Rails.application.credentials&.slack&.signing_secret
   config.x.slack.verification_token = Rails.application.credentials&.slack&.verification_token
   config.x.slack.oauth_scope = JSON.parse(File.read("slack-app-manifest.json")).dig("oauth_config", "scopes", "bot").join(",")
+
+  # Outbound Slack notifications (daily digest and status reminder) are turned
+  # off app-wide. Flip to true to start sending them again.
+  config.x.slack.notifications_enabled = false
 end
