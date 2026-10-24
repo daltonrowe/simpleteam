@@ -9,8 +9,6 @@ class ApiChartComponent < ApplicationComponent
       @page = page
       @resolution = resolution
       @limit = limit
-
-      super
   end
 
   attr_accessor :name, :team, :keys, :host, :page, :resolution, :limit

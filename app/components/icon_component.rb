@@ -4,8 +4,6 @@ class IconComponent < ApplicationComponent
   def initialize(icon:, classes:)
       @icon = icon
       @classes = classes
-
-      super
   end
 
   attr_accessor :icon, :classes

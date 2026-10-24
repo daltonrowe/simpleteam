@@ -53,7 +53,8 @@ class DataController < ApplicationController
   end
 
   def ensure_json_request
-    head :not_acceptable unless request.content_type == "application/json"
-    head :not_acceptable unless request.format == :json
+    return if request.content_type == "application/json" && request.format == :json
+
+    head :not_acceptable
   end
 end

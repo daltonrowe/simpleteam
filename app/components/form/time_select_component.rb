@@ -5,8 +5,6 @@ class Form::TimeSelectComponent < ApplicationComponent
     @form = form
     @method = method
     @args = args
-
-    super
   end
 
   attr_accessor :form, :method, :args
