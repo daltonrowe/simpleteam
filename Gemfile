@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1.4"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
@@ -16,6 +16,9 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+
+# OpenStruct is a bundled gem since Ruby 3.5; it must be declared to be requirable [https://bugs.ruby-lang.org/issues/20309]
+gem "ostruct"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
@@ -64,6 +67,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webmock"
+  # Minitest 6 extracted Minitest::Mock and #stub into this gem
+  gem "minitest-mock"
 end
 
 gem "tailwindcss-rails", "~> 4.2"

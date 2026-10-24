@@ -8,8 +8,6 @@ class LinkComponent < Abstract::NavigatorComponent
     @level = level
     @element_attrs = element
     @external = external
-
-    super
   end
 
   attr_reader :text, :to, :style, :level, :element_attrs, :external

@@ -3,7 +3,6 @@
 class Form::InlineLayoutComponent < ApplicationComponent
   def initialize(label:)
     @label = label
-    super
   end
 
   attr_reader :label

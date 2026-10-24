@@ -10,8 +10,6 @@ class ButtonComponent < Abstract::NavigatorComponent
     @level = level
     @form = form
     @element_attrs = element
-
-    super
   end
 
   attr_reader :text, :type, :to, :method, :style, :level, :form, :element_attrs
