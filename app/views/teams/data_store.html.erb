@@ -39,7 +39,7 @@
   <div>
     <pre>GET <%= team_data_path(@team) %></pre>
     <div>
-      Optional Params: <pre>name: str, per_page: int, page: int, order: 'asc' | 'desc'</pre>
+      Optional Params: <pre>name: str, sha: str, per_page: int, page: int, order: 'asc' | 'desc'</pre>
     </div>
   </div>
 
@@ -52,6 +52,9 @@
   <div>
     <pre>POST <%= team_data_path(@team) %></pre>
     <pre>{ name: "My Data Type", content: { must_be: "object at the top level" } }</pre>
+    <div>
+      Optional Params: <pre>sha: str</pre>
+    </div>
   </div>
 
   <strong>Delete Data</strong>

@@ -2,6 +2,7 @@ data_1:
   team: with_api_key
   name: Some Data Type
   content: { "prop": 1 }
+  sha: abc123
   created_at: 2025-09-01
 
 data_2:
@@ -20,4 +21,5 @@ other_data_4:
   team: other_team
   name: Some Data Type
   content: { "prop": 1 }
+  sha: abc123
   created_at: 2025-09-03
