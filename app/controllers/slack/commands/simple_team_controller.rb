@@ -106,9 +106,6 @@ module Slack
         status.update_sections(section_data)
         status.save!
 
-        slack_client.chat_postEphemeral(channel: team.name,
-                                  user: user.slack_users.find_by(slack_installation:).slack_user_id,
-                                  text: "Status was added! :raised_hands:")
         { "response_action": "clear" }
       end
 
@@ -130,9 +127,6 @@ module Slack
         status.update_sections(section_data)
         status.save!
 
-        slack_client.chat_postEphemeral(channel: team.name,
-                                        user: user.slack_users.first.slack_user_id,
-                                        text: "Status was updated! :raised_hands:")
         { "response_action": "clear" }
       end
 

@@ -1,12 +1,3 @@
-production:
-  daily_list_status:
-    class: DailyScheduleListStatusJob
-    queue: cron
-    args:
-    schedule: 0 0 * * 1-5
-  daily_status_reminder:
-    class: DailyScheduleStatusReminderJob
-    queue: cron
-    args:
-    schedule: 0 0 * * 1-5
-
+# Simpleteam does not send any Slack messages, so there are no recurring
+# notification jobs.
+production: {}
