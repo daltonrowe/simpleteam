@@ -21,8 +21,9 @@ class DataController < ApplicationController
     content = create_params[:content].permit!.to_h
     return head :bad_request unless content.is_a? Hash
     return head :bad_request unless content.length.positive?
+    return head :bad_request unless create_params[:sha].nil? || create_params[:sha].is_a?(String)
 
-    data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], content:)
+    data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], sha: create_params[:sha], content:)
 
     render json: data.to_json
   end
@@ -37,14 +38,15 @@ class DataController < ApplicationController
   private
 
   def query_params
-    params.permit(:name, :per_page, :page, :order, :resolution)
+    params.permit(:name, :sha, :per_page, :page, :order, :resolution)
   end
 
   def create_params
     # TODO: Struggling to permit arbitrary data in a hash from params
     {
       name: params["name"],
-      content: params["content"]
+      content: params["content"],
+      sha: params["sha"].presence
     }
   end
 

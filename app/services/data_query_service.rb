@@ -4,6 +4,7 @@ class DataQueryService
     page: 1,
     order: "desc",
     name: nil,
+    sha: nil,
     resolution: "full"
   }.freeze
 
@@ -28,6 +29,7 @@ class DataQueryService
   def base_scope
     where_args = { team: @team }
     where_args[:name] = query_params[:name] if query_params[:name]
+    where_args[:sha] = query_params[:sha] if query_params[:sha]
 
     Datum.where(**where_args)
   end

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_10_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_31_000000) do
   create_table "data", id: :string, force: :cascade do |t|
     t.string "team_id", null: false
     t.string "name", limit: 120, null: false
     t.json "content", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sha", limit: 64
     t.index ["name", "created_at"], name: "index_data_on_name_and_created_at"
+    t.index ["team_id", "sha"], name: "index_data_on_team_id_and_sha"
     t.index ["team_id"], name: "index_data_on_team_id"
   end
 

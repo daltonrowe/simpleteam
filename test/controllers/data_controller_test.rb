@@ -87,6 +87,49 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Another Data Type", data[0]["name"]
   end
 
+  test "returns data with the correct sha" do
+    team = teams(:with_api_key)
+
+    get(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { sha: "abc123" }
+    )
+
+    assert_response :ok
+    data = JSON.parse response.body
+
+    assert_equal 1, data.length
+    assert_equal data(:data_1).id, data[0]["id"]
+    assert_equal "abc123", data[0]["sha"]
+  end
+
+  test "returns no data for an unknown sha" do
+    team = teams(:with_api_key)
+
+    get(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { sha: "does-not-exist" }
+    )
+
+    assert_response :ok
+    assert_equal 0, JSON.parse(response.body).length
+  end
+
+  test "combines sha and name filters" do
+    team = teams(:with_api_key)
+
+    get(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { sha: "abc123", name: "Another Data Type" }
+    )
+
+    assert_response :ok
+    assert_equal 0, JSON.parse(response.body).length
+  end
+
   # names
 
   test "returns names of all data" do
@@ -121,6 +164,38 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert json["id"].class == String
     assert_equal json["team_id"], team.id
     assert_equal params[:content], json["content"].symbolize_keys
+  end
+
+  test "creates data with a sha" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      sha: "deadbeef",
+      content: { some_data: 1 }
+    }
+
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
+
+    assert_response :ok
+    json = JSON.parse response.body
+
+    assert_equal "deadbeef", json["sha"]
+    assert_equal "deadbeef", Datum.find(json["id"]).sha
+  end
+
+  test "bad_request if sha is not a string" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      sha: { nope: 1 },
+      content: { some_data: 1 }
+    }
+
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
+
+    assert_response :bad_request
   end
 
   test "bad_request if not json" do
