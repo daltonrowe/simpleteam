@@ -14,9 +14,6 @@
         "scopes": {
             "bot": [
                 "app_mentions:read",
-                "chat:write",
-                "chat:write.public",
-                "commands",
                 "team:read",
                 "users:read",
                 "users:read.email",
