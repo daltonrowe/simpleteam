@@ -23,7 +23,9 @@ class DataController < ApplicationController
     return head :bad_request unless content.length.positive?
     return head :bad_request unless create_params[:sha].nil? || create_params[:sha].is_a?(String)
 
-    data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], sha: create_params[:sha], content:)
+    sha = create_params[:sha] || (content["sha"] if content["sha"].is_a?(String))
+
+    data = Datum.create!(id: SecureRandom.uuid, team: @team, name: create_params[:name], sha:, content:)
 
     render json: data.to_json
   end

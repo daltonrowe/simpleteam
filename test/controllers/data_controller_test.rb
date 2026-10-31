@@ -184,6 +184,49 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal "deadbeef", Datum.find(json["id"]).sha
   end
 
+  test "falls back to sha in content" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      content: { sha: "cafef00d", some_data: 1 }
+    }
+
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
+
+    assert_response :ok
+    assert_equal "cafef00d", JSON.parse(response.body)["sha"]
+  end
+
+  test "top-level sha wins over sha in content" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      sha: "toplevel",
+      content: { sha: "nested" }
+    }
+
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
+
+    assert_response :ok
+    assert_equal "toplevel", JSON.parse(response.body)["sha"]
+  end
+
+  test "ignores non-string sha in content" do
+    team = teams(:with_api_key)
+
+    params = {
+      name: "My Data",
+      content: { sha: 123 }
+    }
+
+    post(team_data_path(team), headers: correct_headers, params:, as: :json)
+
+    assert_response :ok
+    assert_nil JSON.parse(response.body)["sha"]
+  end
+
   test "bad_request if sha is not a string" do
     team = teams(:with_api_key)
 

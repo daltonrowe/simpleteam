@@ -53,7 +53,7 @@
     <pre>POST <%= team_data_path(@team) %></pre>
     <pre>{ name: "My Data Type", content: { must_be: "object at the top level" } }</pre>
     <div>
-      Optional Params: <pre>sha: str</pre>
+      Optional Params: <pre>sha: str</pre> (defaults to <code>content.sha</code> if that is a string)
     </div>
   </div>
 
