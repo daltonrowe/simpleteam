@@ -40,7 +40,7 @@ class DataController < ApplicationController
   private
 
   def query_params
-    params.permit(:name, :sha, :per_page, :page, :order, :resolution)
+    params.permit(:name, :sha, :per_page, :page, :order, :resolution, sha: [])
   end
 
   def create_params

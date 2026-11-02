@@ -10,6 +10,9 @@ class DataQueryService
 
   RESOLUTIONS = %w[full weekly monthly quarterly].freeze
 
+  # Max number of shas accepted in a single `sha[]` filter; extras are ignored.
+  MAX_SHAS = 100
+
   LIMIT_OPTIONS = [ 25, 50, 75, 100 ].freeze
   UNLIMITED = "none".freeze
 
@@ -29,7 +32,7 @@ class DataQueryService
   def base_scope
     where_args = { team: @team }
     where_args[:name] = query_params[:name] if query_params[:name]
-    where_args[:sha] = query_params[:sha] if query_params[:sha]
+    where_args[:sha] = shas unless query_params[:sha].nil?
 
     Datum.where(**where_args)
   end
@@ -51,6 +54,12 @@ class DataQueryService
     else
       collection[page_offset, per_page] || []
     end
+  end
+
+  # `sha` may be a single value (`sha=abc`) or an array (`sha[]=abc&sha[]=def`).
+  # Matches the indexed `sha` column, populated from `content.sha` on write.
+  def shas
+    Array(query_params[:sha]).grep(String).uniq.first(MAX_SHAS)
   end
 
   def unlimited?
