@@ -130,6 +130,106 @@ class DataControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, JSON.parse(response.body).length
   end
 
+  # sha[] array filter
+
+  def create_sha_datum(team, name, sha)
+    Datum.create!(id: SecureRandom.uuid, team:, name:, sha:, content: { "jsRequests" => 1, "sha" => sha })
+  end
+
+  test "sha[] with one matching sha returns that record" do
+    team = teams(:with_api_key)
+    sha = "a" * 40
+    datum = create_sha_datum(team, "asset-tracking-search", sha)
+    create_sha_datum(team, "asset-tracking-search", "b" * 40)
+
+    get team_data_path(team), headers: correct_headers, params: { sha: [ sha ] }
+
+    assert_response :ok
+    data = JSON.parse response.body
+    assert_equal [ datum.id ], data.map { |d| d["id"] }
+    assert_equal sha, data[0]["content"]["sha"]
+  end
+
+  test "sha[] with several shas returns only the matching records" do
+    team = teams(:with_api_key)
+    a = create_sha_datum(team, "asset-tracking-search", "a" * 40)
+    c = create_sha_datum(team, "asset-tracking-search", "c" * 40)
+    create_sha_datum(team, "asset-tracking-search", "b" * 40)
+
+    get(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { sha: [ "a" * 40, "c" * 40, "d" * 40 ], per_page: 3, page: 1, order: "desc" }
+    )
+
+    assert_response :ok
+    data = JSON.parse response.body
+    assert_equal [ a.id, c.id ].sort, data.map { |d| d["id"] }.sort
+  end
+
+  test "sha[] combines with name" do
+    team = teams(:with_api_key)
+    sha = "a" * 40
+    match = create_sha_datum(team, "asset-tracking-search", sha)
+    create_sha_datum(team, "other-metric", sha)
+
+    get team_data_path(team), headers: correct_headers, params: { name: "asset-tracking-search", sha: [ sha ] }
+
+    assert_response :ok
+    data = JSON.parse response.body
+    assert_equal [ match.id ], data.map { |d| d["id"] }
+  end
+
+  test "sha[] with no matches returns 200 and an empty list" do
+    team = teams(:with_api_key)
+    create_sha_datum(team, "asset-tracking-search", "a" * 40)
+
+    get team_data_path(team), headers: correct_headers, params: { sha: [ "e" * 40, "f" * 40 ] }
+
+    assert_response :ok
+    assert_equal [], JSON.parse(response.body)
+  end
+
+  test "sha[] does not return other teams' records" do
+    team = teams(:with_api_key)
+
+    get team_data_path(team), headers: correct_headers, params: { sha: [ "abc123" ] }
+
+    assert_response :ok
+    data = JSON.parse response.body
+    assert_equal [ data(:data_1).id ], data.map { |d| d["id"] }
+  end
+
+  test "sha[] accepts at least 50 shas" do
+    team = teams(:with_api_key)
+    shas = (1..50).map { |i| i.to_s(16).rjust(40, "0") }
+    first = create_sha_datum(team, "asset-tracking-search", shas.first)
+    last = create_sha_datum(team, "asset-tracking-search", shas.last)
+
+    get team_data_path(team), headers: correct_headers, params: { sha: shas, per_page: 50 }
+
+    assert_response :ok
+    data = JSON.parse response.body
+    assert_equal [ first.id, last.id ].sort, data.map { |d| d["id"] }.sort
+  end
+
+  test "sha filter matches records backfilled from content.sha" do
+    team = teams(:with_api_key)
+    sha = "9" * 40
+
+    post(
+      team_data_path(team),
+        headers: correct_headers,
+        params: { name: "asset-tracking-search", content: { jsRequests: 115, sha: } }.to_json
+    )
+    assert_response :ok
+    id = JSON.parse(response.body)["id"]
+
+    get team_data_path(team), headers: correct_headers, params: { sha: [ sha ] }
+
+    assert_equal [ id ], JSON.parse(response.body).map { |d| d["id"] }
+  end
+
   # names
 
   test "returns names of all data" do
